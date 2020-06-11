@@ -1,30 +1,32 @@
 <?php
+
 namespace Deployer;
 
 require 'recipe/laravel.php';
 
 // Project name
-set('application', 'my_project');
+set('application', 'alpha_auric');
 
 // Project repository
-set('repository', 'git@domain.com:username/repository.git');
+set('repository', 'git@github.com:secrethash/auric.git');
 
 // [Optional] Allocate tty for git clone. Default value is false.
-set('git_tty', true); 
+set('git_tty', true);
 
-// Shared files/dirs between deploys 
-add('shared_files', []);
-add('shared_dirs', []);
+// Shared files/dirs between deploys
+add('shared_files', ['.env.deploy']);
+add('shared_dirs', ['public/storage']);
 
-// Writable dirs by web server 
+// Writable dirs by web server
 add('writable_dirs', []);
 
 
 // Hosts
 
-host('project.com')
-    ->set('deploy_path', '~/{{application}}');    
-    
+host('auric')
+    ->stage('alpha')
+    ->set('deploy_path', '~/sites/alpha');
+
 // Tasks
 
 task('build', function () {
