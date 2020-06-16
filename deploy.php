@@ -33,7 +33,7 @@ task('build', function () {
     run('cd {{release_path}} && build');
 });
 
-task('artisan:optimize', function() {});
+// task('artisan:optimize', function() {});
 
 // [Optional] if deploy fails automatically unlock.
 after('deploy:failed', 'deploy:unlock');
