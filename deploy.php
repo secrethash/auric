@@ -33,15 +33,15 @@ task('build', function () {
     run('cd {{release_path}} && build');
 });
 
-task('clear:memcache', function () {
-    run('flush_memca');
-});
+// task('clear:memcache', function () {
+//     run('flush_memca');
+// });
 
 // task('artisan:optimize', function() {});
 
 // [Optional] if deploy fails automatically unlock.
 after('deploy:failed', 'deploy:unlock');
-after('cleanup', 'clear:memcache');
+// after('cleanup', 'clear:memcache');
 
 // Migrate database before symlink new release.
 
