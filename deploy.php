@@ -41,7 +41,7 @@ task('clear:memcache', function () {
 
 // [Optional] if deploy fails automatically unlock.
 after('deploy:failed', 'deploy:unlock');
-after('cleanup', 'clear:memcache')
+after('cleanup', 'clear:memcache');
 
 // Migrate database before symlink new release.
 
