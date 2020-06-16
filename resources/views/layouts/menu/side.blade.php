@@ -1,4 +1,3 @@
-<ul class="sidenav-nav">
 
     @php
 
@@ -48,4 +47,3 @@
         </li>
     @endforeach
 
-</ul>

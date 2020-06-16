@@ -14,14 +14,18 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', 'HomeController@index')->name('home');
-Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/home', 'HomeController@index')->name('home.index');
 
-Route::get('/shop', 'Shop/ProductsController@index')->name('shop.list');
-Route::get('/shop/{product?}', 'Shop/ProductsController@show')->name('shop.show');
+Route::get('/shop', 'Shop\ProductsController@index')->name('shop.list');
+Route::get('/shop/{product?}', 'Shop\ProductsController@show')->name('shop.show');
+
+Route::get('auth/logout', 'UserController@logout')->name('logout.link');
 
 Route::prefix('console')->group(function () {
     Voyager::routes();
 });
 
 Auth::routes();
+
+
 

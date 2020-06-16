@@ -9,7 +9,7 @@
         <!-- Title-->
         <title>{{env('APP_NAME')}}</title>
         <!-- Favicon-->
-        <link rel="icon" href="img/core-img/favicon.ico">
+        <link rel="icon" href="images/core-img/favicon.ico">
         <!-- Stylesheet-->
         <link rel="stylesheet" href="{{asset("style.css")}}">
         {{-- <link rel="stylesheet" href="{{mix("css/app.css")}}"> --}}
@@ -25,7 +25,7 @@
         <div class="header-area" id="headerArea">
             <div class="container h-100 d-flex align-items-center justify-content-between">
                 <!-- Logo Wrapper-->
-                <div class="logo-wrapper"><a href="home.html"><img src="{{asset("img/core-img/logo_icon_small.png")}}" alt=""></a></div>
+                <div class="logo-wrapper"><a href="home.html"><img src="{{asset("images/core-img/logo_icon_small.png")}}" alt=""></a></div>
                 <!-- Search Form-->
                 <div class="top-search-form">
                     <form action="" method="POST">
@@ -43,22 +43,30 @@
         <div class="suha-sidenav-wrapper" id="sidenavWrapper">
             <!-- Sidenav Profile-->
             <div class="sidenav-profile">
-                <div class="user-profile"><img src="{{asset("img/bg-img/9.jpg")}}" alt=""></div>
+                <div class="user-profile"><img src="{{asset("images/bg-img/user.png")}}" alt=""></div>
                 <div class="user-info">
-                    <h6 class="user-name mb-0">{{auth()->user()->name}}</h6>
-                    <p class="available-balance">Balance <span>$<span class="counter">379.23</span></span></p>
+                    <h6 class="user-name mb-0">
+                        @auth
+                            Welcome {{auth()->user()->name}}
+                        @endauth
+                        @guest
+                            Welcome Guest!
+                        @endguest
+                    </h6>
+                    <p class="available-balance">Balance <span>&#8377;<span class="counter">@guest{{e('0')}}@endguest</span></span></p>
                 </div>
             </div>
             <!-- Sidenav Nav-->
-            {{-- <ul class="sidenav-nav">
-                <li><a href="profile.html"><i class="lni-user"></i>My Profile</a></li>
+            <ul class="sidenav-nav">
+                {{-- <li><a href="profile.html"><i class="lni-user"></i>My Profile</a></li>
                 <li><a href="notifications.html"><i class="lni-alarm lni-tada-effect"></i>Notifications<span class="ml-3 badge badge-warning">3</span></a></li>
                 <li><a href="pages.html"><i class="lni-empty-file"></i>All Pages</a></li>
                 <li><a href="wishlist-grid.html"><i class="lni-heart-filled"></i>My Wishlist</a></li>
                 <li><a href="settings.html"><i class="lni-cog"></i>Settings</a></li>
-                <li><a href="intro.html"><i class="lni-power-switch"></i>Sign Out</a></li>
-            </ul> --}}
-            {!! menu('side_nav', 'layouts.menu.side') !!}
+                <li><a href="intro.html"><i class="lni-power-switch"></i>Sign Out</a></li> --}}
+                @auth{!! menu('side_nav_auth', 'layouts.menu.side') !!}@endauth
+                @guest{!! menu('side_nav', 'layouts.menu.side') !!}@endguest
+            </ul>
             <!-- Go Back Button-->
             <div class="go-home-btn" id="goHomeBtn"><i class="lni-arrow-left"></i></div>
         </div>

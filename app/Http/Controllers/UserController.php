@@ -1,12 +1,11 @@
 <?php
 
-namespace App\Http\Controllers\Shop;
+namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
-use App\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
-class ProductsController extends Controller
+class UserController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,9 +15,20 @@ class ProductsController extends Controller
     public function index()
     {
         //
-        $products = Product::all();
+    }
 
-        return view('home')->with('products', $products);
+
+    /**
+     *
+     *
+     * @return redirect Route
+     */
+    public function logout() {
+
+        Auth::logout();
+
+        return redirect()->route('home');
+
     }
 
     /**
