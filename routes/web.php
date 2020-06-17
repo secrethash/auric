@@ -25,7 +25,7 @@ Route::prefix('console')->group(function () {
     Voyager::routes();
 });
 
-Auth::routes();
+Auth::routes(['verify'=>true]);
 
 
 

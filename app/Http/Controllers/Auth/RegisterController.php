@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use App\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
@@ -40,7 +41,19 @@ class RegisterController extends Controller
     {
         $this->middleware('guest');
     }
+    /**
+     * Show the application registration form.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function showRegistrationForm(Request $request)
+    {
+        if ($request->has('ref')) {
+            session(['referrer' => $request->query('ref')]);
+        }
 
+        return view('auth.register');
+    }
     /**
      * Get a validator for an incoming registration request.
      *
@@ -53,6 +66,8 @@ class RegisterController extends Controller
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
+            'username' => ['required', 'string', 'unique:users', 'alpha_dash', 'min:3', 'max:30'],
+            'referral' => ['required', 'string', 'exists:users,username', 'alpha_dash', 'min:3', 'max:30'],
         ]);
     }
 
@@ -64,9 +79,18 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
+        $referrer = User::whereUsername(session()->pull('referrer'))->first();
+
+        if (!$referrer)
+        {
+            $referrer = User::whereUsername($data['referral'])->first();
+        }
+
         return User::create([
+            'username' => $data['username'],
             'name' => $data['name'],
             'email' => $data['email'],
+            'referrer_id' => $referrer ? $referrer->id : null,
             'password' => Hash::make($data['password']),
         ]);
     }
