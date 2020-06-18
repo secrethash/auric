@@ -10,6 +10,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
+use Illuminate\Support\Str;
+
 class RegisterController extends Controller
 {
     /*
@@ -66,8 +68,8 @@ class RegisterController extends Controller
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
-            'username' => ['required', 'string', 'unique:users', 'alpha_dash', 'min:3', 'max:30'],
-            'referral' => ['required', 'string', 'exists:users,username', 'alpha_dash', 'min:3', 'max:30'],
+            // 'username' => ['required', 'string', 'unique:users', 'alpha_dash', 'min:3', 'max:30'],
+            'referral' => ['required', 'string', 'exists:users,username', 'alpha_dash', 'min:1', 'max:30'],
         ]);
     }
 
@@ -81,17 +83,34 @@ class RegisterController extends Controller
     {
         $referrer = User::whereUsername(session()->pull('referrer'))->first();
 
+        $username = $this->generateUsername();
+
         if (!$referrer)
         {
             $referrer = User::whereUsername($data['referral'])->first();
         }
 
         return User::create([
-            'username' => $data['username'],
+            'username' => $username,
             'name' => $data['name'],
             'email' => $data['email'],
             'referrer_id' => $referrer ? $referrer->id : null,
             'password' => Hash::make($data['password']),
         ]);
+    }
+
+    protected function generateUsername()
+    {
+        //
+        $generated = Str::random(32);
+
+        $user = User::whereUsername($generated)->first();
+
+        if (!$user)
+        {
+            return $generated;
+        }
+
+        return $this->generateUsername();
     }
 }

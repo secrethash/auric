@@ -85,7 +85,8 @@
                         <li><a href="pages.html"><i class="lni-heart"></i>Pages</a></li>
                         <li><a href="settings.html"><i class="lni-cog"></i>Settings</a></li>
                     </ul> --}}
-                    {!! menu('foot_nav', 'layouts.menu.foot') !!}
+                    @guest{!! menu('foot_nav', 'layouts.menu.foot') !!}@endguest
+                    @auth{!! menu('foot_nav_auth', 'layouts.menu.foot') !!}@endauth
                 </div>
             </div>
         </div>

@@ -44,6 +44,28 @@ class User extends \TCG\Voyager\Models\User implements MustVerifyEmail
      */
     protected $appends = ['referral_link'];
 
+
+    /**
+     * A user has a referrer.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function referrer()
+    {
+        return $this->belongsTo(User::class, 'referrer_id', 'id');
+    }
+
+    /**
+     * A user has many referrals.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function referrals()
+    {
+        return $this->hasMany(User::class, 'referrer_id', 'id');
+    }
+
+
     /**
      * Get the user's referral link.
      *

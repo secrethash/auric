@@ -4,16 +4,6 @@
 
 <form action="{{ route('register') }}" method="POST">
     @csrf
-    <div class="form-group text-left mb-4"><span>{{ __('User Name') }}</span>
-        <label for="username"><i class="lni-invention"></i></label>
-        <input class="form-control @error('username') is-invalid @enderror" id="username" name="username" type="text" placeholder="john_doe" value="{{ old('username') }}" required autocomplete="username" autofocus>
-
-        @error('username')
-            <span class="invalid-feedback" role="alert">
-                <strong>{{ $message }}</strong>
-            </span>
-        @enderror
-    </div>
     <div class="form-group text-left mb-4"><span>{{ __('Full Name') }}</span>
         <label for="name"><i class="lni-user"></i></label>
         <input class="form-control @error('name') is-invalid @enderror" id="name" name="name" type="text" placeholder="John Doe" value="{{ old('name') }}" required autocomplete="name" autofocus>
