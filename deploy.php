@@ -37,7 +37,8 @@ task('build', function () {
 //     run('flush_memca');
 // });
 
-task('artisan:optimize', function() {
+task('app:optimize', function() {
+    // run('cd ~/sites/alpha/current');
     run('php artisan view:clear');
     run('php artisan route:clear');
     run('php artisan config:clear');
@@ -48,7 +49,7 @@ task('artisan:optimize', function() {
 
 // [Optional] if deploy fails automatically unlock.
 after('deploy:failed', 'deploy:unlock');
-// after('cleanup', 'clear:memcache');
+after('cleanup', 'app:optimize');
 
 // Migrate database before symlink new release.
 
