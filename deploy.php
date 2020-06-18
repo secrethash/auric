@@ -37,7 +37,14 @@ task('build', function () {
 //     run('flush_memca');
 // });
 
-// task('artisan:optimize', function() {});
+task('artisan:optimize', function() {
+    run('php artisan view:clear');
+    run('php artisan route:clear');
+    run('php artisan config:clear');
+    run('php artisan cache:clear');
+    run('php artisan route:cache');
+    run('php artisan config:cache');
+});
 
 // [Optional] if deploy fails automatically unlock.
 after('deploy:failed', 'deploy:unlock');
