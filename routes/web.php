@@ -19,7 +19,12 @@ Route::get('/home', 'HomeController@index')->name('home.index');
 Route::get('/shop', 'Shop\ProductsController@index')->name('shop.list');
 Route::get('/shop/{product?}', 'Shop\ProductsController@show')->name('shop.show');
 
-Route::get('auth/logout', 'UserController@logout')->name('logout.link');
+Route::prefix('user')->name('user.')->group(function () {
+    Route::get('account', 'UserController@account')->name('account');
+    Route::get('referral', 'UserController@referral')->name('referral');
+    Route::get('logout', 'UserController@logout')->name('logout');
+});
+
 
 Route::prefix('console')->group(function () {
     Voyager::routes();

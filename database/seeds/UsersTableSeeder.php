@@ -12,15 +12,15 @@ class UsersTableSeeder extends Seeder
      */
     public function run()
     {
-        
+
 
         \DB::table('users')->delete();
-        
+
         \DB::table('users')->insert(array (
-            0 => 
+            0 =>
             array (
                 'id' => 1,
-                'username' => 'n',
+                'username' => '7dbd395b-cde5-4dcc-99e1-cd4e012ca28e',
                 'role_id' => 1,
                 'name' => 'Admin',
                 'email' => 'admin@auricshops.com',
@@ -34,7 +34,7 @@ class UsersTableSeeder extends Seeder
                 'updated_at' => '2020-06-14 13:15:22',
             ),
         ));
-        
-        
+
+
     }
 }

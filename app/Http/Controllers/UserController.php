@@ -7,14 +7,19 @@ use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
     /**
-     * Display a listing of the resource.
+     * Display Account Options
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function account()
     {
         //
+        return view('user.account')->with('user', auth()->user());
     }
 
 
@@ -36,9 +41,10 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function referral()
     {
         //
+        return view('user.referral')->with('user', auth()->user());
     }
 
     /**

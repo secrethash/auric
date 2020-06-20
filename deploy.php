@@ -49,7 +49,7 @@ task('app:optimize', function() {
 
 // [Optional] if deploy fails automatically unlock.
 after('deploy:failed', 'deploy:unlock');
-after('cleanup', 'app:optimize');
+// after('artisan:migrate', 'app:optimize');
 
 // Migrate database before symlink new release.
 

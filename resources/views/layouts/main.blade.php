@@ -13,6 +13,7 @@
         <!-- Stylesheet-->
         <link rel="stylesheet" href="{{asset("style.css")}}">
         {{-- <link rel="stylesheet" href="{{mix("css/app.css")}}"> --}}
+        @yield('style')
     </head>
     <body>
         <!-- Preloader-->
@@ -24,15 +25,7 @@
         <!-- Header Area-->
         <div class="header-area" id="headerArea">
             <div class="container h-100 d-flex align-items-center justify-content-between">
-                <!-- Logo Wrapper-->
-                <div class="logo-wrapper"><a href="home.html"><img src="{{asset("images/core-img/logo_icon_small.png")}}" alt=""></a></div>
-                <!-- Search Form-->
-                <div class="top-search-form">
-                    <form action="" method="POST">
-                        <input class="form-control" type="search" placeholder="Enter your keyword">
-                        <button type="submit"><i class="fa fa-search"></i></button>
-                    </form>
-                </div>
+                @yield('header')
                 <!-- Navbar Toggler-->
                 <div class="suha-navbar-toggler d-flex justify-content-between flex-wrap" id="suhaNavbarToggler"><span></span><span></span><span></span></div>
             </div>
@@ -53,17 +46,11 @@
                             Welcome Guest!
                         @endguest
                     </h6>
-                    <p class="available-balance">Balance <span>&#8377;<span class="counter">@guest{{e('0')}}@endguest</span></span></p>
+                    <p class="available-balance">Balance <span>&#8377; @auth<span class="counter">{{auth()->user()->credits}}</span> @else{{e('--')}}@endauth </span></p>
                 </div>
             </div>
             <!-- Sidenav Nav-->
             <ul class="sidenav-nav">
-                {{-- <li><a href="profile.html"><i class="lni-user"></i>My Profile</a></li>
-                <li><a href="notifications.html"><i class="lni-alarm lni-tada-effect"></i>Notifications<span class="ml-3 badge badge-warning">3</span></a></li>
-                <li><a href="pages.html"><i class="lni-empty-file"></i>All Pages</a></li>
-                <li><a href="wishlist-grid.html"><i class="lni-heart-filled"></i>My Wishlist</a></li>
-                <li><a href="settings.html"><i class="lni-cog"></i>Settings</a></li>
-                <li><a href="intro.html"><i class="lni-power-switch"></i>Sign Out</a></li> --}}
                 @auth{!! menu('side_nav_auth', 'layouts.menu.side') !!}@endauth
                 @guest{!! menu('side_nav', 'layouts.menu.side') !!}@endguest
             </ul>
@@ -91,6 +78,9 @@
             </div>
         </div>
         {{-- <script src="{{mix("js/app.js")}}"></script> --}}
+        <!-- Custom JS Code -->
+        @yield('scripts')
+
         <!-- All JavaScript Files-->
         <script src="{{asset("js/jquery.min.js")}}"></script>
         <script src="{{asset("js/popper.min.js")}}"></script>

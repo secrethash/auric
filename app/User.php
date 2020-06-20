@@ -5,6 +5,7 @@ namespace App;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use App\Transaction;
 
 class User extends \TCG\Voyager\Models\User implements MustVerifyEmail
 {
@@ -46,6 +47,16 @@ class User extends \TCG\Voyager\Models\User implements MustVerifyEmail
 
 
     /**
+     * User's Transcations
+     *
+     * @return \App\Transaction
+     */
+    public function transactions()
+    {
+        return $this->hasMany(Transaction::class);
+    }
+
+    /**
      * A user has a referrer.
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
@@ -64,7 +75,6 @@ class User extends \TCG\Voyager\Models\User implements MustVerifyEmail
     {
         return $this->hasMany(User::class, 'referrer_id', 'id');
     }
-
 
     /**
      * Get the user's referral link.

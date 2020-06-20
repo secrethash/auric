@@ -1,5 +1,10 @@
 @extends('layouts.main')
 
+@section('header')
+    @include('partials.header.logo')
+@endsection
+
+
 @section('content')
 
     <!-- Hero Slides-->
