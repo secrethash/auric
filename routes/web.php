@@ -22,6 +22,7 @@ Route::get('/shop/{product?}', 'Shop\ProductsController@show')->name('shop.show'
 Route::prefix('user')->name('user.')->group(function () {
     Route::get('account', 'UserController@account')->name('account');
     Route::get('referral', 'UserController@referral')->name('referral');
+    Route::get('wallet', 'UserController@wallet')->name('wallet');
     Route::get('logout', 'UserController@logout')->name('logout');
 });
 

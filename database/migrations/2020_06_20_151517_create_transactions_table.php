@@ -16,9 +16,11 @@ class CreateTransactionsTable extends Migration
         Schema::create('transactions', function (Blueprint $table) {
             $table->id();
             $table->uuid('sign');
-            $table->string('payment_id')->unique();
-            $table->string('request_id');
-            $table->enum('status', ['success', 'failed', 'processing']);
+            $table->string('note');
+            $table->bigInteger('amount');
+            $table->enum('status', ['success', 'failed', 'processing'])->default('processing');
+            $table->string('payment_id')->unique()->nullable();
+            $table->string('request_id')->nullable();
             $table->foreignId('user_id')->constrained();
             $table->foreignId('order_id')->constrained();
             $table->timestamps();

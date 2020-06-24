@@ -48,7 +48,7 @@
                     <!-- Single Settings-->
                     <div class="single-settings d-flex align-items-center justify-content-between">
                         <div class="title"><i class="lni-wallet"></i><span>My Wallet</span></div>
-                        <div class="data-content"><a href="language.html">&#8377;500<i class="lni-chevron-right"></i></a></div>
+                        <div class="data-content"><a href="{{route('user.wallet')}}">&#8377;{{$user->credits}}<i class="lni-chevron-right"></i></a></div>
                     </div>
                 </div>
             </div>
@@ -66,7 +66,7 @@
                     <!-- Single Settings-->
                     <div class="single-settings d-flex align-items-center justify-content-between">
                         <div class="title"><i class="lni-protection"></i><span>Privacy</span></div>
-                        <div class="data-content"><a class="pl-4" href="privacy-policy.html"><i class="lni-chevron-right"></i></a></div>
+                        <div class="data-content"><a class="pl-4 stretched-link" href="privacy-policy.html"><i class="lni-chevron-right"></i></a></div>
                     </div>
                 </div>
             </div>
@@ -84,7 +84,7 @@
                     <!-- Single Settings-->
                     <div class="single-settings d-flex align-items-center justify-content-between">
                         <div class="title"><i class="lni-protection"></i><span>About Us</span></div>
-                        <div class="data-content"><a class="pl-4" href="privacy-policy.html"><i class="lni-chevron-right"></i></a></div>
+                        <div class="data-content"><a class="pl-4 stretched-link" href="privacy-policy.html"><i class="lni-chevron-right"></i></a></div>
                     </div>
                 </div>
             </div>
@@ -93,7 +93,16 @@
                     <!-- Single Settings-->
                     <div class="single-settings d-flex align-items-center justify-content-between">
                         <div class="title"><i class="lni-question-circle"></i><span>Support & Complaints</span></div>
-                        <div class="data-content"><a class="pl-4" href="support.html"><i class="lni-chevron-right"></i></a></div>
+                        <div class="data-content"><a class="pl-4 stretched-link" href="support.html"><i class="lni-chevron-right"></i></a></div>
+                    </div>
+                </div>
+            </div>
+            <div class="card settings-card">
+                <div class="card-body">
+                    <!-- Single Settings-->
+                    <div class="single-settings d-flex align-items-center justify-content-between">
+                        <div class="title"><i class="lni-power-switch"></i><span>Signout</span></div>
+                        <div class="data-content"><a class="pl-4 stretched-link" href="{{route('user.logout')}}"><i class="lni-chevron-right"></i></a></div>
                     </div>
                 </div>
             </div>

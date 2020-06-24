@@ -28,12 +28,12 @@ class DataTypesTableSeeder extends Seeder
                 'model_name' => 'TCG\\Voyager\\Models\\User',
                 'policy_name' => 'TCG\\Voyager\\Policies\\UserPolicy',
                 'controller' => 'TCG\\Voyager\\Http\\Controllers\\VoyagerUserController',
-                'description' => '',
+                'description' => NULL,
                 'generate_permissions' => 1,
                 'server_side' => 0,
-                'details' => NULL,
+                'details' => '{"order_column":null,"order_display_column":null,"order_direction":"desc","default_search_key":null,"scope":null}',
                 'created_at' => '2020-06-14 12:59:50',
-                'updated_at' => '2020-06-14 12:59:50',
+                'updated_at' => '2020-06-22 11:41:03',
             ),
             1 => 
             array (
@@ -124,6 +124,24 @@ class DataTypesTableSeeder extends Seeder
                 'details' => '{"order_column":null,"order_display_column":null,"order_direction":"asc","default_search_key":null,"scope":null}',
                 'created_at' => '2020-06-14 15:52:18',
                 'updated_at' => '2020-06-14 15:53:25',
+            ),
+            6 => 
+            array (
+                'id' => 7,
+                'name' => 'orders',
+                'slug' => 'orders',
+                'display_name_singular' => 'Order',
+                'display_name_plural' => 'Orders',
+                'icon' => 'voyager-paperclip',
+                'model_name' => 'App\\Order',
+                'policy_name' => NULL,
+                'controller' => NULL,
+                'description' => NULL,
+                'generate_permissions' => 1,
+                'server_side' => 0,
+                'details' => '{"order_column":null,"order_display_column":null,"order_direction":"asc","default_search_key":null,"scope":null}',
+                'created_at' => '2020-06-22 12:57:23',
+                'updated_at' => '2020-06-24 02:40:45',
             ),
         ));
         

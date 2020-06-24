@@ -15,9 +15,11 @@ class CreateOrdersTable extends Migration
     {
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
+            $table->string('name')->nullable();
             $table->string('type');
             $table->text('description');
-            $table->enum('mode', ['online', 'offline']);
+            $table->enum('mode', ['online', 'offline'])->default('online');
+            $table->enum('method', ['plus', 'minus'])->default('minus');
             $table->timestamps();
         });
     }
