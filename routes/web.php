@@ -26,6 +26,10 @@ Route::prefix('user')->name('user.')->group(function () {
     Route::get('logout', 'UserController@logout')->name('logout');
 });
 
+Route::prefix('invest')->name('invest.')->group(function () {
+    Route::get('{lobby?}', 'InvestController@index')->name('index');
+});
+
 
 Route::prefix('console')->group(function () {
     Voyager::routes();

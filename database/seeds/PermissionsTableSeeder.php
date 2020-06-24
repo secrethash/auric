@@ -385,6 +385,46 @@ class PermissionsTableSeeder extends Seeder
                 'created_at' => '2020-06-22 12:57:23',
                 'updated_at' => '2020-06-22 12:57:23',
             ),
+            46 => 
+            array (
+                'id' => 47,
+                'key' => 'browse_lobbies',
+                'table_name' => 'lobbies',
+                'created_at' => '2020-06-24 03:56:21',
+                'updated_at' => '2020-06-24 03:56:21',
+            ),
+            47 => 
+            array (
+                'id' => 48,
+                'key' => 'read_lobbies',
+                'table_name' => 'lobbies',
+                'created_at' => '2020-06-24 03:56:21',
+                'updated_at' => '2020-06-24 03:56:21',
+            ),
+            48 => 
+            array (
+                'id' => 49,
+                'key' => 'edit_lobbies',
+                'table_name' => 'lobbies',
+                'created_at' => '2020-06-24 03:56:21',
+                'updated_at' => '2020-06-24 03:56:21',
+            ),
+            49 => 
+            array (
+                'id' => 50,
+                'key' => 'add_lobbies',
+                'table_name' => 'lobbies',
+                'created_at' => '2020-06-24 03:56:21',
+                'updated_at' => '2020-06-24 03:56:21',
+            ),
+            50 => 
+            array (
+                'id' => 51,
+                'key' => 'delete_lobbies',
+                'table_name' => 'lobbies',
+                'created_at' => '2020-06-24 03:56:21',
+                'updated_at' => '2020-06-24 03:56:21',
+            ),
         ));
         
         

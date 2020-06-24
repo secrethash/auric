@@ -29,7 +29,7 @@ class UsersTableSeeder extends Seeder
                 'password' => '$2y$10$NtHaby9umHezzTtxuIHdKu1heNjxxnyUuQJr4XgWNzHrH71vpsmZm',
                 'credits' => 1000,
                 'referrer_id' => NULL,
-                'remember_token' => '5pk9C7Zdz1bWSWpc18kE8fgZGACt2ZdP1dOfJS4vrTLy1dOmgMmmQV6jMxg2',
+                'remember_token' => 'Mb0IbsDYtntSkFzIZ6QylFSl1hA3aZxwpOZpH2Yn6HUE4uyrIPS1o3gdXF53',
                 'settings' => NULL,
                 'created_at' => '2020-06-14 13:13:14',
                 'updated_at' => '2020-06-14 13:15:22',

@@ -39,17 +39,6 @@
 
                 @endforeach
 
-                <li class="list-group-item justify-content-between align-items-center">
-                    <div class="row">
-                        <div class="col-8">
-                            <span>Lobby 3 (Invest)</span>
-                        </div>
-                        <div class="col-4">
-                            <span class="text-danger float-right"><i class="lni-minus"></i>&nbsp;&#8377;100</span>
-                        </div>
-                    </div>
-                </li>
-
             </ul>
         </div>
     </div>
