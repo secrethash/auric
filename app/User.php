@@ -5,7 +5,10 @@ namespace App;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use App\Transaction;
+use App\ {
+    Transaction,
+    Period
+};
 
 class User extends \TCG\Voyager\Models\User implements MustVerifyEmail
 {
@@ -74,6 +77,16 @@ class User extends \TCG\Voyager\Models\User implements MustVerifyEmail
     public function referrals()
     {
         return $this->hasMany(User::class, 'referrer_id', 'id');
+    }
+
+    /**
+     * Periods of Users
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function periods()
+    {
+        return $this->belongsToMany(Period::class);
     }
 
     /**

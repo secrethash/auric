@@ -87,7 +87,7 @@ a:focus {
   text-decoration: none;
   outline: 0 solid transparent;
   box-shadow: none;
-  color: #100DD1; }
+  color: #2A769A; }
 
 .btn:focus {
   box-shadow: none; }
@@ -143,7 +143,7 @@ img {
   border-radius: 6px;
   background-color: #020310; }
   #scrollUp:hover, #scrollUp:focus {
-    background-color: #100DD1; }
+    background-color: #2A769A; }
 
 .jarallax {
   position: relative;
@@ -207,9 +207,9 @@ textarea:invalid {
   .bg-overlay::after {
     position: absolute;
     content: "";
-    background: #100DD1;
-    background: -webkit-linear-gradient(to left, #100DD1, #083afb);
-    background: linear-gradient(to left, #100DD1, #083afb);
+    background: #2A769A;
+    background: -webkit-linear-gradient(to left, #2A769A, #083afb);
+    background: linear-gradient(to left, #2A769A, #083afb);
     opacity: 0.85;
     top: 0;
     left: 0;
@@ -262,8 +262,8 @@ textarea:invalid {
     border-color: #020310; }
 
 .btn-primary {
-  background-color: #100DD1;
-  border-color: #100DD1; }
+  background-color: #2A769A;
+  border-color: #2A769A; }
   .btn-primary:hover, .btn-primary:focus {
     background-color: #020310;
     border-color: #020310; }
@@ -284,7 +284,7 @@ textarea:invalid {
 
 .bg-primary,
 .badge-primary {
-  background-color: #100DD1 !important; }
+  background-color: #2A769A !important; }
 
 .bg-danger,
 .badge-danger {
@@ -488,7 +488,7 @@ textarea:invalid {
           .preview-iframe-wrapper .preview-hero-area .preview-content-wrapper .demo-title {
             font-size: 2rem; } }
         .preview-iframe-wrapper .preview-hero-area .preview-content-wrapper .demo-title span {
-          color: #100DD1; }
+          color: #2A769A; }
       .preview-iframe-wrapper .preview-hero-area .preview-content-wrapper .demo-desc {
         font-size: 18px; }
       .preview-iframe-wrapper .preview-hero-area .preview-content-wrapper .qr-code-wrapper {
@@ -562,7 +562,7 @@ textarea:invalid {
         left: 0;
         font-family: "FontAwesome";
         font-size: 16px;
-        color: #100DD1;
+        color: #2A769A;
         z-index: 1; }
 
 .border-top.margin-100 {
@@ -608,7 +608,7 @@ textarea:invalid {
     color: #747794;
     font-weight: 700; }
     .preview-footer-area .footer-nav a:hover, .preview-footer-area .footer-nav a:focus {
-      color: #100DD1; }
+      color: #2A769A; }
   .preview-footer-area .footer-logo img {
     max-height: 50px; }
 
@@ -734,7 +734,7 @@ textarea:invalid {
     font-size: 1.25rem;
     margin-right: 0.25rem; }
   .back-button a:hover, .back-button a:focus {
-    color: #100DD1; }
+    color: #2A769A; }
 
 .page-heading h6 {
   color: #747794;
@@ -748,9 +748,9 @@ textarea:invalid {
   position: relative;
   width: 100%;
   height: 100vh;
-  background: #100DD1;
-  background: -webkit-linear-gradient(to left, #100DD1, #083afb);
-  background: linear-gradient(to left, #100DD1, #083afb);
+  background: #2A769A;
+  background: -webkit-linear-gradient(to left, #2A769A, #083afb);
+  background: linear-gradient(to left, #2A769A, #083afb);
   z-index: 1; }
   .intro-wrapper .background-shape {
     position: absolute;
@@ -787,9 +787,9 @@ textarea:invalid {
   top: 0;
   left: -250px;
   height: 100%;
-  background: #100DD1;
-  background: -webkit-linear-gradient(to left, #100DD1, #083afb);
-  background: linear-gradient(to left, #100DD1, #083afb);
+  background: #2A769A;
+  background: -webkit-linear-gradient(to left, #2A769A, #083afb);
+  background: linear-gradient(to left, #2A769A, #083afb);
   overflow-y: auto;
   width: 240px; }
   .suha-sidenav-wrapper .go-home-btn {
@@ -868,7 +868,7 @@ textarea:invalid {
       width: 46px;
       font-size: 12px;
       border: 3px solid #ffffff;
-      background-color: #100DD1;
+      background-color: #2A769A;
       display: inline-block;
       border-radius: 50%;
       color: #ffffff;
@@ -947,7 +947,7 @@ textarea:invalid {
       font-size: 1rem;
       margin-left: auto; }
     .page-nav li a:hover, .page-nav li a:focus {
-      color: #100DD1;
+      color: #2A769A;
       background-color: #f8f8ff; }
 
 .hero-slides {
@@ -1079,7 +1079,7 @@ textarea:invalid {
     line-height: 1;
     color: #747794; }
   .catagory-card:hover span, .catagory-card:focus span {
-    color: #100DD1; }
+    color: #2A769A; }
 
 .subcatagory-card {
   position: relative;
@@ -1100,7 +1100,7 @@ textarea:invalid {
     line-height: 1;
     color: #747794; }
   .subcatagory-card:hover span, .subcatagory-card:focus span {
-    color: #100DD1; }
+    color: #2A769A; }
 
 .flash-sale-slide.owl-carousel {
   width: 130% !important; }
@@ -1135,7 +1135,7 @@ textarea:invalid {
   .flash-sale-card .sale-price {
     font-size: 14px;
     font-weight: 700;
-    color: #100DD1;
+    color: #2A769A;
     margin-bottom: 0; }
   .flash-sale-card .real-price {
     display: inline-block;
@@ -1150,7 +1150,7 @@ textarea:invalid {
     font-size: 12px;
     display: block; }
   .flash-sale-card:hover .product-title, .flash-sale-card:focus .product-title {
-    color: #100DD1; }
+    color: #2A769A; }
 
 .top-product-card {
   position: relative;
@@ -1212,7 +1212,7 @@ textarea:invalid {
     font-size: 1rem;
     z-index: 9; }
   .top-product-card:hover .product-title, .top-product-card:focus .product-title {
-    color: #100DD1; }
+    color: #2A769A; }
 
 .weekly-product-card {
   position: relative;
@@ -1274,7 +1274,7 @@ textarea:invalid {
         height: 20px;
         border-radius: 50%;
         color: #ffffff;
-        background-color: #100DD1;
+        background-color: #2A769A;
         font-size: 10px;
         text-align: center;
         line-height: 20px;
@@ -1303,7 +1303,7 @@ textarea:invalid {
     .weekly-product-card .product-description .btn i {
       font-size: 14px; }
   .weekly-product-card:hover .product-title, .weekly-product-card:focus .product-title {
-    color: #100DD1; }
+    color: #2A769A; }
 
 .catagory-sidebar-area {
   position: relative;
@@ -1341,9 +1341,9 @@ textarea:invalid {
       -ms-flex: 0 0 30px;
       flex: 0 0 30px;
       max-width: 30px;
-      background: #100DD1;
-      background: -webkit-linear-gradient(to left, #100DD1, #083afb);
-      background: linear-gradient(to left, #100DD1, #083afb);
+      background: #2A769A;
+      background: -webkit-linear-gradient(to left, #2A769A, #083afb);
+      background: linear-gradient(to left, #2A769A, #083afb);
       color: #ffffff;
       text-align: center;
       font-size: 1rem;
@@ -1390,7 +1390,7 @@ textarea:invalid {
       .notification-area .list-group-item.readed h6 {
         color: #747794; }
     .notification-area .list-group-item:hover h6, .notification-area .list-group-item:focus h6 {
-      color: #100DD1; }
+      color: #2A769A; }
   .notification-area .unread-notifications {
     position: relative;
     z-index: 1; }
@@ -1503,7 +1503,7 @@ textarea:invalid {
   .single-settings .checkbox:checked + .knobs:before {
     content: '';
     left: 24px;
-    background-color: #100DD1; }
+    background-color: #2A769A; }
   .single-settings .checkbox:checked ~ .layer {
     background-color: #f8f8ff; }
 
@@ -1568,13 +1568,13 @@ textarea:invalid {
           transition: background 0.25s linear; }
   .language-area-wrapper input[type=radio]:checked ~ .check,
   .shipping-method-choose input[type=radio]:checked ~ .check {
-    border-color: #100DD1; }
+    border-color: #2A769A; }
   .language-area-wrapper input[type=radio]:checked ~ .check::before,
   .shipping-method-choose input[type=radio]:checked ~ .check::before {
-    background: #100DD1; }
+    background: #2A769A; }
   .language-area-wrapper input[type=radio]:checked ~ label,
   .shipping-method-choose input[type=radio]:checked ~ label {
-    color: #100DD1;
+    color: #2A769A;
     background-color: rgba(16, 13, 209, 0.103); }
 
 .user-info-card {
@@ -1689,9 +1689,9 @@ textarea:invalid {
     border: 1px solid #ebebeb; }
 
 .support-wrapper .faq-heading {
-  background: #100DD1;
-  background: -webkit-linear-gradient(to right, #100DD1, #00b894);
-  background: linear-gradient(to right, #100DD1, #00b894);
+  background: #2A769A;
+  background: -webkit-linear-gradient(to right, #2A769A, #00b894);
+  background: linear-gradient(to right, #2A769A, #00b894);
   background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -1709,7 +1709,7 @@ textarea:invalid {
   .accordian-card .accordian-header.collapse {
     display: block; }
   .accordian-card .accordian-header button {
-    color: #100DD1;
+    color: #2A769A;
     text-align: left;
     padding-left: 0;
     padding-right: 0; }
@@ -1717,7 +1717,7 @@ textarea:invalid {
       width: 30px;
       height: 30px;
       border-radius: 50%;
-      background-color: #100DD1;
+      background-color: #2A769A;
       display: inline-block;
       text-align: center;
       line-height: 30px;
@@ -1730,7 +1730,7 @@ textarea:invalid {
       -ms-transform: rotate(-90deg);
       transform: rotate(-90deg); }
     .accordian-card .accordian-header button:hover, .accordian-card .accordian-header button:focus {
-      color: #100DD1; }
+      color: #2A769A; }
     .accordian-card .accordian-header button.collapsed > span {
       color: #020310; }
     .accordian-card .accordian-header button.collapsed > i {
@@ -1810,7 +1810,7 @@ textarea:invalid {
 .live-chat-intro {
   position: relative;
   z-index: 1;
-  background-color: #100DD1;
+  background-color: #2A769A;
   padding: 2rem 0;
   text-align: center;
   border-radius: 0 0 3rem 3rem; }
@@ -1887,7 +1887,7 @@ textarea:invalid {
       display: inline-block;
       margin-bottom: 0;
       padding: .75rem 1rem .65rem;
-      background-color: #100DD1;
+      background-color: #2A769A;
       color: #ffffff;
       border-radius: 1rem; }
     .user-message-content .user-message-text span {
@@ -1963,7 +1963,7 @@ textarea:invalid {
   .single-order-status:last-child {
     margin-bottom: 0; }
   .single-order-status .order-icon {
-    color: #100DD1;
+    color: #2A769A;
     margin-right: .5rem; }
   .single-order-status .order-status {
     color: #020310;
@@ -2004,7 +2004,7 @@ textarea:invalid {
         display: block;
         color: #747794; }
       .cart-table table a:hover, .cart-table table a:focus {
-        color: #100DD1; }
+        color: #2A769A; }
   .cart-table .table td,
   .cart-table .table th {
     vertical-align: middle;
@@ -2025,7 +2025,7 @@ textarea:invalid {
     -o-transition-duration: 300ms;
     transition-duration: 300ms; }
     .cart-table .qty-text:focus {
-      border: 1px solid #100DD1; }
+      border: 1px solid #2A769A; }
 
 .coupon-card .card-body {
   padding: 1.25rem; }
@@ -2090,7 +2090,7 @@ textarea:invalid {
   .single-payment-method a:hover, .single-payment-method a:focus {
     box-shadow: 0 5px 11px rgba(15, 15, 15, 0.175); }
     .single-payment-method a:hover h6, .single-payment-method a:focus h6 {
-      color: #100DD1; }
+      color: #2A769A; }
 
 .credit-card-info-wrapper img {
   margin: 0 auto;
@@ -2118,9 +2118,9 @@ textarea:invalid {
 .order-success-wrapper {
   position: relative;
   width: 100%;
-  background: #100DD1;
-  background: -webkit-linear-gradient(to left, #100DD1, #083afb);
-  background: linear-gradient(to left, #100DD1, #083afb);
+  background: #2A769A;
+  background: -webkit-linear-gradient(to left, #2A769A, #083afb);
+  background: linear-gradient(to left, #2A769A, #083afb);
   height: 100vh;
   top: 0;
   left: 0;
@@ -2165,7 +2165,7 @@ textarea:invalid {
     margin-top: -15px;
     left: 15px;
     font-size: 20px;
-    color: #100DD1; }
+    color: #2A769A; }
     .product-slides .owl-prev.disabled,
     .product-slides .owl-next.disabled {
       opacity: 0;
@@ -2278,13 +2278,13 @@ textarea:invalid {
   font-size: 20px;
   margin-left: 0.5rem; }
   .p-wishlist-share a:last-child {
-    color: #100DD1; }
+    color: #2A769A; }
 
 .choose-color-radio .custom-control-label::before {
   width: 1.25rem;
   height: 1.25rem;
   border: 0;
-  background-color: #100DD1; }
+  background-color: #2A769A; }
 
 .choose-color-radio .custom-control-label.yellow::before {
   background-color: #ffaf00; }
@@ -2304,8 +2304,8 @@ textarea:invalid {
   border-color: transparent; }
 
 .choose-color-radio .custom-control-input:checked ~ .custom-control-label::before {
-  border-color: #100DD1;
-  background-color: #100DD1; }
+  border-color: #2A769A;
+  background-color: #2A769A; }
 
 .choose-color-radio .custom-control-input:checked ~ .custom-control-label.yellow::before {
   background-color: #ffaf00; }
@@ -2487,13 +2487,13 @@ textarea:invalid {
         font-size: 18px;
         margin-bottom: 4px; }
       .suha-footer-nav ul li a:hover, .suha-footer-nav ul li a:focus {
-        color: #100DD1; }
+        color: #2A769A; }
       .suha-footer-nav ul li a img {
         max-height: 1.5rem;
         margin: 0 auto .25rem;
         display: block; }
     .suha-footer-nav ul li.active a {
-      color: #100DD1; }
+      color: #2A769A; }
 
 /* CTA Area */
 .cta-area {
@@ -2515,9 +2515,9 @@ textarea:invalid {
       left: 0;
       position: absolute;
       content: "";
-      background: #100DD1;
-      background: -webkit-linear-gradient(to left, #100DD1, #083afb);
-      background: linear-gradient(to left, #100DD1, #083afb);
+      background: #2A769A;
+      background: -webkit-linear-gradient(to left, #2A769A, #083afb);
+      background: linear-gradient(to left, #2A769A, #083afb);
       z-index: -10;
       border-radius: 0.5rem;
       opacity: .75; }
@@ -2527,9 +2527,9 @@ textarea:invalid {
   position: relative;
   width: 100%;
   min-height: 100vh;
-  background: #100DD1;
-  background: -webkit-linear-gradient(to left, #100DD1, #083afb);
-  background: linear-gradient(to left, #100DD1, #083afb);
+  background: #2A769A;
+  background: -webkit-linear-gradient(to left, #2A769A, #083afb);
+  background: linear-gradient(to left, #2A769A, #083afb);
   z-index: 10;
   overflow-y: auto;
   padding-top: 2rem;
@@ -2635,7 +2635,7 @@ textarea:invalid {
   z-index: 10;
   cursor: pointer; }
   .go-back-btn:hover, .go-back-btn:focus {
-    background-color: #100DD1;
+    background-color: #2A769A;
     color: #ffffff; }
 
 /* Contact CSS */
@@ -2756,7 +2756,7 @@ textarea:invalid {
       overflow: hidden;
       height: 38px; }
       .blog-card .post-content .post-title:hover, .blog-card .post-content .post-title:focus {
-        color: #100DD1; }
+        color: #2A769A; }
     .blog-card .post-content .post-meta {
       position: relative;
       z-index: 1; }
@@ -2765,7 +2765,7 @@ textarea:invalid {
         line-height: 1;
         color: #747794; }
         .blog-card .post-content .post-meta a:hover, .blog-card .post-content .post-meta a:focus {
-          color: #100DD1; }
+          color: #2A769A; }
         .blog-card .post-content .post-meta a i {
           margin-right: 0.25rem; }
       .blog-card .post-content .post-meta span {
@@ -2794,7 +2794,7 @@ textarea:invalid {
   .blog-catagory-card a {
     display: block; }
     .blog-catagory-card a i {
-      color: #100DD1;
+      color: #2A769A;
       font-size: 2rem;
       margin-bottom: 1rem;
       display: block; }
@@ -2808,7 +2808,7 @@ textarea:invalid {
       font-weight: 700;
       letter-spacing: .5px; }
     .blog-catagory-card a:hover span, .blog-catagory-card a:focus span {
-      color: #100DD1; }
+      color: #2A769A; }
 
 .blog-details-post-thumbnail {
   position: relative;
@@ -2828,7 +2828,7 @@ textarea:invalid {
     .blog-details-post-thumbnail .post-bookmark i {
       line-height: 35px; }
     .blog-details-post-thumbnail .post-bookmark:hover, .blog-details-post-thumbnail .post-bookmark:focus {
-      background-color: #100DD1;
+      background-color: #2A769A;
       color: #ffffff; }
 
 .product-title-meta-data {
@@ -2854,14 +2854,14 @@ textarea:invalid {
     -o-transition-duration: 500ms;
     transition-duration: 500ms;
     padding: 3px 8px;
-    border: 1px solid #100DD1;
+    border: 1px solid #2A769A;
     border-radius: .25rem;
     margin-left: 0.5rem;
-    color: #100DD1; }
+    color: #2A769A; }
   .post-meta-data a:hover span, .post-meta-data a:focus span {
-    border-color: #100DD1;
+    border-color: #2A769A;
     color: #ffffff;
-    background-color: #100DD1; }
+    background-color: #2A769A; }
 
 .post-meta-data span {
   color: #747794;
@@ -3020,7 +3020,7 @@ textarea:invalid {
     [data-theme="dark"] .single-payment-method a h6 {
       color: #ffffff; }
     [data-theme="dark"] .single-payment-method a:hover h6, [data-theme="dark"] .single-payment-method a:focus h6 {
-      color: #100DD1; }
+      color: #2A769A; }
   [data-theme="dark"] .billing-information-title-card {
     border-color: transparent; }
   [data-theme="dark"] .shipping-method-choose-title-card {

@@ -2,6 +2,7 @@
 
 namespace App\Console;
 
+use App\Services\Invest;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
@@ -25,6 +26,12 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
         // $schedule->command('inspire')->hourly();
+        $schedule->call(function () {
+            Invest::createPeriod();
+        })->everyMinute()->sendOutputTo(storage_path('logs/schedule.log'), true);
+        $schedule->call(function () {
+            Invest::cleanup();
+        })->dailyAt('04:00')->sendOutputTo(storage_path('logs/schedule.log'), true);
     }
 
     /**

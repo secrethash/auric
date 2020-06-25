@@ -96,5 +96,7 @@
         <script src="{{asset("js/default/jquery.passwordstrength.js")}}"></script>
         <script src="{{asset("js/default/dark-mode-switch.js")}}"></script>
         <script src="{{asset("js/default/active.js")}}"></script>
+
+        @yield('after-scripts')
     </body>
 </html>
