@@ -40,7 +40,7 @@ class InvestController extends Controller
             'user'=>auth()->user(),
             'lobbies'=>$lobbies,
             'current'=>$current,
-            'period'=>$period,
+            'period'=> $period,
         ]);
     }
 
@@ -49,7 +49,7 @@ class InvestController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
         //
     }
