@@ -24,8 +24,14 @@
 
                     <li class="list-group-item justify-content-between align-items-center">
                         <div class="row">
+                            <div class="col-6 mb-2">
+                                <span class="text-muted"><strong>ID:</strong> {{$trans->sign}}</span>
+                            </div>
+                            <div class="col-6 mb-2">
+                                <span class="text-muted float-right">{{$trans->created_at->toFormattedDateString()}}</span>
+                            </div>
                             <div class="col-8">
-                                <span>{{$trans->order->description}} ({{$trans->order->name}})</span>
+                                <span class="font-weight-bold">{{$trans->order->description}} ({{$trans->order->name}})</span>
                             </div>
                             <div class="col-4">
                                 @if($trans->order->method === 'plus')

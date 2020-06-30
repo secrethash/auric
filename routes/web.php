@@ -28,6 +28,7 @@ Route::prefix('user')->name('user.')->group(function () {
 
 Route::prefix('invest')->name('invest.')->group(function () {
     Route::get('{lobby?}', 'InvestController@index')->name('index');
+    Route::post('create/{lobby}/{period}', 'InvestController@create')->name('create');
 });
 
 

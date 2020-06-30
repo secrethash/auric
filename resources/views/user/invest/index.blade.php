@@ -7,7 +7,8 @@
 @endsection
 
 @section('style')
-    <link rel="stylesheet" href="css/jquery.countdown.css">
+    <link rel="stylesheet" href="{{asset('css/jquery.countdown.css')}}">
+    <link rel="stylesheet" href="{{asset('css/jquery.loading.css')}}">
     <style>
         .btn-violet {
             color: #fff;
@@ -54,7 +55,7 @@
     <!-- Live Chat Intro-->
     <div class="live-chat-intro">
         <p>Available Balance</p>
-        <h1 class="text-white">&#8377;{{$user->credits}}</h1>
+        <h1 class="text-white">&#8377;<span id="wallet-credits">{{$user->credits}}</span></h1>
         <div>
             <button href="#addmoney" class="btn btn-light text-dark"><i class="lni-plus"></i>&nbsp;Add Money</button>
             <button href="#rules" class="btn btn-dark"><i class="lni-agenda"></i>&nbsp;Rules</button>
@@ -70,6 +71,28 @@
 
     <div class="container mt-2">
         <div class="checkout-wrapper-area py-3">
+            <!-- Alerts -->
+            <div id="alerts">
+                <div id="a-primary" class="d-none alert alert-primary alert-dismissible fade show" role="alert">
+                    <span id="a-content">A simple primary alert—check it out!</span>
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div id="a-success" class="d-none alert alert-success alert-dismissible fade show" role="alert">
+                    <span id="a-content">A simple primary alert—check it out!</span>
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div id="a-danger" class="d-none alert alert-danger alert-dismissible fade show" role="alert">
+                    <span id="a-content">A simple primary alert—check it out!</span>
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            </div>
+
             <ul class="nav nav-pills nav-fill nav-justified">
                 @foreach ($lobbies as $lobby)
                     <li class="nav-item">
@@ -88,54 +111,57 @@
                     <h4 style="color: #333;"><div id="period-countdown"></div></h4>
                 </div>
             </div>
-            <div class="row mt-3 align-items-center">
-                <div class="col-4">
-                    <button class="btn btn-success">Join Green</button>
+            <div id="investron">
+                <div class="row mt-3 align-items-center">
+                    <div class="col-4">
+                        <button class="btn btn-success" data-toggle="modal" data-target="#investModal" data-label="{{$current->name}} Green Color" data-slug="{{encrypt('color-green')}}" data-color="{{encrypt('green')}}">Join Green</button>
+                    </div>
+                    <div class="col-4">
+                        <button class="btn btn-violet" data-toggle="modal" data-target="#investModal" data-label="{{$current->name}} Violet Color" data-slug="{{encrypt('color-violet')}}" data-color="{{encrypt('violet')}}">Join Violet</button>
+                    </div>
+                    <div class="col-4">
+                        <button class="btn btn-danger" data-toggle="modal" data-target="#investModal" data-label="{{$current->name}} Red Color" data-slug="{{encrypt('color-red')}}" data-color="{{encrypt('red')}}">Join Red</button>
+                    </div>
                 </div>
-                <div class="col-4">
-                    <button class="btn btn-violet">Join Violet</button>
-                </div>
-                <div class="col-4">
-                    <button class="btn btn-danger">Join Red</button>
-                </div>
-            </div>
-            <div class="row mt-2">
-                <div class="m-1 mt-2"></div>
-                <div class="col-2 m-1 mt-2">
-                    <button class="btn btn-primary btn-block">0</button>
-                </div>
-                <div class="col-2 m-1 mt-2">
-                    <button class="btn btn-primary btn-block">1</button>
-                </div>
-                <div class="col-2 m-1 mt-2">
-                    <button class="btn btn-primary btn-block">2</button>
-                </div>
-                <div class="col-2 m-1 mt-2">
-                    <button class="btn btn-primary btn-block">3</button>
-                </div>
-                <div class="col-2 m-1 mt-2">
-                    <button class="btn btn-primary btn-block">4</button>
-                </div>
-                <div class="m-1 mt-2"></div>
+                <div class="row mt-2">
+                    <div class="m-1 mt-2"></div>
+                    <div class="col-2 m-1 mt-2">
+                        <button class="btn btn-primary btn-block" data-toggle="modal" data-target="#investModal" data-label="{{$current->name}} Number 0" data-slug="{{encrypt('number-0')}}" data-number="{{encrypt('0')}}">0</button>
+                    </div>
+                    <div class="col-2 m-1 mt-2">
+                        <button class="btn btn-primary btn-block" data-toggle="modal" data-target="#investModal" data-label="{{$current->name}} Number 1" data-slug="{{encrypt('number-1')}}" data-number="{{encrypt('1')}}">1</button>
+                    </div>
+                    <div class="col-2 m-1 mt-2">
+                        <button class="btn btn-primary btn-block" data-toggle="modal" data-target="#investModal" data-label="{{$current->name}} Number 2" data-slug="{{encrypt('number-2')}}" data-number="{{encrypt('2')}}">2</button>
+                    </div>
+                    <div class="col-2 m-1 mt-2">
+                        <button class="btn btn-primary btn-block" data-toggle="modal" data-target="#investModal" data-label="{{$current->name}} Number 3" data-slug="{{encrypt('number-3')}}" data-number="{{encrypt('3')}}">3</button>
+                    </div>
+                    <div class="col-2 m-1 mt-2">
+                        <button class="btn btn-primary btn-block" data-toggle="modal" data-target="#investModal" data-label="{{$current->name}} Number 4" data-slug="{{encrypt('number-4')}}" data-number="{{encrypt('4')}}">4</button>
+                    </div>
+                    <div class="m-1 mt-2"></div>
 
-                <div class="m-1 mt-2"></div>
-                <div class="col-2 m-1 mt-2">
-                    <button class="btn btn-primary btn-block">5</button>
+                    <div class="m-1 mt-2"></div>
+                    <div class="col-2 m-1 mt-2">
+                        <button class="btn btn-primary btn-block" data-toggle="modal" data-target="#investModal" data-label="{{$current->name}} Number 5" data-slug="{{encrypt('number-5')}}" data-number="{{encrypt('5')}}">5</button>
+                    </div>
+                    <div class="col-2 m-1 mt-2">
+                        <button class="btn btn-primary btn-block" data-toggle="modal" data-target="#investModal" data-label="{{$current->name}} Number 6" data-slug="{{encrypt('number-6')}}" data-number="{{encrypt('6')}}">6</button>
+                    </div>
+                    <div class="col-2 m-1 mt-2">
+                        <button class="btn btn-primary btn-block" data-toggle="modal" data-target="#investModal" data-label="{{$current->name}} Number 7" data-slug="{{encrypt('number-7')}}" data-number="{{encrypt('7')}}">7</button>
+                    </div>
+                    <div class="col-2 m-1 mt-2">
+                        <button class="btn btn-primary btn-block" data-toggle="modal" data-target="#investModal" data-label="{{$current->name}} Number 8" data-slug="{{encrypt('number-8')}}" data-number="{{encrypt('8')}}">8</button>
+                    </div>
+                    <div class="col-2 m-1 mt-2">
+                        <button class="btn btn-primary btn-block" data-toggle="modal" data-target="#investModal" data-label="{{$current->name}} Number 9" data-slug="{{encrypt('number-9')}}" data-number="{{encrypt('9')}}">9</button>
+                    </div>
+                    <div class="m-1 mt-2"></div>
                 </div>
-                <div class="col-2 m-1 mt-2">
-                    <button class="btn btn-primary btn-block">6</button>
-                </div>
-                <div class="col-2 m-1 mt-2">
-                    <button class="btn btn-primary btn-block">7</button>
-                </div>
-                <div class="col-2 m-1 mt-2">
-                    <button class="btn btn-primary btn-block">8</button>
-                </div>
-                <div class="col-2 m-1 mt-2">
-                    <button class="btn btn-primary btn-block">9</button>
-                </div>
-                <div class="m-1 mt-2"></div>
             </div>
+
             <div class="clearfix mt-3 pt-2">
                 <div class="row">
                     <div class="col-8">
@@ -183,7 +209,7 @@
 				<ul class="list-group mb-3">
                 @foreach ($user->periods->where('lobby_id', $current->id)->sortDesc()->take(10) as $result)
 
-                    <li class="list-group-item justify-content-between align-items-center {{$result->pivot->result ? 'border-success' : 'border-danger'}}">
+                    <li class="list-group-item justify-content-between align-items-center @if($result->pivot->result){{e('border-success')}}@elseif($result->pivot->result===0){{e('border-danger')}}@else{{e('border-primary')}}@endif">
                         <div class="row">
                             <div class="col-8">
 								<span class="text-muted">Period</span>
@@ -205,7 +231,7 @@
                             </div>
                             <div class="col-4">
 								<span class="text-muted">Result</span>
-								<h6 class="text-align-center {{$result->pivot->result ? 'text-success' : 'text-danger'}}">{{$result->pivot->result ? 'WIN' : 'LOOSE' }}</h6>
+								<h6 class="text-align-center @if($result->pivot->result){{e('text-success')}}@elseif($result->pivot->result===0){{e('text-danger')}}@else{{e('text-primary')}}@endif">@if($result->pivot->result){{e('WIN')}}@elseif($result->pivot->result===0){{e('LOOSE')}}@else{{e('ON-GOING')}}@endif</h6>
                             </div>
                         </div>
                     </li>
@@ -214,36 +240,74 @@
 
             	</ul>
 
-                {{-- <table class="table table-hover table-responsive">
-                    <thead>
-                        <tr>
-                            <th scope="col" class="text-muted font-weight-normal">Period</th>
-                            <th scope="col" class="text-muted font-weight-normal">Price</th>
-                            <th scope="col" class="text-muted font-weight-normal">Number</th>
-                            <th scope="col" class="text-muted font-weight-normal">Result</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach ($user->periods->where('lobby_id', $current->id)->sortDesc()->take(10) as $result)
-
-                            <tr>
-                                <th class="font-weight-normal">{{Str::of($result->uid)->trim($current->slug.'-')}}</th>
-                                <td class="font-weight-normal">{{$result->price}}</td>
-                                <td class="font-weight-normal">{{$result->result_number}}</td>
-                                <td class="font-weight-normal">{{$result->result_color}}</td>
-                            </tr>
-
-                        @endforeach
-                    </tbody>
-                </table> --}}
-
             </div>
         </div>
     </div>
 @endsection
 
-@section('after-scripts')
+@section('scripts')
+    <!-- Modal -->
+    <div class="modal fade" id="investModal" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="investModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="investModalLabel">Modal title</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form id="investForm" method="POST">
+                        @csrf
+                        <div class="d-none" id="slugtoken">
+                            <input type="hidden" name="slugtoken" value="">
+                        </div>
+                        <div class="d-none" id="bet-color">
+                            <input type="hidden" name="bet_color" value="">
+                        </div>
+                        <div class="d-none" id="bet-number">
+                            <input type="hidden" name="bet_number" value="">
+                        </div>
+                        <div class="form-group">
+                            <label for="number">Contract Money</label>
+                            <div class="btn-group btn-group-toggle btn-block" data-toggle="buttons">
+                                <label class="btn btn-secondary active">
+                                    <input type="radio" name="amount" value="10" id="option1" checked> 10
+                                </label>
+                                <label class="btn btn-secondary">
+                                    <input type="radio" name="amount" value="100" id="option2"> 100
+                                </label>
+                                <label class="btn btn-secondary">
+                                    <input type="radio" name="amount" value="1000" id="option3"> 1000
+                                </label>
+                                <label class="btn btn-secondary">
+                                    <input type="radio" name="amount" value="10000" id="option4"> 10000
+                                </label>
+                            </div>
+                            <span class="text-danger">
+                                <strong id="amount-error"></strong>
+                            </span>
+                        </div>
+                        <div class="form-group">
+                            <label for="bets-number">Number of Bets</label>
+                            <input id="bets-number" class="form-control" type="number" value="1" name="bets" min="1" max="999">
+                            <span class="text-danger">
+                                <strong id="bets-error"></strong>
+                            </span>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" onclick="formInvest();">Proceed</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
+@endsection
+
+@section('after-scripts')
     <script src="{{asset("js/jquery.countdown.min.js")}}"></script>
     <script type="text/javascript">
         var countTime = "{{Carbon\Carbon::create($period->start)->addMinutes(3)->format('Y/m/d H:i:s')}}";
@@ -251,10 +315,109 @@
         .countdown(countTime, function(event) {
             $(this).text(
                 event.strftime('%M:%S')
-            );
+                );
         })
         .on('finish.countdown', function(){
             location.reload(true);
+        })
+        .on('update.countdown', function (event) {
+            if (event.offset.totalSeconds <= 30)
+            {
+                $("#investron").find("button").prop("disabled", true);
+                jQuery("#investModal").modal('hide');
+            }
         });
+
+        $('#investModal').on('show.bs.modal', function (event) {
+            var button = $(event.relatedTarget);
+            var slug = button.data('slug');
+            var label = button.data('label');
+            var color = button.data('color');
+            var number = button.data('number');
+
+            var modal = $(this);
+            modal.find('.modal-title').text('Invest in ' + label);
+            modal.find('.modal-body #slugtoken input').val(slug);
+            modal.find('.modal-body #bet-color input').val(color);
+            modal.find('.modal-body #bet-number input').val(number);
+        });
+
+        function hideInvestModal() {
+            jQuery("#investModal").modal('hide');
+        }
+    </script>
+
+    <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+    <script>
+        var noConJq = $.noConflict(true);
+    </script>
+    <script type="text/javascript" src="{{asset('js/jquery.loading.js')}}"></script>
+    <script type="text/javascript">
+        function formInvest(){
+            console.log('Initiation');
+            var registerForm = $("#investForm");
+            var formData = registerForm.serialize();
+            var wallet = {{$user->credits}};
+            $("#investron").loading({
+                message: "Working On It...",
+                onStart: function(loading) {
+                        loading.overlay.slideDown(400);
+                },
+                onStop: function(loading) {
+                    loading.overlay.slideUp(400);
+                }
+            });
+            $("#investron").find("button").prop('disabled', true);
+            $("#amount-error").html( "" );
+            $("#bets-error").html( "" );
+
+            console.log('Starting Ajax Requests');
+            $.ajax({
+                url:"{{ route("invest.create", [encrypt($current->id), encrypt($period->uid)]) }}",
+                type:"POST",
+                data: formData,
+                success:function(data) {
+                    console.log(data);
+                    if(data.errors) {
+                        $("#investron").loading("stop");
+                        $("#investron").find("button").prop('disabled', false);
+                        $("#alerts").find("#a-danger").removeClass("d-none");
+                        $("#alerts").find("#a-danger").find("#a-content").html("You have an Error!");
+                        // Notification
+                        if(data.errors.amount){
+                            $("#amount-error").html( data.errors.amount[0] );
+                            console.log(data.errors.amount[0]);
+                        }
+                        if(data.errors.bets){
+                            $("#bets-error").html( data.errors.bets[0] );
+                        }
+                        if(data.errors.time){
+                            $("#alerts").find("#a-danger").removeClass("d-none");
+                            $("#alerts").find("#a-danger").find("#a-content").html( data.errors.time[0] );
+                            jQuery("#a-danger").alert();
+                        }
+
+                    }
+                    if(data.success) {
+                        $("#investron").loading("stop");
+                        $("#investron").loading({
+                            message: "Data Saved! Click Here.",
+                            stoppable: true,
+                            onStart: function(loading) {
+                                    loading.overlay.slideDown(400);
+                            },
+                            onStop: function(loading) {
+                                loading.overlay.slideUp(400);
+                            }
+                        }, 2000);
+                        $("#wallet-credits").html(data.wallet);
+                        hideInvestModal();
+                        $("#investron").find("button").removeProp('disabled', true);
+                        $("#alerts").find("#a-success").removeClass("d-none");
+                        $("#alerts").find("#a-success").find("#a-content").html("Invested Successfully!");
+                    }
+                },
+            });
+        }
     </script>
 @endsection
