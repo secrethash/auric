@@ -40,6 +40,11 @@
                                     <span class="text-danger float-right"><i class="lni-minus"></i>&nbsp;&#8377;{{$trans->amount}}</span>
                                 @endif
                             </div>
+                            @if($trans->note)
+                            <div class="col-12 mt-3">
+                                <p class="text-muted"><strong class="text-primary">Note:</strong> {{$trans->note}}</p>
+                            </div>
+                            @endif
                         </div>
                     </li>
 
