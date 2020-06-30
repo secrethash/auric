@@ -88,8 +88,9 @@ class InvestController extends Controller
 
         $order = Order::whereType('invest')->first();
 
+        $amount = $validated['amount'] * $validated['bets'];
         $data = [
-            'amount' => $validated['amount'],
+            'amount' => $amount,
             'note' => 'Investment in Period: '.$period->uid,
             'status' => 'success',
             'payment_id' => null,
@@ -97,7 +98,6 @@ class InvestController extends Controller
         ];
 
         $transact = Transact::create($data, Auth::user(), $order);
-        $amount = $validated['amount'] * $validated['bets'];
 
         $user->periods()->attach($period->id, [
             'amount' => $amount,
