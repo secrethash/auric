@@ -47,5 +47,7 @@ class DatabaseSeeder extends Seeder
         // $this->call(PasswordResetsTableSeeder::class);
         // $this->call(MigrationsTableSeeder::class);
         // $this->call(FailedJobsTableSeeder::class);
+        $this->call(NumbersTableSeeder::class);
+        $this->call(ColorsTableSeeder::class);
     }
 }

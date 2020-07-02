@@ -4,13 +4,18 @@ namespace App\Services;
 
 use Carbon\Carbon;
 use App\ {
+    Color,
     Lobby,
+    Number,
     Period
 };
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Log;
 
 class Invest {
+
+    var $colors = [];
+    var $numbers = [];
 
     public static function createPeriod()
     {
@@ -41,7 +46,7 @@ class Invest {
         }
 
         // Processing Results
-        self::process($current);
+        self::processor($current);
         // Deactivating Old Periods
         self::deactivate($current);
 
@@ -75,157 +80,107 @@ class Invest {
      *
      * @return mixed
      */
-    protected static function process(Collection $current)
+    protected static function processor(Collection $current)
     {
         // Periods that are active and have elapsed
-        // $periods = Period::where('active', 1)
-        //                 ->whereNotIn('uid', $current->toArray())
-        //                 ->get();
+        $periods = Period::where('active', 1)
+                        ->whereNotIn('uid', $current->toArray())
+                        ->get();
 
-        // foreach ($periods as $period) {
+        foreach ($periods as $period) {
 
-        //     $green = $period->user()->where('invest_color', 'green');
-        //     $red = $period->user()->where('invest_color', 'red');
-        //     $violet = $period->user()->where('invest_color', 'violet');
+            $colors = self::colors($period);
+            $numbers = self::numbers($period);
 
-        //     $color = [
-        //         [
-        //             'color' => 'green',
-        //             'obj' => $green,
-        //             'count' => $green->count(),
-        //             'weightage' => 0.10
-        //         ],
-        //         [
-        //             'color' => 'red',
-        //             'obj' => $red,
-        //             'count' => $red->count(),
-        //             'weightage' => 0.10
-        //         ],
-        //         [
-        //             'color' => 'violet',
-        //             'obj' => $violet,
-        //             'count' => $violet->count(),
-        //             'weightage' => 0
-        //         ]
-        //     ];
+            Log::debug('Collect Colors: '.$colors->toJson());
+            Log::debug('Collect Numbers: '.$numbers->toJson());
 
-        //     $numZero = $period->user()->where('invest_number', 0);
-        //     $numOne = $period->user()->where('invest_number', 1);
-        //     $numTwo = $period->user()->where('invest_number', 2);
-        //     $numThree = $period->user()->where('invest_number', 3);
-        //     $numFour = $period->user()->where('invest_number', 4);
-        //     $numFive = $period->user()->where('invest_number', 5);
-        //     $numSix = $period->user()->where('invest_number', 6);
-        //     $numSeven = $period->user()->where('invest_number', 7);
-        //     $numEight = $period->user()->where('invest_number', 8);
-        //     $numNine = $period->user()->where('invest_number', 9);
+            if (!$period->user->count())
+            {
+                Log::debug('On Standby Mode!');
+                $selectedColor = $colors->random();
+            }
+            else
+            {
+                Log::debug('Period is Active!');
+                $selectedColor = $colors->sortBy('amount')->first();
+            }
 
-        //     $number = [
-        //         [
-        //             'obj' => $numZero,
-        //             'count' => $numZero->count(),
-        //             'weightage' => 0
-        //         ],
-        //         [
-        //             'obj' => $numOne,
-        //             'count' => $numOne->count(),
-        //             'weightage' => 0.10
-        //         ],
-        //         [
-        //             'obj' => $numTwo,
-        //             'count' => $numTwo->count(),
-        //             'weightage' => 0.10
-        //         ],
-        //         [
-        //             'obj' => $numThree,
-        //             'count' => $numThree->count(),
-        //             'weightage' => 0.10
-        //         ],
-        //         [
-        //             'obj' => $numFour,
-        //             'count' => $numFour->count(),
-        //             'weightage' => 0.10
-        //         ],
-        //         [
-        //             'obj' => $numFive,
-        //             'count' => $numFive->count(),
-        //             'weightage' => 0
-        //         ],
-        //         [
-        //             'obj' => $numSix,
-        //             'count' => $numSix->count(),
-        //             'weightage' => 0.10
-        //         ],
-        //         [
-        //             'obj' => $numSeven,
-        //             'count' => $numSeven->count(),
-        //             'weightage' => 0.10
-        //         ],
-        //         [
-        //             'obj' => $numEight,
-        //             'count' => $numEight->count(),
-        //             'weightage' => 0.10
-        //         ],
-        //         [
-        //             'obj' => $numNine,
-        //             'count' => $numNine->count(),
-        //             'weightage' => 0.10
-        //         ],
-        //     ];
+            foreach ($colors as $color)
+            {
+                $counter = 0;
 
-        //     $collection = collect(['numbers' => $number, 'colors' => $color]);
+                if ($color['color'] === $selectedColor['color'])
+                {
+                    Log::debug('Single Color: '.json_encode($color));
+                    Log::debug('Selected Color: '.json_encode($selectedColor));
 
-        //     // $numberCollect = collect([
-        //     //     $number[0]['count'],
-        //     //     $number[1]['count'],
-        //     //     $number[2]['count'],
-        //     //     $number[3]['count'],
-        //     //     $number[4]['count'],
-        //     //     $number[5]['count'],
-        //     //     $number[6]['count'],
-        //     //     $number[7]['count'],
-        //     //     $number[8]['count'],
-        //     //     $number[9]['count'],
-        //     // ]);
-        //     // $number['sorted'] = $numberCollect->sortDesc();
+                    $weightage = $selectedColor['weightage'] + 0.25;
+                    Log::debug('Weightage: '.$weightage);
+                    $colors->replaceRecursive([$counter => [ 'color' => $color['color'], 'amount' => $selectedColor['amount'], 'weightage' => $weightage]]);
+                }
 
-        //     // $color['least'] = $color['sorted']->last();
-        //     // $number['least'] = $number['sorted']->last();
+                $counter ++;
+            }
 
-        //     // $number = collect($number);
-        //     // $color = collect($color);
+            Log::debug('Colors after Process: '.json_encode($colors->all()));
 
-        //     if ($collection->where('colors')->contains(function ($value, $key){
-        //         if ($key==='count')
-        //         {
-        //             return $value <= 0;
-        //         }
-        //         Log::debug('Key: '.$key);
-        //         Log::debug('Value: '.$value);
-        //     }))
-        //     {
-        //         // $collection->where('colors')->get('sorted')->reject(function($value, $key) {
-        //         //     return $value <= 0;
-        //         // });
-        //         Log::debug('Color Contains Zero!');
-        //     }
+        }
+    }
 
-        //     // if ($collection->where('numbers')->get('count')->contains(0))
-        //     // {
-        //     //     // $collection->where('number')->get('sorted')->reject(function($value, $key) {
-        //     //     //     return $value <= 0;
-        //     //     // });
-        //     //     Log::debug('Number Containes Zero!');
-        //     // }
+    /**
+     * Collect Colors
+     *
+     * @return Collection
+     */
+    protected static function colors(Period $period)
+    {
+        $collection = collect([]);
 
-        //     Log::debug('Collection to Json: '. $collection->toJson());
+        $colors = Color::all();
+        foreach ($colors as $color)
+        {
+            $collection->push(['color' => $color->name, 'amount' => 0, 'weightage' => $color->weightage]);
+        }
 
+        foreach ($period->user as $periodUser)
+        {
+            $color = Color::find($periodUser->pivot->color_id);
+            if ($color)
+            {
+                $amount = $periodUser->pivot->amount + $collection->where($color->name)->get('amount');
+                $collection->merge(['color' => $color->name, 'amount' => $amount]);
+            }
+        }
 
+        return $collection->sortByDesc('weightage');
+    }
 
+    /**
+     * Collect Colors
+     *
+     * @return Collection
+     */
+    protected static function numbers(Period $period)
+    {
+        $collection = collect([]);
 
+        $numbers = Number::all();
+        foreach ($numbers as $number)
+        {
+            $collection->push(['number' => $number->number, 'amount' => 0, 'weightage' => $number->weightage]);
+        }
 
+        foreach ($period->user as $periodUser)
+        {
+            $number = Number::find($periodUser->pivot->number_id);
+            if ($number)
+            {
+                $collection->merge(['number' => $number->number, 'amount' => $periodUser->pivot->amount]);
+            }
+        }
 
-        // }
+        return $collection->sortByDesc('weightage');
     }
 
     /**

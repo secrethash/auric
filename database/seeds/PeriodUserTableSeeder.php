@@ -12,26 +12,26 @@ class PeriodUserTableSeeder extends Seeder
      */
     public function run()
     {
-        
+
 
         \DB::table('period_user')->delete();
-        
-        \DB::table('period_user')->insert(array (
-            0 => 
-            array (
-                'id' => 1,
-                'user_id' => 1,
-                'period_id' => 1,
-                'amount' => 300,
-                'transaction_id' => 1,
-                'invest_number' => '3',
-                'invest_color' => NULL,
-                'result' => 1,
-                'created_at' => NULL,
-                'updated_at' => NULL,
-            ),
-        ));
-        
-        
+
+        // \DB::table('period_user')->insert(array (
+        //     0 =>
+        //     array (
+        //         'id' => 1,
+        //         'user_id' => 1,
+        //         'period_id' => 1,
+        //         'amount' => 300,
+        //         'transaction_id' => 1,
+        //         'number' => '3',
+        //         'invest_color' => NULL,
+        //         'result' => 1,
+        //         'created_at' => NULL,
+        //         'updated_at' => NULL,
+        //     ),
+        // ));
+
+
     }
 }

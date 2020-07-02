@@ -12,12 +12,12 @@ class TransactionsTableSeeder extends Seeder
      */
     public function run()
     {
-
+        
 
         \DB::table('transactions')->delete();
-
+        
         \DB::table('transactions')->insert(array (
-            0 =>
+            0 => 
             array (
                 'id' => 1,
                 'sign' => '5353rrw5553536',
@@ -32,7 +32,7 @@ class TransactionsTableSeeder extends Seeder
                 'updated_at' => '2020-06-30 13:45:07',
             ),
         ));
-
-
+        
+        
     }
 }

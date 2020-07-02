@@ -86,7 +86,7 @@ class User extends \TCG\Voyager\Models\User implements MustVerifyEmail
      */
     public function periods()
     {
-        return $this->belongsToMany(Period::class)->withPivot(['amount', 'transaction_id', 'invest_number', 'invest_color', 'result']);
+        return $this->belongsToMany(Period::class)->withPivot(['amount', 'transaction_id', 'number_id', 'color_id', 'result']);
     }
 
     /**

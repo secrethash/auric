@@ -19,8 +19,8 @@ class CreatePeriodUserTable extends Migration
             $table->foreignId('period_id');
             $table->bigInteger('amount');
             $table->foreignId('transaction_id')->constrained();
-            $table->enum('invest_number', [0,1,2,3,4,5,6,7,8,9,null])->nullable();
-            $table->enum('invest_color', ['red','green','violet',null])->nullable();
+            $table->foreignId('number_id')->nullable()->constrained();
+            $table->foreignId('color_id')->nullable()->constrained();
             $table->boolean('result')->nullable()->default(null);
             $table->timestamps();
         });

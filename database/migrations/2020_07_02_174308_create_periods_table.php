@@ -19,8 +19,8 @@ class CreatePeriodsTable extends Migration
             $table->timestamp('start');
             $table->bigInteger('price')->nullable();
             $table->foreignId('lobby_id')->constrained();
-            $table->enum('result_number', [0,1,2,3,4,5,6,7,8,9])->nullable();
-            $table->enum('result_color', ['green', 'red'])->nullable();
+            $table->foreignId('number_id')->nullable()->constrained();
+            $table->foreignId('color_id')->nullable()->constrained();
             $table->boolean('active')->default(0);
             $table->timestamps();
         });

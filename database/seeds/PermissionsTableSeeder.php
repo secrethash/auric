@@ -425,6 +425,126 @@ class PermissionsTableSeeder extends Seeder
                 'created_at' => '2020-06-24 03:56:21',
                 'updated_at' => '2020-06-24 03:56:21',
             ),
+            51 => 
+            array (
+                'id' => 52,
+                'key' => 'browse_periods',
+                'table_name' => 'periods',
+                'created_at' => '2020-07-02 11:35:54',
+                'updated_at' => '2020-07-02 11:35:54',
+            ),
+            52 => 
+            array (
+                'id' => 53,
+                'key' => 'read_periods',
+                'table_name' => 'periods',
+                'created_at' => '2020-07-02 11:35:54',
+                'updated_at' => '2020-07-02 11:35:54',
+            ),
+            53 => 
+            array (
+                'id' => 54,
+                'key' => 'edit_periods',
+                'table_name' => 'periods',
+                'created_at' => '2020-07-02 11:35:54',
+                'updated_at' => '2020-07-02 11:35:54',
+            ),
+            54 => 
+            array (
+                'id' => 55,
+                'key' => 'add_periods',
+                'table_name' => 'periods',
+                'created_at' => '2020-07-02 11:35:54',
+                'updated_at' => '2020-07-02 11:35:54',
+            ),
+            55 => 
+            array (
+                'id' => 56,
+                'key' => 'delete_periods',
+                'table_name' => 'periods',
+                'created_at' => '2020-07-02 11:35:54',
+                'updated_at' => '2020-07-02 11:35:54',
+            ),
+            56 => 
+            array (
+                'id' => 57,
+                'key' => 'browse_numbers',
+                'table_name' => 'numbers',
+                'created_at' => '2020-07-02 12:19:18',
+                'updated_at' => '2020-07-02 12:19:18',
+            ),
+            57 => 
+            array (
+                'id' => 58,
+                'key' => 'read_numbers',
+                'table_name' => 'numbers',
+                'created_at' => '2020-07-02 12:19:18',
+                'updated_at' => '2020-07-02 12:19:18',
+            ),
+            58 => 
+            array (
+                'id' => 59,
+                'key' => 'edit_numbers',
+                'table_name' => 'numbers',
+                'created_at' => '2020-07-02 12:19:18',
+                'updated_at' => '2020-07-02 12:19:18',
+            ),
+            59 => 
+            array (
+                'id' => 60,
+                'key' => 'add_numbers',
+                'table_name' => 'numbers',
+                'created_at' => '2020-07-02 12:19:18',
+                'updated_at' => '2020-07-02 12:19:18',
+            ),
+            60 => 
+            array (
+                'id' => 61,
+                'key' => 'delete_numbers',
+                'table_name' => 'numbers',
+                'created_at' => '2020-07-02 12:19:18',
+                'updated_at' => '2020-07-02 12:19:18',
+            ),
+            61 => 
+            array (
+                'id' => 62,
+                'key' => 'browse_colors',
+                'table_name' => 'colors',
+                'created_at' => '2020-07-02 12:19:56',
+                'updated_at' => '2020-07-02 12:19:56',
+            ),
+            62 => 
+            array (
+                'id' => 63,
+                'key' => 'read_colors',
+                'table_name' => 'colors',
+                'created_at' => '2020-07-02 12:19:56',
+                'updated_at' => '2020-07-02 12:19:56',
+            ),
+            63 => 
+            array (
+                'id' => 64,
+                'key' => 'edit_colors',
+                'table_name' => 'colors',
+                'created_at' => '2020-07-02 12:19:56',
+                'updated_at' => '2020-07-02 12:19:56',
+            ),
+            64 => 
+            array (
+                'id' => 65,
+                'key' => 'add_colors',
+                'table_name' => 'colors',
+                'created_at' => '2020-07-02 12:19:56',
+                'updated_at' => '2020-07-02 12:19:56',
+            ),
+            65 => 
+            array (
+                'id' => 66,
+                'key' => 'delete_colors',
+                'table_name' => 'colors',
+                'created_at' => '2020-07-02 12:19:56',
+                'updated_at' => '2020-07-02 12:19:56',
+            ),
         ));
         
         
