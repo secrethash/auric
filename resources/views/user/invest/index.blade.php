@@ -10,6 +10,9 @@
     <link rel="stylesheet" href="{{asset('css/jquery.countdown.css')}}">
     <link rel="stylesheet" href="{{asset('css/jquery.loading.css')}}">
     <style>
+        .text-violet {
+            color: #FF26D3;
+        }
         .btn-violet {
             color: #fff;
             background-color: #FF26D3;
@@ -71,27 +74,6 @@
 
     <div class="container mt-2">
         <div class="checkout-wrapper-area py-3">
-            <!-- Alerts -->
-            <div id="alerts">
-                <div id="a-primary" class="d-none alert alert-primary alert-dismissible fade show" role="alert">
-                    <span id="a-content">A simple primary alert—check it out!</span>
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div id="a-success" class="d-none alert alert-success alert-dismissible fade show" role="alert">
-                    <span id="a-content">A simple primary alert—check it out!</span>
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div id="a-danger" class="d-none alert alert-danger alert-dismissible fade show" role="alert">
-                    <span id="a-content">A simple primary alert—check it out!</span>
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-            </div>
 
             <ul class="nav nav-pills nav-fill nav-justified">
                 @foreach ($lobbies as $lobby)
@@ -162,6 +144,28 @@
                 </div>
             </div>
 
+            <!-- Alerts -->
+            <div id="alerts">
+                <div id="a-primary" class="d-none alert alert-primary alert-dismissible fade show" role="alert">
+                    <span id="a-content"></span>
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div id="a-success" class="d-none alert alert-success alert-dismissible fade show" role="alert">
+                    <span id="a-content"></span>
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div id="a-danger" class="d-none alert alert-danger alert-dismissible fade show" role="alert">
+                    <span id="a-content"></span>
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            </div>
+
             <div class="clearfix mt-3 pt-2">
                 <div class="row">
                     <div class="col-8">
@@ -183,12 +187,26 @@
                     </thead>
                     <tbody>
                         @foreach ($current->periods->where('active', 0)->sortDesc()->take(10) as $result)
-
+                            @php
+                                $color = App\Color::find($result->color_id);
+                                $number = App\Number::find($result->number_id);
+                            @endphp
                             <tr>
                                 <th class="font-weight-normal">{{Str::of($result->uid)->trim($current->slug.'-')}}</th>
                                 <td class="font-weight-normal">{{$result->price}}</td>
-                                <td class="font-weight-normal">{{App\Number::find($result->number_id)->number}}</td>
-                                <td class="font-weight-normal">{{App\Color::find($result->color_id)->name}}</td>
+                                <td class="font-weight-normal">{{$number->number}}</td>
+                                <td class="font-weight-normal">
+                                    <i class="fa fa-circle @if($color->name === 'red'){{e('text-danger')}}@elseif($color->name === 'green'){{e('text-success')}}@else{{e('text-violet')}}@endif"></i>
+                                    @if($color->name === 'red' AND $number->number === 0)
+                                        <i class="fa fa-circle text-violet"></i>
+                                    @elseif($color->name === 'green' AND $number->number === 5)
+                                        <i class="fa fa-circle text-violet"></i>
+                                    @elseif($color->name === 'violet' AND $number->number === 5)
+                                        <i class="fa fa-circle text-violet"></i>
+                                    @elseif($color->name === 'violet' AND $number->number === 0)
+                                        <i class="fa fa-circle text-violet"></i>
+                                    @endif
+                                </td>
                             </tr>
 
                         @endforeach
