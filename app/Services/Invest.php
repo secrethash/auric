@@ -7,7 +7,8 @@ use App\ {
     Color,
     Lobby,
     Number,
-    Period
+    Period,
+    PeriodUser
 };
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Log;
@@ -92,40 +93,127 @@ class Invest {
             $colors = self::colors($period);
             $numbers = self::numbers($period);
 
-            Log::debug('Collect Colors: '.$colors->toJson());
-            Log::debug('Collect Numbers: '.$numbers->toJson());
+            $color = $colors->first();
+            $number = $numbers->first();
 
-            if (!$period->user->count())
+            $find = $color->numbers->where('id', $number->id);
+
+            if (!$find->count())
             {
-                Log::debug('On Standby Mode!');
-                $selectedColor = $colors->random();
+                self::regenerate($color, $number, $period);
+
+                $color = Color::orderBy('weightage')->first();
+                $number = Number::orderBy('weightage')->first();
+            }
+
+            self::saveBets($color, $number, $period);
+
+
+        }
+    }
+
+    protected static function saveBets(Color $color, Number $number, Period $period)
+    {
+        Log::debug('Final Color Saved Results: '.$color->name);
+        Log::debug('Final Number Saved Results: '.$number->number);
+
+        $period->color()->associate($color);
+        $period->number()->associate($number);
+        $period->save();
+
+        $puNumber = PeriodUser::where(['number_id' => $number->id, 'period_id' => $period->uid])
+                            ->get();
+
+        foreach ($puNumber as $pu)
+        {
+            $pu->result = 1;
+            $pu->save();
+        }
+
+        $puColor = PeriodUser::where(['color_id' => $color->id, 'period_id' => $period->id])
+                            ->get();
+
+        foreach ($puColor as $pu)
+        {
+            $pu->result = 1;
+            $pu->save();
+        }
+
+        // Result Fails
+
+        $puFail = PeriodUser::where('period_id', $period->uid)
+                            ->whereNotIn('number_id', [$number->id])
+                            ->whereNotIn('color_id', [$color->id])
+                            ->get();
+
+        foreach ($puFail as $pu)
+        {
+            $pu->result = 0;
+            $pu->save();
+        }
+
+    }
+
+    protected static function regenerate(Color $color, Number $number, Period $period)
+    {
+        $noc = $color->numbers;
+        $con = $number->colors;
+
+        if (!$period->user->count())
+        {
+            Log::debug('Regenerating On Standby Mode!');
+            $select = $con->random();
+            Log::debug('Regenrate Select: '.$select);
+            $select->weightage += 0.25;
+            $select->save();
+        }
+        else {
+            Log::debug('Regenrate Period is Active!');
+            $selected = self::sortAmount($noc, $period, 'number_id');
+            Log::debug('Regenerated Selected: '.json_encode($selected));
+            $selectNumber = Number::find($selected['id']);
+            $amountNoc = $selected['amount'];
+
+            $selected = self::sortAmount($noc, $period, 'number_id');
+            Log::debug('Regenerated Selected: '.json_encode($selected));
+            $selectColor = Color::find($selected['id']);
+            $amountCon = $selected['amount'];
+
+            if ($amountNoc > $amountCon)
+            {
+                $selectColor->weightage += 0.25;
+                $selectColor->save();
             }
             else
             {
-                Log::debug('Period is Active!');
-                $selectedColor = $colors->sortBy('amount')->first();
+                $selectNumber->weightage += 0.25;
+                $selectNumber->save();
             }
-
-            foreach ($colors as $color)
-            {
-                $counter = 0;
-
-                if ($color['color'] === $selectedColor['color'])
-                {
-                    Log::debug('Single Color: '.json_encode($color));
-                    Log::debug('Selected Color: '.json_encode($selectedColor));
-
-                    $weightage = $selectedColor['weightage'] + 0.25;
-                    Log::debug('Weightage: '.$weightage);
-                    $colors->replaceRecursive([$counter => [ 'color' => $color['color'], 'amount' => $selectedColor['amount'], 'weightage' => $weightage]]);
-                }
-
-                $counter ++;
-            }
-
-            Log::debug('Colors after Process: '.json_encode($colors->all()));
 
         }
+
+
+
+
+        Log::debug('NOC: '.json_encode($noc));
+        Log::debug('CON: '.json_encode($con));
+    }
+
+    protected static function sortAmount($model, Period $period, $reference = '')
+    {
+        $amount = collect([]);
+        foreach ($model as $m) {
+            $periodUser = $period->user->where($reference, $m->id);
+            $count = 0;
+            foreach ($periodUser as $pu)
+            {
+                $count += $pu->pivot->amount;
+            }
+            $amount->push(['id'=>$m->id, 'amount'=>$count]);
+        }
+        $selected = $amount->sortBy('amount')->first();
+
+        return $selected;
     }
 
     /**
@@ -135,25 +223,51 @@ class Invest {
      */
     protected static function colors(Period $period)
     {
-        $collection = collect([]);
 
-        $colors = Color::all();
+        $colors = Color::orderBy('weightage', 'desc')->get();
+
+        // First set to default
         foreach ($colors as $color)
         {
-            $collection->push(['color' => $color->name, 'amount' => 0, 'weightage' => $color->weightage]);
+            $color->weightage = $color->default;
+            $color->save();
         }
 
-        foreach ($period->user as $periodUser)
+        $colors = Color::orderBy('weightage', 'desc')->get();
+
+
+        if (!$period->user->count())
         {
-            $color = Color::find($periodUser->pivot->color_id);
-            if ($color)
-            {
-                $amount = $periodUser->pivot->amount + $collection->where($color->name)->get('amount');
-                $collection->merge(['color' => $color->name, 'amount' => $amount]);
+            Log::debug('On Standby Mode!');
+            $select = $colors->random();
+        }
+        else
+        {
+            Log::debug('Period is Active!');
+            $amount = collect([]);
+            foreach ($colors as $color) {
+                $periodUser = $period->user->where('color_id', $color->id);
+                $colorAmount = 0;
+                foreach ($periodUser as $pu)
+                {
+                    $colorAmount += $pu->pivot->amount;
+                }
+                $amount->push(['color'=>$color->id, 'amount'=>$colorAmount]);
             }
+            $selected = $amount->sortBy('amount')->first();
+            $select = Color::find($selected['color']);
         }
 
-        return $collection->sortByDesc('weightage');
+        $weightage = $select->weightage + 0.25;
+
+        $select->weightage = $weightage;
+        $select->save();
+
+        Log::debug('Colors after Process: '.json_encode($colors->all()));
+
+        $colors = Color::orderBy('weightage', 'desc')->get();
+
+        return $colors;
     }
 
     /**
@@ -163,24 +277,51 @@ class Invest {
      */
     protected static function numbers(Period $period)
     {
-        $collection = collect([]);
 
-        $numbers = Number::all();
+        $numbers = Number::orderBy('weightage', 'desc')->get();
+
+        // First set to default
         foreach ($numbers as $number)
         {
-            $collection->push(['number' => $number->number, 'amount' => 0, 'weightage' => $number->weightage]);
+            $number->weightage = $number->default;
+            $number->save();
         }
 
-        foreach ($period->user as $periodUser)
+        $numbers = Number::orderBy('weightage', 'desc')->get();
+
+
+        if (!$period->user->count())
         {
-            $number = Number::find($periodUser->pivot->number_id);
-            if ($number)
-            {
-                $collection->merge(['number' => $number->number, 'amount' => $periodUser->pivot->amount]);
+            Log::debug('On Standby Mode!');
+            $select = $numbers->random();
+        }
+        else
+        {
+            Log::debug('Period is Active!');
+            $amount = collect([]);
+            foreach ($numbers as $number) {
+                $periodUser = $period->user->where('number_id', $number->id);
+                $numberAmount = 0;
+                foreach ($periodUser as $pu)
+                {
+                    $numberAmount += $pu->pivot->amount;
+                }
+                $amount->push(['number'=>$number->id, 'amount'=>$numberAmount]);
             }
+            $selected = $amount->sortBy('amount')->first();
+            $select = Number::find($selected['number']);
         }
 
-        return $collection->sortByDesc('weightage');
+        $weightage = $select->weightage + 0.25;
+
+        $select->weightage = $weightage;
+        $select->save();
+
+        Log::debug('Numbers after Process: '.json_encode($numbers->all()));
+
+        $numbers = Number::orderBy('weightage', 'desc')->get();
+
+        return $numbers;
     }
 
     /**

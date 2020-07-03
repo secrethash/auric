@@ -17,6 +17,7 @@ class CreateNumbersTable extends Migration
             $table->id();
             $table->integer('number')->unique();
             $table->float('weightage')->default(0.00);
+            $table->float('default');
             $table->timestamps();
         });
     }

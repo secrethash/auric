@@ -26,6 +26,8 @@ class DatabaseSeeder extends Seeder
         $this->call(UsersTableSeeder::class);
         $this->call(OrdersTableSeeder::class);
         $this->call(LobbiesTableSeeder::class);
+        $this->call(NumbersTableSeeder::class);
+        $this->call(ColorsTableSeeder::class);
 
         // Foregin Contraint Table (LEVEL 1)
         $this->call(PeriodsTableSeeder::class);
@@ -39,6 +41,7 @@ class DatabaseSeeder extends Seeder
         $this->call(RateTypesTableSeeder::class);
         $this->call(RatingsTableSeeder::class);
         $this->call(UserRolesTableSeeder::class);
+        $this->call(NumberColorTableSeeder::class);
 
         // Foregin Contraint Table (LEVEL 2)
         $this->call(PeriodUserTableSeeder::class);
@@ -47,7 +50,5 @@ class DatabaseSeeder extends Seeder
         // $this->call(PasswordResetsTableSeeder::class);
         // $this->call(MigrationsTableSeeder::class);
         // $this->call(FailedJobsTableSeeder::class);
-        $this->call(NumbersTableSeeder::class);
-        $this->call(ColorsTableSeeder::class);
     }
 }

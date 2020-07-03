@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Color;
 use App\Http\Requests\InvestRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Lobby;
+use App\Number;
 use App\Order;
 use App\Period;
 use App\Services\Transact;
@@ -99,11 +101,14 @@ class InvestController extends Controller
 
         $transact = Transact::create($data, Auth::user(), $order);
 
-        $user->periods()->attach($period->id, [
+        $betNumber = $validated['bet_number'] ? Number::where('number', $validated['bet_number'])->first()->id : NULL;
+        $betColor = $validated['bet_color'] ? Color::where('name', $validated['bet_color'])->first()->id : NULL;
+
+        $user->periods()->attach($period, [
             'amount' => $amount,
             'transaction_id' => $transact->id,
-            'invest_number' => $validated['bet_number'] ?? NULL,
-            'invest_color' => $validated['bet_color'] ?? NULL
+            'number_id' => $betNumber,
+            'color_id' => $betColor
         ]);
 
         $wallet = Transact::wallet('sub', $amount, $user);

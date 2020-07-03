@@ -187,8 +187,8 @@
                             <tr>
                                 <th class="font-weight-normal">{{Str::of($result->uid)->trim($current->slug.'-')}}</th>
                                 <td class="font-weight-normal">{{$result->price}}</td>
-                                <td class="font-weight-normal">{{$result->result_number}}</td>
-                                <td class="font-weight-normal">{{$result->result_color}}</td>
+                                <td class="font-weight-normal">{{App\Number::find($result->number_id)->number}}</td>
+                                <td class="font-weight-normal">{{App\Color::find($result->color_id)->name}}</td>
                             </tr>
 
                         @endforeach
@@ -223,11 +223,11 @@
                         <div class="row mt-2">
                             <div class="col-4">
 								<span class="text-muted">Number</span>
-								<h6 class="text-dark text-align-center">{{$result->pivot->invest_number ?? '-' }}</h6>
+								<h6 class="text-dark text-align-center">{{App\Number::find($result->pivot->number_id)->number ?? '-' }}</h6>
                             </div>
                             <div class="col-4">
 								<span class="text-muted">Color</span>
-								<h6 class="text-dark text-align-center">{{$result->pivot->invest_color ?? '-' }}</h6>
+								<h6 class="text-dark text-align-center">{{App\Color::find($result->pivot->color_id)->name ?? '-' }}</h6>
                             </div>
                             <div class="col-4">
 								<span class="text-muted">Result</span>
