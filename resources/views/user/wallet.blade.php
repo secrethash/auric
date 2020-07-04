@@ -20,7 +20,7 @@
         <div class="checkout-wrapper-area py-3">
             <h3 class="text-center" style="color: #333;">Transactions</h3>
             <ul class="list-group mb-3">
-                @foreach ($user->transactions->sortByDesc() as $trans)
+                @foreach ($user->transactions->sortDesc() as $trans)
 
                     <li class="list-group-item justify-content-between align-items-center">
                         <div class="row">
