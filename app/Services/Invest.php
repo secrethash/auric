@@ -255,7 +255,7 @@ class Invest {
         //
         if($period->user->count())
         {
-            Log::debug('Genrate Period is Active! Period: '.$period->uid);
+            Log::debug('Generate Period is Active! Period: '.$period->uid);
             $selected = self::sortAmount($color->numbers, $period, 'number_id')->first();
             $selectedNumber = Number::find($selected['id']);
             Log::debug('Generated Number Selected: '.json_encode($selectedNumber->number).' after: '.$number->number);
@@ -284,21 +284,21 @@ class Invest {
             {
                 Log::debug('Else for Generate!');
                 Log::debug('AmountColor: '.$amountColor.' For Color: '.$selectedColor->name.' And Number: '.$number->number);
-                Log::debug('AmountNumber: '.$amountNumber.' For Number: '.$selectedNumber->number.' And Number: '.$color->name);
+                Log::debug('AmountNumber: '.$amountNumber.' For Number: '.$selectedNumber->number.' And Color: '.$color->name);
 
-                // $num = $selectedColor->numbers;
-                // $selected = self::sortAmount($num, $period, 'number_id')->first();
-                // $selectedNumber = Number::find($selected['id']);
-                // // Log::debug('Regenerated Number Selected: '.json_encode($selectedNumber->number).' after: '.$number->number);
-                // // $amountNumber = $selected['amount'];
-                // // Log::debug('Elseif Regenerated Color Selected: '.json_encode($selectedColor->name).' after: '.$color->name);
+                $num = $selectedColor->numbers;
+                $selected = self::sortAmount($num, $period, 'number_id')->first();
+                $selectedNumber = Number::find($selected['id']);
+                // Log::debug('Regenerated Number Selected: '.json_encode($selectedNumber->number).' after: '.$number->number);
+                // $amountNumber = $selected['amount'];
+                // Log::debug('Elseif Regenerated Color Selected: '.json_encode($selectedColor->name).' after: '.$color->name);
 
-                // $selectedColor->weightage += 0.50;
-                // $selectedColor->save();
-                // $selectedNumber->weightage += 0.50;
-                // $selectedNumber->save();
+                $selectedColor->weightage += 0.50;
+                $selectedColor->save();
+                $selectedNumber->weightage += 0.50;
+                $selectedNumber->save();
 
-                self::regenerate($color, $number, $period);
+                // self::regenerate($color, $number, $period);
             }
         }
     }
