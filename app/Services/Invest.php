@@ -384,7 +384,9 @@ class Invest {
             }
             $amount->push(['id'=>$m->id, 'amount'=>$count]);
         }
-        $selected = $amount->shuffle()->sortByDesc('amount');
+        $selected = $amount->shuffle()->sortBy('amount');
+
+        Log::debug('Sorted Amount: '. $selected->toJson());
 
         return $selected;
     }
