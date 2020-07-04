@@ -384,7 +384,7 @@ class Invest {
             }
             $amount->push(['id'=>$m->id, 'amount'=>$count]);
         }
-        $selected = $amount->shuffle()->sortDesc('amount');
+        $selected = $amount->shuffle()->sortByDesc('amount');
 
         return $selected;
     }

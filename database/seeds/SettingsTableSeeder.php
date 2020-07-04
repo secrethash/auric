@@ -55,7 +55,7 @@ class SettingsTableSeeder extends Seeder
                 'id' => 4,
                 'key' => 'site.google_analytics_tracking_id',
                 'display_name' => 'Google Analytics Tracking ID',
-                'value' => '',
+                'value' => NULL,
                 'details' => '',
                 'type' => 'text',
                 'order' => 4,
@@ -121,11 +121,35 @@ class SettingsTableSeeder extends Seeder
                 'id' => 10,
                 'key' => 'admin.google_analytics_client_id',
             'display_name' => 'Google Analytics Client ID (used for admin dashboard)',
-                'value' => '',
+                'value' => NULL,
                 'details' => '',
                 'type' => 'text',
                 'order' => 1,
                 'group' => 'Admin',
+            ),
+            10 => 
+            array (
+                'id' => 11,
+                'key' => 'invest.rules',
+                'display_name' => 'Investment Rules',
+                'value' => '<p>
+3 minutes 1 issue, 2 minutes and 30 seconds to order, 30 seconds to show the lottery result. It opens all day. The total number of trade is 480 issues.
+<br><br>
+If you spend 100 rupees to trade, after deducting 2 rupees service fee, your contract amount is 98 rupees:
+<br><br>
+1. <b>JOIN GREEN:</b> If the result shows 1,3,7,9, you will get (98*2) 196 rupees;
+If the result shows 5, you will get (98*1.5) 147rupees.
+<br><br>
+2. <b>JOIN RED:</b> If the result shows 2,4,6,8, you will get (98*2) 196 rupees; If the result shows 0, you will get (98*1.5) 147 rupees.
+<br><br>
+3. <b>JOIN VIOLET:</b> If the result shows 0 or 5, you will get (98*4.5) 441 rupees.
+<br><br>
+4. <b>SELECT NUMBER:</b> If the result is the same as the number you selected, you will get (98*9) 882 rupees.
+</p>',
+                'details' => NULL,
+                'type' => 'code_editor',
+                'order' => 6,
+                'group' => 'Invest',
             ),
         ));
         
