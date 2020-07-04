@@ -145,7 +145,7 @@
             </div>
 
             <!-- Alerts -->
-            <div id="alerts">
+            <div id="alerts" class="mt-3">
                 <div id="a-primary" class="d-none alert alert-primary alert-dismissible fade show" role="alert">
                     <span id="a-content"></span>
                     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
@@ -194,8 +194,8 @@
                             <tr>
                                 <th class="font-weight-normal">{{Str::of($result->uid)->trim($current->slug.'-')}}</th>
                                 <td class="font-weight-normal">{{$result->price}}</td>
-                                <td class="font-weight-normal">{{$number->number}}</td>
-                                <td class="font-weight-normal">
+                                <td class="font-weight-normal text-center">{{$number->number}}</td>
+                                <td class="font-weight-normal text-center">
                                     <i class="fa fa-circle @if($color->name === 'red'){{e('text-danger')}}@elseif($color->name === 'green'){{e('text-success')}}@else{{e('text-violet')}}@endif"></i>
                                     @if($color->name === 'red' AND $number->number === 0)
                                         <i class="fa fa-circle text-violet"></i>
@@ -226,7 +226,9 @@
 
 				<ul class="list-group mb-3">
                 @foreach ($user->periods->where('lobby_id', $current->id)->sortDesc()->take(10) as $result)
-
+                    @php
+                        $color = App\Color::find($result->pivot->color_id);
+                    @endphp
                     <li class="list-group-item justify-content-between align-items-center @if($result->pivot->result){{e('border-success')}}@elseif($result->pivot->result===0){{e('border-danger')}}@else{{e('border-primary')}}@endif">
                         <div class="row">
                             <div class="col-8">
@@ -239,17 +241,17 @@
                             </div>
                         </div>
                         <div class="row mt-2">
-                            <div class="col-4">
+                            <div class="col-4 text-center">
 								<span class="text-muted">Number</span>
 								<h6 class="text-dark text-align-center">{{App\Number::find($result->pivot->number_id)->number ?? '-' }}</h6>
                             </div>
-                            <div class="col-4">
+                            <div class="col-4 text-center">
 								<span class="text-muted">Color</span>
-								<h6 class="text-dark text-align-center">{{App\Color::find($result->pivot->color_id)->name ?? '-' }}</h6>
+								<h6 class="text-dark"><i class="fa fa-circle @if($color->name === 'violet'){{e('text-violet')}}@elseif($color->name === 'red'){{e('text-danger')}}@elseif($color->name === 'green'){{e('text-success')}}@endif"></i></h6>
                             </div>
                             <div class="col-4">
 								<span class="text-muted">Result</span>
-								<h6 class="text-align-center @if($result->pivot->result){{e('text-success')}}@elseif($result->pivot->result===0){{e('text-danger')}}@else{{e('text-primary')}}@endif">@if($result->pivot->result){{e('WIN')}}@elseif($result->pivot->result===0){{e('LOOSE')}}@else{{e('ON-GOING')}}@endif</h6>
+								<h6 class="@if($result->pivot->result){{e('text-success')}}@elseif($result->pivot->result===0){{e('text-danger')}}@else{{e('text-primary')}}@endif">@if($result->pivot->result){{e('WIN')}}@elseif($result->pivot->result===0){{e('LOOSE')}}@else{{e('ON-GOING')}}@endif</h6>
                             </div>
                         </div>
                     </li>

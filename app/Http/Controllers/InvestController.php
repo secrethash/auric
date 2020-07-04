@@ -111,7 +111,7 @@ class InvestController extends Controller
             'color_id' => $betColor
         ]);
 
-        $wallet = Transact::wallet('sub', $amount, $user);
+        $wallet = Transact::wallet($order->method, $amount, $user);
 
         return response()->json([
             'success' => true,

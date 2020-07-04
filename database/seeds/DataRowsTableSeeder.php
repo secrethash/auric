@@ -1345,6 +1345,38 @@ class DataRowsTableSeeder extends Seeder
                 'details' => '{"model":"App\\\\Color","table":"colors","type":"belongsToMany","column":"id","key":"id","label":"name","pivot_table":"number_color","pivot":"1","taggable":"0"}',
                 'order' => 6,
             ),
+            83 => 
+            array (
+                'id' => 84,
+                'data_type_id' => 11,
+                'field' => 'default',
+                'type' => 'number',
+                'display_name' => 'Default',
+                'required' => 1,
+                'browse' => 1,
+                'read' => 1,
+                'edit' => 1,
+                'add' => 1,
+                'delete' => 1,
+                'details' => '{}',
+                'order' => 4,
+            ),
+            84 => 
+            array (
+                'id' => 85,
+                'data_type_id' => 11,
+                'field' => 'color_belongstomany_number_relationship',
+                'type' => 'relationship',
+                'display_name' => 'numbers',
+                'required' => 0,
+                'browse' => 1,
+                'read' => 1,
+                'edit' => 1,
+                'add' => 1,
+                'delete' => 1,
+                'details' => '{"model":"App\\\\Number","table":"numbers","type":"belongsToMany","column":"id","key":"id","label":"number","pivot_table":"number_color","pivot":"1","taggable":null}',
+                'order' => 6,
+            ),
         ));
         
         

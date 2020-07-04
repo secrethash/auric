@@ -7,11 +7,14 @@ use App\ {
     Color,
     Lobby,
     Number,
+    Order,
     Period,
-    PeriodUser
+    PeriodUser,
+    User
 };
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Log;
+use App\Services\Transact;
 
 class Invest {
 
@@ -100,12 +103,26 @@ class Invest {
 
             if (!$find->count())
             {
-                self::regenerate($color, $number, $period);
 
-                $color = Color::orderBy('weightage', 'desc')->first();
-                $number = Number::orderBy('weightage', 'desc')->first();
+                $check = false;
 
-                // if ($color)
+                while (!$check)
+                {
+                    foreach ($color->numbers as $colorNumbers)
+                    {
+                        if ($colorNumbers->number === $number->number)
+                        {
+                            $check = true;
+                        }
+                    }
+                    if (!$check)
+                    {
+                        self::regenerate($color, $number, $period);
+
+                        $color = Color::orderBy('weightage', 'desc')->first();
+                        $number = Number::orderBy('weightage', 'desc')->first();
+                    }
+                }
             }
 
             self::saveBets($color, $number, $period);
@@ -142,36 +159,92 @@ class Invest {
         $period->number()->associate($number);
         $period->save();
 
-        $puNumber = PeriodUser::where(['number_id' => $number->id, 'period_id' => $period->uid])
+        $order = Order::whereType('roi')->first();
+
+        $puNumber = PeriodUser::where(['number_id' => $number->id, 'period_id' => $period->id])
                             ->get();
 
         foreach ($puNumber as $pu)
         {
             $pu->result = 1;
             $pu->save();
+            self::transact($pu, $period, $order);
         }
 
-        $puColor = PeriodUser::where(['color_id' => $color->id, 'period_id' => $period->id])
+        $colorId = collect([$color->id]);
+
+        if ($color->name === 'violet')
+        {
+            // If Violet || 0
+            if ($number->number === 0)
+            {
+                $colorId->push(Color::whereName('red')->first()->id);
+            }
+            elseif ($number->number === 5)
+            {
+                $colorId->push(Color::whereName('green')->first()->id);
+            }
+        }
+
+        $puColor = PeriodUser::where('period_id', $period->id)
+                            ->whereIn('color_id', [$colorId->toArray()])
                             ->get();
 
         foreach ($puColor as $pu)
         {
             $pu->result = 1;
             $pu->save();
+            self::transact($pu, $period, $order);
+
         }
 
         // Result Fails
 
-        $puFail = PeriodUser::where('period_id', $period->uid)
-                            ->whereNotIn('number_id', [$number->id])
+        $puFailColor = PeriodUser::where('period_id', $period->id)
+                            ->where('number_id', NULL)
                             ->whereNotIn('color_id', [$color->id])
                             ->get();
 
-        foreach ($puFail as $pu)
+        Log::debug('Save Bets: Color Result Failed: '.$puFailColor->toJson());
+
+        foreach ($puFailColor as $pu)
         {
             $pu->result = 0;
             $pu->save();
         }
+
+        $puFailNumber = PeriodUser::where('period_id', $period->id)
+                            ->where('color_id', NULL)
+                            ->whereNotIn('number_id', [$number->id])
+                            ->get();
+
+        Log::debug('Save Bets: Color Result Failed: '.$puFailNumber->toJson());
+
+        foreach ($puFailNumber as $pu)
+        {
+            $pu->result = 0;
+            $pu->save();
+		}
+
+
+    }
+
+    protected static function transact($pu, $period, $order)
+    {
+
+        // Create Transaction
+        $user = User::find($pu->user_id);
+        $amount = $pu->amount;
+        $data = [
+            'amount' => $amount,
+            'note' => 'Return on Investment for: '.$period->uid,
+            'status' => 'success',
+            'payment_id' => null,
+            'request_id' => $period->uid
+        ];
+
+        $transact = Transact::create($data, $user, $order);
+        $wallet = Transact::wallet($order->method, $amount, $user);
 
     }
 
@@ -191,31 +264,26 @@ class Invest {
             $number->save();
         }
         else {
-            Log::debug('Regenrate Period is Active!');
-            $selected = self::sortAmount($noc, $period, 'number_id');
-            Log::debug('Regenerated Selected: '.json_encode($selected));
+            Log::debug('Regenrate Period is Active! Period: '.$period->uid);
+            $selected = self::sortAmount($noc, $period, 'number_id')->first();
             $selectedNumber = Number::find($selected['id']);
-            $amountNoc = $selected['amount'];
+            Log::debug('Regenerated Number Selected: '.json_encode($selectedNumber->number).' after: '.$number->number);
+            $amountNumber = $selected['amount']; // red, 8 = 100
 
-            $selected = self::sortAmount($con, $period, 'number_id');
-            Log::debug('Regenerated Selected: '.json_encode($selected));
+            $selected = self::sortAmount($con, $period, 'number_id')->first();
             $selectedColor = Color::find($selected['id']);
-            $amountCon = $selected['amount'];
+            Log::debug('Regenerated Color Selected: '.json_encode($selectedColor->name).' after: '.$color->name);
+            $amountColor = $selected['amount']; // 7, green = 10
 
-            if ($amountNoc > $amountCon)
+            if ($amountNumber < $amountColor)
             {
-                // $check = false;
-
-                // if ($selectedColor->name === 'red')
-                // {
-                //     while(!$check) {
-
-                //         $check = $number->number % 2 == 0;
-
-
-                //     }
-                // }
-
+                $selectedNumber->weightage += 0.50;
+                $selectedNumber->save();
+                $color->weightage += 0.50;
+                $color->save();
+            }
+            elseif ($amountColor < $amountNumber)
+            {
                 $selectedColor->weightage += 0.50;
                 $selectedColor->save();
                 $number->weightage += 0.50;
@@ -223,10 +291,9 @@ class Invest {
             }
             else
             {
-                $selectedNumber->weightage += 0.50;
-                $selectedNumber->save();
-                $color->weightage += 0.50;
-                $color->save();
+                Log::debug('Else for Regenerate!');
+                Log::debug('AmountColor: '.$amountColor.' For Color: '.$selectedColor->name.' And Number: '.$number->number);
+                Log::debug('AmountNumber: '.$amountNumber.' For Number: '.$selectedNumber->name.' And Number: '.$color->name);
             }
 
         }
@@ -250,7 +317,7 @@ class Invest {
             }
             $amount->push(['id'=>$m->id, 'amount'=>$count]);
         }
-        $selected = $amount->sortBy('amount')->first();
+        $selected = $amount->shuffle()->sortBy('amount');
 
         return $selected;
     }
@@ -283,18 +350,9 @@ class Invest {
         else
         {
             Log::debug('Period is Active!');
-            $amount = collect([]);
-            foreach ($colors as $color) {
-                $periodUser = $period->user->where('color_id', $color->id);
-                $colorAmount = 0;
-                foreach ($periodUser as $pu)
-                {
-                    $colorAmount += $pu->pivot->amount;
-                }
-                $amount->push(['color'=>$color->id, 'amount'=>$colorAmount]);
-            }
-            $selected = $amount->sortBy('amount')->first();
-            $select = Color::find($selected['color']);
+
+            $selected = self::sortAmount($colors, $period, 'color_id')->first();
+            $select = Color::find($selected['id']);
         }
 
         $weightage = $select->weightage + 0.25;
@@ -302,9 +360,9 @@ class Invest {
         $select->weightage = $weightage;
         $select->save();
 
-        Log::debug('Colors after Process: '.json_encode($colors->all()));
-
         $colors = Color::orderBy('weightage', 'desc')->get();
+
+        Log::debug('Colors after Process: '.json_encode($colors->all()));
 
         return $colors;
     }
@@ -337,18 +395,9 @@ class Invest {
         else
         {
             Log::debug('Period is Active!');
-            $amount = collect([]);
-            foreach ($numbers as $number) {
-                $periodUser = $period->user->where('number_id', $number->id);
-                $numberAmount = 0;
-                foreach ($periodUser as $pu)
-                {
-                    $numberAmount += $pu->pivot->amount;
-                }
-                $amount->push(['number'=>$number->id, 'amount'=>$numberAmount]);
-            }
-            $selected = $amount->sortBy('amount')->first();
-            $select = Number::find($selected['number']);
+
+            $selected = self::sortAmount($numbers, $period, 'number_id')->first();
+            $select = Number::find($selected['id']);
         }
 
         $weightage = $select->weightage + 0.25;
@@ -356,9 +405,9 @@ class Invest {
         $select->weightage = $weightage;
         $select->save();
 
-        Log::debug('Numbers after Process: '.json_encode($numbers->all()));
-
         $numbers = Number::orderBy('weightage', 'desc')->get();
+
+        Log::debug('Numbers after Process: '.json_encode($numbers->all()));
 
         return $numbers;
     }
