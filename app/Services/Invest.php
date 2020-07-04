@@ -99,6 +99,8 @@ class Invest {
             $color = $colors->first();
             $number = $numbers->first();
 
+            self::generate($color, $number, $period);
+
             $find = $color->numbers->where('id', $number->id);
 
             if (!$find->count())
@@ -248,6 +250,59 @@ class Invest {
 
     }
 
+    public static function generate(Color $color, Number $number, Period $period)
+    {
+        //
+        if($period->user->count())
+        {
+            Log::debug('Genrate Period is Active! Period: '.$period->uid);
+            $selected = self::sortAmount($color->numbers, $period, 'number_id')->first();
+            $selectedNumber = Number::find($selected['id']);
+            Log::debug('Generated Number Selected: '.json_encode($selectedNumber->number).' after: '.$number->number);
+            $amountNumber = $selected['amount']; // red, 8 = 100
+
+            $selected = self::sortAmount($number->colors, $period, 'color_id')->first();
+            $selectedColor = Color::find($selected['id']);
+            Log::debug('Generated Color Selected: '.json_encode($selectedColor->name).' after: '.$color->name);
+            $amountColor = $selected['amount']; // 7, green = 10
+
+            if ($amountNumber < $amountColor)
+            {
+                $selectedNumber->weightage += 0.50;
+                $selectedNumber->save();
+                $color->weightage += 0.50;
+                $color->save();
+            }
+            elseif ($amountColor < $amountNumber)
+            {
+                $selectedColor->weightage += 0.50;
+                $selectedColor->save();
+                $number->weightage += 0.50;
+                $number->save();
+            }
+            elseif ($amountColor === $amountNumber)
+            {
+                Log::debug('Else for Generate!');
+                Log::debug('AmountColor: '.$amountColor.' For Color: '.$selectedColor->name.' And Number: '.$number->number);
+                Log::debug('AmountNumber: '.$amountNumber.' For Number: '.$selectedNumber->number.' And Number: '.$color->name);
+
+                // $num = $selectedColor->numbers;
+                // $selected = self::sortAmount($num, $period, 'number_id')->first();
+                // $selectedNumber = Number::find($selected['id']);
+                // // Log::debug('Regenerated Number Selected: '.json_encode($selectedNumber->number).' after: '.$number->number);
+                // // $amountNumber = $selected['amount'];
+                // // Log::debug('Elseif Regenerated Color Selected: '.json_encode($selectedColor->name).' after: '.$color->name);
+
+                // $selectedColor->weightage += 0.50;
+                // $selectedColor->save();
+                // $selectedNumber->weightage += 0.50;
+                // $selectedNumber->save();
+
+                self::regenerate($color, $number, $period);
+            }
+        }
+    }
+
     protected static function regenerate(Color $color, Number $number, Period $period)
     {
         $noc = $color->numbers;
@@ -270,7 +325,7 @@ class Invest {
             Log::debug('Regenerated Number Selected: '.json_encode($selectedNumber->number).' after: '.$number->number);
             $amountNumber = $selected['amount']; // red, 8 = 100
 
-            $selected = self::sortAmount($con, $period, 'number_id')->first();
+            $selected = self::sortAmount($con, $period, 'color_id')->first();
             $selectedColor = Color::find($selected['id']);
             Log::debug('Regenerated Color Selected: '.json_encode($selectedColor->name).' after: '.$color->name);
             $amountColor = $selected['amount']; // 7, green = 10
@@ -289,11 +344,23 @@ class Invest {
                 $number->weightage += 0.50;
                 $number->save();
             }
-            else
+            elseif ($amountColor === $amountNumber)
             {
                 Log::debug('Else for Regenerate!');
                 Log::debug('AmountColor: '.$amountColor.' For Color: '.$selectedColor->name.' And Number: '.$number->number);
-                Log::debug('AmountNumber: '.$amountNumber.' For Number: '.$selectedNumber->name.' And Number: '.$color->name);
+                Log::debug('AmountNumber: '.$amountNumber.' For Number: '.$selectedNumber->number.' And Number: '.$color->name);
+
+                $num = $selectedColor->numbers;
+                $selected = self::sortAmount($num, $period, 'number_id')->first();
+                $selectedNumber = Number::find($selected['id']);
+                // Log::debug('Regenerated Number Selected: '.json_encode($selectedNumber->number).' after: '.$number->number);
+                // $amountNumber = $selected['amount'];
+                // Log::debug('Elseif Regenerated Color Selected: '.json_encode($selectedColor->name).' after: '.$color->name);
+
+                $selectedColor->weightage += 0.50;
+                $selectedColor->save();
+                $selectedNumber->weightage += 0.50;
+                $selectedNumber->save();
             }
 
         }
@@ -317,7 +384,7 @@ class Invest {
             }
             $amount->push(['id'=>$m->id, 'amount'=>$count]);
         }
-        $selected = $amount->shuffle()->sortBy('amount');
+        $selected = $amount->shuffle()->sortDesc('amount');
 
         return $selected;
     }
@@ -329,7 +396,7 @@ class Invest {
      */
     protected static function colors(Period $period)
     {
-
+        Log::debug('Period: '.$period->uid);
         $colors = Color::orderBy('weightage', 'desc')->get();
 
         // First set to default

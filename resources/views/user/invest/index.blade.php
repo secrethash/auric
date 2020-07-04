@@ -61,7 +61,7 @@
         <h1 class="text-white">&#8377;<span id="wallet-credits">{{$user->credits}}</span></h1>
         <div>
             <button href="#addmoney" class="btn btn-light text-dark"><i class="lni-plus"></i>&nbsp;Add Money</button>
-            <button href="#rules" class="btn btn-dark"><i class="lni-agenda"></i>&nbsp;Rules</button>
+            <button href="#rules" class="btn btn-dark" data-toggle="modal" data-target="#rules"><i class="lni-agenda"></i>&nbsp;Rules</button>
         </div>
         <div class="clearfix mt-2 mb-0 pb-0 text-white">
             <span class="font-weight-bolder">ID:</span>&nbsp;<span>{{$user->username}}</span>
@@ -247,7 +247,7 @@
                             </div>
                             <div class="col-4 text-center">
 								<span class="text-muted">Color</span>
-								<h6 class="text-dark"><i class="fa fa-circle @if($color->name === 'violet'){{e('text-violet')}}@elseif($color->name === 'red'){{e('text-danger')}}@elseif($color->name === 'green'){{e('text-success')}}@endif"></i></h6>
+								<h6 class="text-dark">@if($color)<i class="fa fa-circle @if($color->name === 'violet'){{e('text-violet')}}@elseif($color->name === 'red'){{e('text-danger')}}@elseif($color->name === 'green'){{e('text-success')}}@endif"></i>@else{{e('-')}}@endif</h6>
                             </div>
                             <div class="col-4">
 								<span class="text-muted">Result</span>
@@ -266,7 +266,26 @@
 @endsection
 
 @section('scripts')
-    <!-- Modal -->
+    <!-- Rules Modal -->
+    <div class="modal fade" id="rules" tabindex="-1" role="dialog" aria-labelledby="rulesModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="rulesModalLabel">Rules of guess:</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="m-2">
+                        {!! setting('invest.rules') !!}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Invest Modal -->
     <div class="modal fade" id="investModal" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="investModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
