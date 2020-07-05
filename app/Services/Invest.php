@@ -87,7 +87,7 @@ class Invest {
 	 */
 	public static function preprocessor()
 	{
-        Log::debug('Pre Processor Running!');
+        // Log::debug('Pre Processor Running!');
 
         $lobbies = Lobby::all();
         $now = Carbon::now()->subMinutes(2)->subSeconds(30);
@@ -114,7 +114,7 @@ class Invest {
                 break;
             }
         }
-        Log::debug('Check for Preprocessor: '.$check);
+        // Log::debug('Check for Preprocessor: '.$check);
         if ($check)
         {
             self::processor($collection, true);
@@ -131,7 +131,7 @@ class Invest {
         if ($pre)
         {
             // Periods that are active and have elapsed
-            Log::debug('Executing $Pre');
+            // Log::debug('Executing $Pre');
             $periods = Period::where('active', 1)->get();
         }
         else
@@ -146,7 +146,7 @@ class Invest {
 
             if (!$period->processed)
             {
-                Log::debug('Period '.$period->uid.' is not processed');
+                // Log::debug('Period '.$period->uid.' is not processed');
                 $colors = self::colors($period);
                 $numbers = self::numbers($period);
 

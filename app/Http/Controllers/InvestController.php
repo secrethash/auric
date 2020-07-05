@@ -149,17 +149,17 @@ class InvestController extends Controller
     public function preProcess($token)
     {
         // Check Period
-        Log::debug('Preprocessor Controller!');
+        // Log::debug('Preprocessor Controller!');
         $now = Carbon::now();
         $id = (($now->format('H') * 20) + ($now->format('i') / 3)) + 1;
         $id = floor($id);
 
         $token = decrypt($token);
         //
-        Log::debug('Id: '.$id.' Token: '.$token);
+        // Log::debug('Id: '.$id.' Token: '.$token);
         if ($token == $id)
         {
-            Log::debug('Check Passed! ID is equal to Token!');
+            // Log::debug('Check Passed! ID is equal to Token!');
 
             Invest::preprocessor();
 
