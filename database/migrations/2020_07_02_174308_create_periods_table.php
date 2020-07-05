@@ -22,6 +22,7 @@ class CreatePeriodsTable extends Migration
             $table->foreignId('number_id')->nullable()->constrained();
             $table->foreignId('color_id')->nullable()->constrained();
             $table->boolean('active')->default(0);
+            $table->boolean('processed')->default(0);
             $table->timestamps();
         });
     }

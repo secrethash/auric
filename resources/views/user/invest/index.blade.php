@@ -176,7 +176,7 @@
                     </div>
                 </div>
 
-                <table class="table table-hover">
+                <table class="table table-hover table-responsive w-100">
                     <thead>
                         <tr>
                             <th scope="col" class="text-muted font-weight-normal">Period</th>
@@ -193,7 +193,7 @@
                             @endphp
                             <tr>
                                 <th class="font-weight-normal">{{Str::of($result->uid)->trim($current->slug.'-')}}</th>
-                                <td class="font-weight-normal">&#8377;&nbsp;{{$result->price}}</td>
+                                <td class="font-weight-normal">&#8377;&nbsp;{{$result->price}}{{$number->number}}</td>
                                 <td class="font-weight-normal text-center">{{$number->number}}</td>
                                 <td class="font-weight-normal text-center">
                                     <i class="fa fa-circle @if($color->name === 'red'){{e('text-danger')}}@elseif($color->name === 'green'){{e('text-success')}}@else{{e('text-violet')}}@endif"></i>
@@ -349,7 +349,7 @@
 @section('after-scripts')
     <script src="{{asset("js/jquery.countdown.min.js")}}"></script>
     <script type="text/javascript">
-        var countTime = "{{Carbon\Carbon::create($period->start)->addMinutes(3)->format('Y/m/d H:i:s')}}";
+        var countTime = "{{Carbon\Carbon::create($period->start)->addMinutes(3)->addSeconds(2)->format('Y/m/d H:i:s')}}";
         $('div#period-countdown')
         .countdown(countTime, function(event) {
             $(this).text(
@@ -364,6 +364,11 @@
             {
                 $("#investron").find("button").prop("disabled", true);
                 jQuery("#investModal").modal('hide');
+            }
+
+            if (event.offset.totalSeconds == 30)
+            {
+                $.get('{{route('invest.process', encrypt($id))}}');
             }
         });
 

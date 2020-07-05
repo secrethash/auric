@@ -1,7 +1,16 @@
 <?php
 
+use App\Http\Controllers\InvestController;
 use Illuminate\Support\Facades\Route;
 
+
+// $now = now()->subMinutes(2)->subSeconds(30);
+// $date = $now->format('Ymd');
+// $id = (($now->format('H') * 20) + ($now->format('i') / 3)) + 1;
+// $uid = (($now->format('H') * 20) + ($now->format('i') / 3)) + 1;
+
+// dump($date.floor($id));
+// // dd($date.floor($uid));
 
 /*
 |--------------------------------------------------------------------------
@@ -30,6 +39,7 @@ Route::prefix('user')->name('user.')->group(function () {
 Route::prefix('invest')->name('invest.')->group(function () {
     Route::get('{lobby?}', 'InvestController@index')->name('index');
     Route::post('create/{lobby}/{period}', 'InvestController@create')->name('create');
+    Route::get('preprocess/{token}', 'InvestController@preProcess')->name('process');
 });
 
 

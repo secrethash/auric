@@ -11,6 +11,7 @@ use App\Number;
 use App\Order;
 use App\Period;
 use App\Services\Transact;
+use App\Services\Invest;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Log;
 
@@ -47,6 +48,7 @@ class InvestController extends Controller
             'lobbies'=>$lobbies,
             'current'=>$current,
             'period'=> $period,
+            'id' => $id,
         ]);
     }
 
@@ -137,6 +139,34 @@ class InvestController extends Controller
         }
 
         return true;
+    }
+
+    /**
+     * Pre-Process
+     *
+     * @return App\Services\Invest
+     */
+    public function preProcess($token)
+    {
+        // Check Period
+        Log::debug('Preprocessor Controller!');
+        $now = Carbon::now();
+        $id = (($now->format('H') * 20) + ($now->format('i') / 3)) + 1;
+        $id = floor($id);
+
+        $token = decrypt($token);
+        //
+        Log::debug('Id: '.$id.' Token: '.$token);
+        if ($token == $id)
+        {
+            Log::debug('Check Passed! ID is equal to Token!');
+
+            Invest::preprocessor();
+
+            return response()->json([
+                'status' => 'In Process!'
+                ]);
+        }
     }
 
     /**
