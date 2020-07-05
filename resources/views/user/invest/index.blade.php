@@ -176,7 +176,7 @@
                     </div>
                 </div>
 
-                <table class="table table-hover table-responsive">
+                <table class="table table-hover">
                     <thead>
                         <tr>
                             <th scope="col" class="text-muted font-weight-normal">Period</th>
@@ -193,7 +193,7 @@
                             @endphp
                             <tr>
                                 <th class="font-weight-normal">{{Str::of($result->uid)->trim($current->slug.'-')}}</th>
-                                <td class="font-weight-normal">{{$result->price}}</td>
+                                <td class="font-weight-normal">&#8377;&nbsp;{{$result->price}}</td>
                                 <td class="font-weight-normal text-center">{{$number->number}}</td>
                                 <td class="font-weight-normal text-center">
                                     <i class="fa fa-circle @if($color->name === 'red'){{e('text-danger')}}@elseif($color->name === 'green'){{e('text-success')}}@else{{e('text-violet')}}@endif"></i>

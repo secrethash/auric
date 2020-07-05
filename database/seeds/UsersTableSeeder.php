@@ -32,7 +32,24 @@ class UsersTableSeeder extends Seeder
                 'remember_token' => 'Mb0IbsDYtntSkFzIZ6QylFSl1hA3aZxwpOZpH2Yn6HUE4uyrIPS1o3gdXF53',
                 'settings' => NULL,
                 'created_at' => '2020-06-14 13:13:14',
-                'updated_at' => '2020-07-04 14:01:11',
+                'updated_at' => '2020-07-05 00:21:04',
+            ),
+            1 =>
+            array (
+                'id' => 2,
+                'role_id' => 2,
+                'username' => 'iNutVZ2zZtjcFqyJZFdIeGXMQH6FlfcT',
+                'name' => 'Dummy',
+                'email' => 'dummy@auricshops.com',
+                'avatar' => 'users/default.png',
+                'email_verified_at' => NULL,
+                'password' => '$2y$10$OGLOKn648nUmv0e6afHSeOvp0aStAN.zICW3HFz3z/kAPPu8LxHFW',
+                'credits' => 80000000000,
+                'referrer_id' => 1,
+                'remember_token' => NULL,
+                'settings' => NULL,
+                'created_at' => '2020-07-05 11:08:21',
+                'updated_at' => '2020-07-05 11:08:21',
             ),
         ));
 
