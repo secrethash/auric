@@ -12,23 +12,23 @@ class SettingsTableSeeder extends Seeder
      */
     public function run()
     {
-        
+
 
         \DB::table('settings')->delete();
-        
+
         \DB::table('settings')->insert(array (
-            0 => 
+            0 =>
             array (
                 'id' => 1,
                 'key' => 'site.title',
                 'display_name' => 'Site Title',
-                'value' => 'Site Title',
+                'value' => 'Auric Shops',
                 'details' => '',
                 'type' => 'text',
                 'order' => 1,
                 'group' => 'Site',
             ),
-            1 => 
+            1 =>
             array (
                 'id' => 2,
                 'key' => 'site.description',
@@ -39,7 +39,7 @@ class SettingsTableSeeder extends Seeder
                 'order' => 2,
                 'group' => 'Site',
             ),
-            2 => 
+            2 =>
             array (
                 'id' => 3,
                 'key' => 'site.logo',
@@ -50,7 +50,7 @@ class SettingsTableSeeder extends Seeder
                 'order' => 3,
                 'group' => 'Site',
             ),
-            3 => 
+            3 =>
             array (
                 'id' => 4,
                 'key' => 'site.google_analytics_tracking_id',
@@ -61,7 +61,7 @@ class SettingsTableSeeder extends Seeder
                 'order' => 4,
                 'group' => 'Site',
             ),
-            4 => 
+            4 =>
             array (
                 'id' => 5,
                 'key' => 'admin.bg_image',
@@ -72,7 +72,7 @@ class SettingsTableSeeder extends Seeder
                 'order' => 5,
                 'group' => 'Admin',
             ),
-            5 => 
+            5 =>
             array (
                 'id' => 6,
                 'key' => 'admin.title',
@@ -83,7 +83,7 @@ class SettingsTableSeeder extends Seeder
                 'order' => 1,
                 'group' => 'Admin',
             ),
-            6 => 
+            6 =>
             array (
                 'id' => 7,
                 'key' => 'admin.description',
@@ -94,7 +94,7 @@ class SettingsTableSeeder extends Seeder
                 'order' => 2,
                 'group' => 'Admin',
             ),
-            7 => 
+            7 =>
             array (
                 'id' => 8,
                 'key' => 'admin.loader',
@@ -105,7 +105,7 @@ class SettingsTableSeeder extends Seeder
                 'order' => 3,
                 'group' => 'Admin',
             ),
-            8 => 
+            8 =>
             array (
                 'id' => 9,
                 'key' => 'admin.icon_image',
@@ -116,7 +116,7 @@ class SettingsTableSeeder extends Seeder
                 'order' => 4,
                 'group' => 'Admin',
             ),
-            9 => 
+            9 =>
             array (
                 'id' => 10,
                 'key' => 'admin.google_analytics_client_id',
@@ -127,7 +127,7 @@ class SettingsTableSeeder extends Seeder
                 'order' => 1,
                 'group' => 'Admin',
             ),
-            10 => 
+            10 =>
             array (
                 'id' => 11,
                 'key' => 'invest.rules',
@@ -152,7 +152,7 @@ If the result shows 5, you will get (98*1.5) 147rupees.
                 'group' => 'Invest',
             ),
         ));
-        
-        
+
+
     }
 }

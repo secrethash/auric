@@ -29,12 +29,14 @@ class InvestRequest extends FormRequest
      */
     protected function prepareForValidation()
     {
-        Log::debug('Bet Color: ' . $this->bet_color);
-        Log::debug('Bet Number: ' . $this->bet_number);
+        $betColor = $this->bet_color ? decrypt($this->bet_color) : '';
+        $betNumber =  $this->bet_number ? decrypt($this->bet_number) : '';
+        Log::debug('Bet Color: ' . $betColor);
+        Log::debug('Bet Number: ' . $betNumber);
 
         $this->merge([
-            'bet_color' => $this->bet_color ? decrypt($this->bet_color) : '',
-            'bet_number' => $this->bet_number ? decrypt($this->bet_number) : '',
+            'bet_color' => $betColor,
+            'bet_number' => $betNumber,
         ]);
     }
 

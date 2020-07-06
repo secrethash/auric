@@ -103,7 +103,21 @@ class InvestController extends Controller
 
         $transact = Transact::create($data, Auth::user(), $order);
 
-        $betNumber = $validated['bet_number'] ? Number::where('number', $validated['bet_number'])->first()->id : NULL;
+        Log::debug('Controller Bet Number: '.$validated['bet_number']);
+
+        if ($validated['bet_number'])
+        {
+            $betNumber = Number::where('number', $validated['bet_number'])->first()->id;
+        }
+        elseif ($validated['bet_number'] == 0)
+        {
+            $betNumber = Number::where('number', $validated['bet_number'])->first()->id;
+        }
+        else
+        {
+            $betNumber = NULL;
+        }
+
         $betColor = $validated['bet_color'] ? Color::where('name', $validated['bet_color'])->first()->id : NULL;
 
         $user->periods()->attach($period, [

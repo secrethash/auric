@@ -228,6 +228,7 @@
                 @foreach ($user->periods->where('lobby_id', $current->id)->sortDesc()->take(10) as $result)
                     @php
                         $color = App\Color::find($result->pivot->color_id);
+                        $number = App\Number::find($result->pivot->number_id);
                     @endphp
                     <li class="list-group-item justify-content-between align-items-center @if($result->pivot->result){{e('border-success')}}@elseif($result->pivot->result===0){{e('border-danger')}}@else{{e('border-primary')}}@endif">
                         <div class="row">
@@ -243,7 +244,7 @@
                         <div class="row mt-2">
                             <div class="col-4 text-center">
 								<span class="text-muted">Number</span>
-								<h6 class="text-dark text-align-center">{{App\Number::find($result->pivot->number_id)->number ?? '-' }}</h6>
+								<h6 class="text-dark text-align-center">{{$number->number ?? '-' }}</h6>
                             </div>
                             <div class="col-4 text-center">
 								<span class="text-muted">Color</span>
