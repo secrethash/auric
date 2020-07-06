@@ -227,7 +227,7 @@ class Invest {
                     $selectedNumber->weightage -= 0.25;
                     $selectedNumber->save();
 
-                    return self::regenerate($color, $number, $period);
+                    return self::regenerate(Color::orderBy('weightage', 'desc')->first(), Number::orderBy('weightage', 'desc')->first(), $period);
                 }
                 else
                 {
@@ -252,7 +252,7 @@ class Invest {
                     $selectedColor->weightage -= 0.25;
                     $selectedColor->save();
 
-                    return self::regenerate($color, $number, $period);
+                    return self::regenerate(Color::orderBy('weightage', 'desc')->first(), Number::orderBy('weightage', 'desc')->first(), $period);
                 }
                 else
                 {
