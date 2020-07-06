@@ -414,7 +414,7 @@ class MenuItemsTableSeeder extends Seeder
                 'order' => 17,
                 'created_at' => '2020-06-15 14:08:09',
                 'updated_at' => '2020-06-16 15:05:37',
-                'route' => 'logout.link',
+                'route' => 'user.logout',
                 'parameters' => 'null',
             ),
             25 =>

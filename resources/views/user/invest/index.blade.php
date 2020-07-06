@@ -360,16 +360,17 @@
             location.reload(true);
         })
         .on('update.countdown', function (event) {
+            if (event.offset.totalSeconds == 30)
+            {
+                console.log('Pre-processor Running!');
+                $.get('{{route('invest.process', encrypt($id))}}');
+            }
             if (event.offset.totalSeconds <= 30)
             {
                 $("#investron").find("button").prop("disabled", true);
                 jQuery("#investModal").modal('hide');
             }
 
-            if (event.offset.totalSeconds == 30)
-            {
-                $.get('{{route('invest.process', encrypt($id))}}');
-            }
         });
 
         $('#investModal').on('show.bs.modal', function (event) {
@@ -455,10 +456,10 @@
                             }
                         }, 2000);
                         $("#wallet-credits").html(data.wallet);
-                        hideInvestModal();
                         $("#investron").find("button").removeProp('disabled', true);
                         $("#alerts").find("#a-success").removeClass("d-none");
                         $("#alerts").find("#a-success").find("#a-content").html("Invested Successfully!");
+                        hideInvestModal();
                     }
                 },
             });
