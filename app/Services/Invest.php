@@ -198,7 +198,7 @@ class Invest {
 
         if($period->user->count())
         {
-            Log::debug('Generate Period is Active! Period: '.$period->uid);
+            // Log::debug('Generate Period is Active! Period: '.$period->uid);
             $selected = self::sortAmount($numbers, $period, 'number_id')->first();
             $selectedNumber = Number::find($selected['id']);
             // Log::debug('Generated Number Selected: '.json_encode($selectedNumber->number).' after: '.$number->number);
@@ -214,7 +214,7 @@ class Invest {
 
             if ($amountNumber < $amountColor)
             {
-                Log::debug('Amount for Number: '.$selectedNumber->number.' is Lesser.');
+                // Log::debug('Amount for Number: '.$selectedNumber->number.' is Lesser.');
 
                 // Check for 0 and 5
                 $count = $selectedNumber->colors->where('id', $selectedColor->id)->count();
@@ -239,7 +239,7 @@ class Invest {
             }
             elseif ($amountColor < $amountNumber)
             {
-                Log::debug('Amount for Color: '.$selectedColor->name.' is Lesser.');
+                // Log::debug('Amount for Color: '.$selectedColor->name.' is Lesser.');
 
 
                 $count = $selectedColor->numbers->where('id', $selectedNumber->id)->count();
@@ -265,9 +265,9 @@ class Invest {
             }
             elseif ($amountColor === $amountNumber)
             {
-                Log::debug('Else for Generate!');
-                Log::debug('AmountColor: '.$amountColor.' For Color: '.$selectedColor->name.' And Number: '.$number->number);
-                Log::debug('AmountNumber: '.$amountNumber.' For Number: '.$selectedNumber->number.' And Color: '.$color->name);
+                // Log::debug('Else for Generate!');
+                // Log::debug('AmountColor: '.$amountColor.' For Color: '.$selectedColor->name.' And Number: '.$number->number);
+                // Log::debug('AmountNumber: '.$amountNumber.' For Number: '.$selectedNumber->number.' And Color: '.$color->name);
 
                 $num = $selectedColor->numbers;
                 $selected = self::sortAmount($num, $period, 'number_id')->first();
@@ -299,7 +299,7 @@ class Invest {
         }
         else
         {
-            Log::debug('Generating On Standby Mode!');
+            // Log::debug('Generating On Standby Mode!');
             $select = $colors->random();
             $number = $select->numbers->random();
             // Log::debug('Regenrate Select: '.$select);
@@ -317,7 +317,7 @@ class Invest {
 
         if ($period->user->count())
         {
-            Log::debug('Regenrate Period is Active! Period: '.$period->uid);
+            // Log::debug('Regenrate Period is Active! Period: '.$period->uid);
 
             $selected = self::sortAmount($noc, $period, 'number_id')->first();
             $selectedNumber = Number::find($selected['id']);
@@ -332,7 +332,7 @@ class Invest {
             if ($amountNumber < $amountColor)
             {
 
-                Log::debug('Regenerate: Amount for Number: '.$selectedNumber->number.' is Lesser.');
+                // Log::debug('Regenerate: Amount for Number: '.$selectedNumber->number.' is Lesser.');
                 // Check for 0 and 5
                 $count = $selectedNumber->colors->where('id', $selectedColor->id)->count();
                 // Log::debug('Regenerate: Color Check Count: '.$count);
@@ -356,7 +356,7 @@ class Invest {
             }
             elseif ($amountColor < $amountNumber)
             {
-                Log::debug('Regenerate: Amount for Color: '.$selectedColor->name.' is Lesser.');
+                // Log::debug('Regenerate: Amount for Color: '.$selectedColor->name.' is Lesser.');
 
                 // Check for Violet
                 $count = $selectedColor->numbers->where('id', $selectedNumber->id)->count();
