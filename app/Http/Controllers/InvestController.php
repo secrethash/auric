@@ -105,7 +105,11 @@ class InvestController extends Controller
 
         Log::debug('Controller Bet Number: '.$validated['bet_number']);
 
-        if ($validated['bet_number'])
+        if ($validated['bet_number'] == '')
+        {
+            $betNumber = NULL;
+		}
+		elseif ($validated['bet_number'])
         {
             $betNumber = Number::where('number', $validated['bet_number'])->first()->id;
         }
