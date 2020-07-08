@@ -232,27 +232,37 @@
                     @endphp
                     <li class="list-group-item justify-content-between align-items-center @if($result->pivot->result){{e('border-success')}}@elseif($result->pivot->result===0){{e('border-danger')}}@else{{e('border-primary')}}@endif">
                         <div class="row">
-                            <div class="col-8">
+                            <div class="col-6">
 								<span class="text-muted">Period</span>
                                 <h6 class="text-dark">{{Str::of($result->uid)->trim($current->slug.'-')}}</h6>
                             </div>
-                            <div class="col-4">
-								<span class="text-muted">Invested</span>
-								<h6 class="text-dark text-align-center">&#8377;{{$result->pivot->amount}}</h6>
+                            <div class="col-6 text-right">
+								<span class="text-muted text-right">Created On</span>
+								<h6 class="text-muted text-right">{{$result->pivot->created_at->format('Y-m-d H:i')}}</h6>
                             </div>
                         </div>
                         <div class="row mt-2">
-                            <div class="col-4 text-center">
+                            <div class="col-4 text-left">
 								<span class="text-muted">Number</span>
-								<h6 class="text-dark text-align-center">{{$number->number ?? '-' }}</h6>
+								<h6 class="text-dark text-left ml-2">{{$number->number ?? '-' }}</h6>
                             </div>
                             <div class="col-4 text-center">
 								<span class="text-muted">Color</span>
 								<h6 class="text-dark">@if($color)<i class="fa fa-circle @if($color->name === 'violet'){{e('text-violet')}}@elseif($color->name === 'red'){{e('text-danger')}}@elseif($color->name === 'green'){{e('text-success')}}@endif"></i>@else{{e('-')}}@endif</h6>
                             </div>
-                            <div class="col-4">
-								<span class="text-muted">Result</span>
-								<h6 class="@if($result->pivot->result){{e('text-success')}}@elseif($result->pivot->result===0){{e('text-danger')}}@else{{e('text-primary')}}@endif">@if($result->pivot->result){{e('WIN')}}@elseif($result->pivot->result===0){{e('LOOSE')}}@else{{e('ON-GOING')}}@endif</h6>
+                            <div class="col-4 text-right">
+								<span class="text-muted text-right">Result</span>
+								<h6 class="text-right @if($result->pivot->result){{e('text-success')}}@elseif($result->pivot->result===0){{e('text-danger')}}@else{{e('text-primary')}}@endif">@if($result->pivot->result){{e('WIN')}}@elseif($result->pivot->result===0){{e('LOOSE')}}@else{{e('ON-GOING')}}@endif</h6>
+                            </div>
+                        </div>
+                        <div class="row mt-2">
+                            <div class="col-8 text-left">
+								<span class="text-muted text-left">Invested</span>
+								<h6 class="text-dark text-left">&#8377;{{$result->pivot->amount}}</h6>
+                            </div>
+                            <div class="col-4 text-right">
+								<span class="text-muted text-right">Fees</span>
+								<h6 class="text-dark text-right">&#8377;{{$result->pivot->fees}}</h6>
                             </div>
                         </div>
                     </li>

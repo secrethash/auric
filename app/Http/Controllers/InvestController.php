@@ -97,7 +97,7 @@ class InvestController extends Controller
         Log::debug('Bet Amount: '.$amount);
 
         $calculate = new Calculate;
-        $commission = $calculate->commission($amount);
+        $commission = $calculate->commission($amount) * $validated['bets'];
         $amount = $calculate->final() * $validated['bets'];
         Log::debug('Bet Commission: '.$commission);
         Log::debug('Final Bet Amount: '.$amount);
@@ -135,9 +135,12 @@ class InvestController extends Controller
 
         $user->periods()->attach($period, [
             'amount' => $amount,
+            'fees' => $commission,
             'transaction_id' => $transact->id,
             'number_id' => $betNumber,
-            'color_id' => $betColor
+            'color_id' => $betColor,
+            'created_at' => now(),
+            'updated_at' => now(),
         ]);
 
         $wallet = Transact::wallet($order->method, $amount, $user);
