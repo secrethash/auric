@@ -15,6 +15,7 @@ use App\ {
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Log;
 use App\Services\Transact;
+use App\Services\Calculate;
 
 class Invest {
 
@@ -722,12 +723,12 @@ class Invest {
         {
             if ($number->number === 0)
             {
-                // Also Associate Color Red
+                // Associate Color Red
                 $period->color()->associate(Color::whereName('red')->first());
             }
             elseif ($number->number === 5)
             {
-                // Also Associate Color Green
+                // Associate Color Green
                 $period->color()->associate(Color::whereName('green')->first());
             }
         }
@@ -743,16 +744,25 @@ class Invest {
 
         $order = Order::whereType('roi')->first();
 
+        // Period User For Number
         $puNumber = PeriodUser::where(['number_id' => $number->id, 'period_id' => $period->id])
                             ->get();
 
         foreach ($puNumber as $pu)
         {
+            $user = User::find($pu->user_id);
+            $calculate = new Calculate;
+            $calculate->amount = $pu->amount;
+            $calculate->number();
+            $amount = $calculate->prize();
+
             $pu->result = 1;
             $pu->save();
-            self::transact($pu, $period, $order);
+
+            self::transact($amount, $user, $period, $order);
         }
 
+        // Period User For Color
         $colorId = collect([$color->id]);
 
         if ($color->name === 'violet')
@@ -774,9 +784,17 @@ class Invest {
 
         foreach ($puColor as $pu)
         {
+            $user = User::find($pu->user_id);
+            $puColor = Color::find($pu->color_id);
+            $calculate = new Calculate;
+            $calculate->amount = $pu->amount;
+            $calculate->color($puColor, $number);
+            $amount = $calculate->prize();
+
             $pu->result = 1;
             $pu->save();
-            self::transact($pu, $period, $order);
+
+            self::transact($amount, $user, $period, $order);
 
         }
 
@@ -814,12 +832,10 @@ class Invest {
 
     }
 
-    protected static function transact($pu, $period, $order)
+    protected static function transact($amount, $user, $period, $order)
     {
 
-        // Create Transaction
-        $user = User::find($pu->user_id);
-        $amount = $pu->amount;
+
         $data = [
             'amount' => $amount,
             'note' => 'Return on Investment for: '.$period->uid,

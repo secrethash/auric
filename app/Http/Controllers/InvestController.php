@@ -10,6 +10,7 @@ use App\Lobby;
 use App\Number;
 use App\Order;
 use App\Period;
+use App\Services\Calculate;
 use App\Services\Transact;
 use App\Services\Invest;
 use Carbon\Carbon;
@@ -92,7 +93,15 @@ class InvestController extends Controller
 
         $order = Order::whereType('invest')->first();
 
-        $amount = $validated['amount'] * $validated['bets'];
+        $amount = $validated['amount'];
+        Log::debug('Bet Amount: '.$amount);
+
+        $calculate = new Calculate;
+        $commission = $calculate->commission($amount);
+        $amount = $calculate->final() * $validated['bets'];
+        Log::debug('Bet Commission: '.$commission);
+        Log::debug('Final Bet Amount: '.$amount);
+
         $data = [
             'amount' => $amount,
             'note' => 'Investment in Period: '.$period->uid,
