@@ -48,7 +48,7 @@ class UserController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * User Wallet Show.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
@@ -57,6 +57,18 @@ class UserController extends Controller
     {
         //
         return view('user.wallet')->with('user', auth()->user());
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function walletAdd()
+    {
+        //
+        return view('user.wallet-add')->with('user', auth()->user());
     }
 
     /**

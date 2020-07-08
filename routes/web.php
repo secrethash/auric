@@ -29,14 +29,15 @@ Route::get('/home', 'HomeController@index')->name('home.index');
 Route::get('/shop', 'Shop\ProductsController@index')->name('shop.list');
 Route::get('/shop/{product?}', 'Shop\ProductsController@show')->name('shop.show');
 
-Route::prefix('user')->name('user.')->group(function () {
+Route::prefix('user')->name('user.')->middleware('auth')->group(function () {
     Route::get('account', 'UserController@account')->name('account');
     Route::get('referral', 'UserController@referral')->name('referral');
     Route::get('wallet', 'UserController@wallet')->name('wallet');
+    Route::get('wallet/add', 'UserController@walletAdd')->name('wallet.add');
     Route::get('logout', 'UserController@logout')->name('logout');
 });
 
-Route::prefix('invest')->name('invest.')->group(function () {
+Route::prefix('invest')->name('invest.')->middleware('auth')->group(function () {
     Route::get('{lobby?}', 'InvestController@index')->name('index');
     Route::post('create/{lobby}/{period}', 'InvestController@create')->name('create');
     Route::get('preprocess/{token}', 'InvestController@preProcess')->name('process');

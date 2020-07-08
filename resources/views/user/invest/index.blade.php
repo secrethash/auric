@@ -60,7 +60,7 @@
         <p>Available Balance</p>
         <h1 class="text-white">&#8377;<span id="wallet-credits">{{$user->credits}}</span></h1>
         <div>
-            <button href="#addmoney" class="btn btn-light text-dark"><i class="lni-plus"></i>&nbsp;Add Money</button>
+            <a href="{{route('user.wallet.add')}}" class="btn btn-light text-dark"><i class="lni-plus"></i>&nbsp;Add Money</a>
             <button href="#rules" class="btn btn-dark" data-toggle="modal" data-target="#rules"><i class="lni-agenda"></i>&nbsp;Rules</button>
         </div>
         <div class="clearfix mt-2 mb-0 pb-0 text-white">
@@ -257,8 +257,8 @@
                         </div>
                         <div class="row mt-2">
                             <div class="col-8 text-left">
-								<span class="text-muted text-left">Invested</span>
-								<h6 class="text-dark text-left">&#8377;{{$result->pivot->amount}}</h6>
+								<span class="text-muted text-left">Amount Invested</span>
+								<h6 class="@if($result->pivot->result){{e('text-success')}}@elseif($result->pivot->result===0){{e('text-danger')}}@else{{e('text-dark')}}@endif text-left">&#8377; @if($result->pivot->result){{e('+')}}@elseif($result->pivot->result===0){{e('-')}}@endif{{$result->pivot->amount}}</h6>
                             </div>
                             <div class="col-4 text-right">
 								<span class="text-muted text-right">Fees</span>

@@ -12,7 +12,7 @@
     <div class="live-chat-intro mb-3">
         <p>Your Balance</p>
         <h1 class="text-white">&#8377;{{$user->credits}}</h1>
-        <div class=""><button href="#addmoney" class="btn btn-light text-dark"><i class="lni-plus"></i>&nbsp;Add Money</button></div>
+        <div class=""><a href="{{route('user.wallet.add')}}" class="btn btn-light text-dark"><i class="lni-plus"></i>&nbsp;Add Money</a></div>
         <!-- .status.offline We’ll be back soon // Use this code for "Offline" Status-->
     </div>
 
