@@ -25,14 +25,18 @@
                 <div class="credit-card-info-wrapper"><img class="d-block mb-4" src="{{asset("images/bg-img/12.png")}}" alt="">
                     <div class="pay-credit-card-form">
                         <p>Add Money to your Wallet. Your wallet will be creadited with the specified amount after a successful transaction.</p>
-                        <form action="payment-success.html" method="POST">
+                        <form action="{{route('user.wallet.pay')}}" method="POST">
+                            @csrf
                             <label for="amount">Amount to Add</label>
                             <div class="input-group mb-3">
                                 <div class="input-group-prepend">
                                     <span class="input-group-text bg-dark text-white" id="basic-addon1">&nbsp;&#8377;&nbsp;</span>
                                 </div>
-                                <input class="form-control" type="text" id="amount" placeholder="Amount to add" value="1000"><small class="ml-1"><i class="fa fa-lock mr-1"></i>Your payment is processed under Maximum Security.<a class="ml-1" href="#">Learn More</a></small>
+                                <input class="form-control" type="text" name="amount" id="amount" placeholder="Amount to add" value="1000"><small class="ml-1"><i class="fa fa-lock mr-1"></i>Your payment is processed under Maximum Security.<a class="ml-1" href="#">Learn More</a></small>
                             </div>
+                            @error('amount')
+                                <span class="text-danger">{{$message}}</span>
+                            @enderror
                             <button class="btn btn-warning btn-lg w-100" type="submit">Pay Now</button>
                         </form>
                     </div>

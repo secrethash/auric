@@ -34,6 +34,8 @@ Route::prefix('user')->name('user.')->middleware('auth')->group(function () {
     Route::get('referral', 'UserController@referral')->name('referral');
     Route::get('wallet', 'UserController@wallet')->name('wallet');
     Route::get('wallet/add', 'UserController@walletAdd')->name('wallet.add');
+    Route::post('wallet/pay', 'UserController@pay')->name('wallet.pay');
+    Route::post('wallet/pay/verify/{transaction}', 'UserController@payVerify')->name('wallet.pay.verify');
     Route::get('logout', 'UserController@logout')->name('logout');
 });
 
