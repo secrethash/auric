@@ -517,7 +517,7 @@ class MenuItemsTableSeeder extends Seeder
             array (
                 'id' => 32,
                 'menu_id' => 5,
-                'title' => 'WinGo',
+                'title' => 'GetIt',
                 'url' => '',
                 'target' => '_self',
                 'icon_class' => 'lni-investment',

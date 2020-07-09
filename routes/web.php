@@ -1,15 +1,19 @@
 <?php
 
-use App\Http\Controllers\InvestController;
 use Illuminate\Support\Facades\Route;
 
 
-// $now = now()->subMinutes(2)->subSeconds(30);
+// $now = now()->addMinutes(60);
 // $date = $now->format('Ymd');
 // $id = (($now->format('H') * 20) + ($now->format('i') / 3)) + 1;
-// $uid = (($now->format('H') * 20) + ($now->format('i') / 3)) + 1;
+// $id = floor($id);
+// $id = str_pad($id, 3, '0', STR_PAD_LEFT);
 
-// dump($date.floor($id));
+// dump($id);
+
+// $now = Carbon::now();
+// $date = $now->format('Ymd');
+// $id = (($now->format('H') * 20) + ($now->format('i') / 3)) + 1;
 // // dd($date.floor($uid));
 
 /*

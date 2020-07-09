@@ -28,11 +28,13 @@ class Invest {
         $now = Carbon::now();
         $date = $now->format('Ymd');
         $id = (($now->format('H') * 20) + ($now->format('i') / 3)) + 1;
+        $id = floor($id);
+        $id = str_pad($id, 3, '0', STR_PAD_LEFT);
         $current = collect([]);
 
         foreach ($lobbies as $lobby)
         {
-            $uid = $lobby->slug.'-'.$date.floor($id);
+            $uid = $lobby->slug.'-'.$date.$id;
             // Collecting Current UIDs
             $current->push($uid);
 

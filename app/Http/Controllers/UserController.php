@@ -96,14 +96,15 @@ class UserController extends Controller
         $secret = config('payment.razorpay.secret');
         $api = new Api($key, $secret);
 
+        $amount = $validated['amount'];
+
         $creation = array(
             'receipt' => uniqid(),
-            'amount' => $validated['amount'],
+            'amount' => $amount * 100,
             'currency' => 'INR',
             'payment_capture' => 1
         );
-        Log::debug('Razorpay Key: '.$key);
-        Log::debug('Razorpay Secret: '.$secret);
+
         $order = $api->order->create($creation); // Creates order
 
         // Record Transaction
@@ -111,7 +112,7 @@ class UserController extends Controller
         $user = $request->user();
         $data = [
             "note" => "Adding Money to Wallet.",
-            "amount" => $validated['amount'],
+            "amount" => $amount,
             "request_id" => $order['id'],
             "payment_id" => NULL,
         ];
@@ -119,7 +120,7 @@ class UserController extends Controller
 
         $data = [
             "key"               => $key,
-            "amount"            => $validated['amount'],
+            "amount"            => $amount * 100,
             "name"              => setting('site.title'),
             "description"       => 'Your one Stop Shop',
             "prefill"           => [
@@ -128,7 +129,7 @@ class UserController extends Controller
             ],
             "order_id"          => $order['id'],
             "display_currency"  => 'INR',
-            "display_amount"    => $validated['amount'],
+            "display_amount"    => $amount,
             "theme"             => [
                 "image_padding" => false,
             ],
@@ -136,7 +137,7 @@ class UserController extends Controller
 
         $json = json_encode($data);
 
-        return view('user.wallet.pay')->with(['user' => auth()->user(), 'json' => $json, 'amount' => $validated['amount'], 'transaction' => encrypt($transact->sign)]);
+        return view('user.wallet.pay')->with(['user' => auth()->user(), 'json' => $json, 'amount' => $amount, 'transaction' => encrypt($transact->sign)]);
     }
 
     /**
@@ -151,6 +152,7 @@ class UserController extends Controller
         $key = config('payment.razorpay.key');
         $secret = config('payment.razorpay.secret');
         $success = true;
+        $user = $request->user();
 
         $transaction = decrypt($transaction);
         $transaction = Transaction::whereSign($transaction)->first();
@@ -188,6 +190,9 @@ class UserController extends Controller
             $transaction->note = "Added Money to Wallet.";
             $transaction->status = 'success';
             $transaction->save();
+
+            $user->credits += $transaction->amount;
+            $user->save();
 
             $message = 'YuHoo! Your Payment was Successful!';
         }
