@@ -92,8 +92,8 @@ class UserController extends Controller
             "amount" => ["numeric", "min:100", "required"],
         ]);
 
-        $key = env("RAZORPAY_KEY");
-        $secret = env("RAZORPAY_SECRET");
+        $key = config('payment.razorpay.key');
+        $secret = config('payment.razorpay.secret');
         $api = new Api($key, $secret);
 
         $creation = array(
@@ -148,8 +148,8 @@ class UserController extends Controller
     public function payVerify(Request $request, $transaction)
     {
         //
-        $key = env('RAZORPAY_KEY');
-        $secret = env('RAZORPAY_SECRET');
+        $key = config('payment.razorpay.key');
+        $secret = config('payment.razorpay.secret');
         $success = true;
 
         $transaction = decrypt($transaction);
