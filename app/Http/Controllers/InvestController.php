@@ -93,7 +93,8 @@ class InvestController extends Controller
 
         $order = Order::whereType('invest')->first();
 
-        $amount = $validated['amount'];
+        $betAmount = $validated['amount'];
+        $amount = $betAmount;
         Log::debug('Bet Amount: '.$amount);
 
         $calculate = new Calculate;
@@ -102,8 +103,10 @@ class InvestController extends Controller
         Log::debug('Bet Commission: '.$commission);
         Log::debug('Final Bet Amount: '.$amount);
 
+        $betAmount = $betAmount * $validated['bets'];
+
         $data = [
-            'amount' => $amount,
+            'amount' => $betAmount,
             'note' => 'Investment in Period: '.$period->uid,
             'status' => 'success',
             'payment_id' => null,
@@ -131,6 +134,7 @@ class InvestController extends Controller
             $betNumber = NULL;
         }
 
+        $wallet = Transact::wallet($order->method, $betAmount, $user);
         $betColor = $validated['bet_color'] ? Color::where('name', $validated['bet_color'])->first()->id : NULL;
 
         $user->periods()->attach($period, [
@@ -143,7 +147,6 @@ class InvestController extends Controller
             'updated_at' => now(),
         ]);
 
-        $wallet = Transact::wallet($order->method, $amount, $user);
 
         return response()->json([
             'success' => true,

@@ -92,7 +92,7 @@ class UserController extends Controller
             "amount" => ["numeric", "min:100", "required"],
         ]);
 
-        $key = env('RAZORPAY_KEY');
+        $key = env("RAZORPAY_KEY");
         $secret = env("RAZORPAY_SECRET");
         $api = new Api($key, $secret);
 
@@ -102,7 +102,8 @@ class UserController extends Controller
             'currency' => 'INR',
             'payment_capture' => 1
         );
-
+        Log::debug('Razorpay Key: '.$key);
+        Log::debug('Razorpay Secret: '.$secret);
         $order = $api->order->create($creation); // Creates order
 
         // Record Transaction
