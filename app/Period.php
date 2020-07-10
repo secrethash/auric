@@ -14,7 +14,7 @@ class Period extends Model
     //
     public function user()
     {
-        return $this->belongsToMany(User::class)->withPivot(['amount', 'transaction_id', 'number_id', 'color_id', 'result']);
+        return $this->belongsToMany(User::class)->withPivot(['amount', 'transaction_id', 'number_id', 'color_id', 'result', 'delivery']);
     }
 
     /**

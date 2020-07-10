@@ -19,6 +19,7 @@ class CreatePeriodUserTable extends Migration
             $table->foreignId('period_id');
             $table->bigInteger('amount');
             $table->bigInteger('fees');
+            $table->bigInteger('delivery')->nullable();
             $table->foreignId('transaction_id')->constrained();
             $table->foreignId('number_id')->nullable()->constrained();
             $table->foreignId('color_id')->nullable()->constrained();

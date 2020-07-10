@@ -63,7 +63,10 @@ class UserController extends Controller
     public function wallet()
     {
         //
-        return view('user.wallet.index')->with('user', auth()->user());
+        $user = Auth::user();
+        $transactions = Transaction::where('user_id', $user->id)->orderBy('created_at', 'desc')->paginate(10);
+        // dd($transactions);
+        return view('user.wallet.index')->with(['user' => $user, 'transactions' => $transactions]);
     }
 
     /**

@@ -30,7 +30,7 @@
 
             <h3 class="text-center" style="color: #333;">Transactions</h3>
             <ul class="list-group mb-3">
-                @foreach ($user->transactions->sortDesc() as $trans)
+                @foreach($transactions as $trans)
 
                     <li class="list-group-item justify-content-between align-items-center">
                         <div class="row">
@@ -66,6 +66,7 @@
                 @endforeach
 
             </ul>
+            <div class="d-flex justify-content-between align-items-center">{{ $transactions->links() }}</div>
         </div>
     </div>
 

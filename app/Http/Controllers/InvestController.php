@@ -10,6 +10,7 @@ use App\Lobby;
 use App\Number;
 use App\Order;
 use App\Period;
+use App\PeriodUser;
 use App\Services\Calculate;
 use App\Services\Transact;
 use App\Services\Invest;
@@ -22,6 +23,7 @@ class InvestController extends Controller
     {
         $this->middleware('auth');
     }
+
     /**
      * Display a listing of the resource.
      *
@@ -50,6 +52,61 @@ class InvestController extends Controller
             'current'=>$current,
             'period'=> $period,
             'id' => $id,
+        ]);
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function periods($lobby)
+    {
+
+        $lobby = Lobby::whereSlug($lobby)->first();
+
+        if (!$lobby)
+        {
+            return abort(404);
+        }
+
+        $periods = Period::where('lobby_id', $lobby->id)
+                        ->where('active', 0)
+                        ->latest()
+                        ->paginate(20);
+
+        return view('user.invest.periods')->with([
+            'user'=>auth()->user(),
+            'lobby'=>$lobby,
+            'periods'=> $periods,
+        ]);
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function records($lobby)
+    {
+        $user = Auth::user();
+        $lobby = Lobby::whereSlug($lobby)->first();
+
+        if (!$lobby)
+        {
+            return abort(404);
+        }
+
+        // $records = PeriodUser::where('user_id', $user->id)
+        //                     ->latest()
+        //                     ->paginate(20);
+        $periods = Period::where('lobby_id', $lobby->id)->get();
+        $records = $user->periods()->where('lobby_id', $lobby->id)->latest()->paginate(10);
+
+        return view('user.invest.records')->with([
+            'user' => $user,
+            'lobby' => $lobby,
+            'records' => $records,
         ]);
     }
 

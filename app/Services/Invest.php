@@ -759,6 +759,7 @@ class Invest {
             $amount = $calculate->prize();
 
             $pu->result = 1;
+            $pu->delivery = $amount;
             $pu->save();
 
             self::transact($amount, $user, $period, $order);
@@ -794,6 +795,7 @@ class Invest {
             $amount = $calculate->prize();
 
             $pu->result = 1;
+            $pu->delivery = $amount;
             $pu->save();
 
             self::transact($amount, $user, $period, $order);

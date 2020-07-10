@@ -172,7 +172,7 @@
                         <h5 class="text-left">{{$current->name}} Records</h5>
                     </div>
                     <div class="col-4">
-                        <a href="#" class="btn text-danger btn-link float-right">More <i class="lni-chevron-right"></i></a>
+                        <a href="{{route('invest.periods', $current->slug)}}" class="btn text-danger btn-link float-right">More <i class="lni-chevron-right"></i></a>
                     </div>
                 </div>
 
@@ -220,7 +220,7 @@
                         <h5 class="text-left">My {{$current->name}} Records</h5>
                     </div>
                     <div class="col-4">
-                        <a href="#" class="btn text-danger btn-link float-right">More <i class="lni-chevron-right"></i></a>
+                        <a href="{{route('invest.records', $current->slug)}}" class="btn text-danger btn-link float-right">More <i class="lni-chevron-right"></i></a>
                     </div>
                 </div>
 
@@ -244,25 +244,30 @@
                         <div class="row mt-2">
                             <div class="col-4 text-left">
 								<span class="text-muted">Number</span>
-								<h6 class="text-dark text-left ml-2">{{$number->number ?? '-' }}</h6>
+								<h6 class="text-dark text-left ml-2">{!!$number->number ?? '&mdash;' !!}</h6>
                             </div>
                             <div class="col-4 text-center">
 								<span class="text-muted">Color</span>
-								<h6 class="text-dark">@if($color)<i class="fa fa-circle @if($color->name === 'violet'){{e('text-violet')}}@elseif($color->name === 'red'){{e('text-danger')}}@elseif($color->name === 'green'){{e('text-success')}}@endif"></i>@else{{e('-')}}@endif</h6>
+								<h6 class="text-dark">@if($color)<i class="fa fa-circle @if($color->name === 'violet'){{e('text-violet')}}@elseif($color->name === 'red'){{e('text-danger')}}@elseif($color->name === 'green'){{e('text-success')}}@endif"></i>@else{!!'&mdash;'!!}@endif</h6>
                             </div>
                             <div class="col-4 text-right">
 								<span class="text-muted text-right">Result</span>
 								<h6 class="text-right @if($result->pivot->result){{e('text-success')}}@elseif($result->pivot->result===0){{e('text-danger')}}@else{{e('text-primary')}}@endif">@if($result->pivot->result){{e('WIN')}}@elseif($result->pivot->result===0){{e('LOOSE')}}@else{{e('ON-GOING')}}@endif</h6>
                             </div>
                         </div>
+                        <hr>
                         <div class="row mt-2">
-                            <div class="col-8 text-left">
-								<span class="text-muted text-left">Amount Invested</span>
-								<h6 class="@if($result->pivot->result){{e('text-success')}}@elseif($result->pivot->result===0){{e('text-danger')}}@else{{e('text-dark')}}@endif text-left">&#8377; @if($result->pivot->result){{e('+')}}@elseif($result->pivot->result===0){{e('-')}}@endif{{$result->pivot->amount}}</h6>
+                            <div class="col-4 text-left">
+								<span class="text-muted text-left">Contract</span>
+								<h6 class="text-dark text-left">&#8377; {{$result->pivot->amount + $result->pivot->fees}}</h6>
+                            </div>
+                            <div class="col-4 text-center">
+								<span class="text-muted text-center">Fees</span>
+								<h6 class="text-dark text-center">&#8377;{{$result->pivot->fees}}</h6>
                             </div>
                             <div class="col-4 text-right">
-								<span class="text-muted text-right">Fees</span>
-								<h6 class="text-dark text-right">&#8377;{{$result->pivot->fees}}</h6>
+								<span class="text-muted text-right">Delivery</span>
+								<h6 class="@if($result->pivot->result){{e('text-success')}}@elseif($result->pivot->result===0){{e('text-danger')}}@else{{e('text-primary')}}@endif text-right">@if($result->pivot->result){!!e('+ ').'&#8377;'.$result->pivot->delivery!!}@elseif($result->pivot->result===0){!!e('- ').'&#8377;'.$result->pivot->amount!!}@else{!!'&mdash;'!!}@endif</h6>
                             </div>
                         </div>
                     </li>

@@ -3,19 +3,6 @@
 use Illuminate\Support\Facades\Route;
 
 
-// $now = now()->addMinutes(60);
-// $date = $now->format('Ymd');
-// $id = (($now->format('H') * 20) + ($now->format('i') / 3)) + 1;
-// $id = floor($id);
-// $id = str_pad($id, 3, '0', STR_PAD_LEFT);
-
-// dump($id);
-
-// $now = Carbon::now();
-// $date = $now->format('Ymd');
-// $id = (($now->format('H') * 20) + ($now->format('i') / 3)) + 1;
-// // dd($date.floor($uid));
-
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -45,6 +32,8 @@ Route::prefix('user')->name('user.')->middleware('auth')->group(function () {
 
 Route::prefix('invest')->name('invest.')->middleware('auth')->group(function () {
     Route::get('{lobby?}', 'InvestController@index')->name('index');
+    Route::get('{lobby}/periods', 'InvestController@periods')->name('periods');
+    Route::get('{lobby}/records', 'InvestController@records')->name('records');
     Route::post('create/{lobby}/{period}', 'InvestController@create')->name('create');
     Route::get('preprocess/{token}', 'InvestController@preProcess')->name('process');
 });
