@@ -9,9 +9,11 @@
         <!-- Title-->
         <title>{{setting('site.title')}}</title>
         <!-- Favicon-->
-        <link rel="icon" href="images/core-img/favicon.ico">
+        <link rel="icon" href="{{asset("images/core-img/favicon.ico")}}">
         <!-- Stylesheet-->
         <link rel="stylesheet" href="{{asset("style.css")}}">
+
+        <link rel="manifest" href="{{asset("manifest.webmanifest")}}">
         {{-- <link rel="stylesheet" href="{{mix("css/app.css")}}"> --}}
         @yield('style')
     </head>
