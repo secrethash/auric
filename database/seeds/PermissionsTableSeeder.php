@@ -545,6 +545,46 @@ class PermissionsTableSeeder extends Seeder
                 'created_at' => '2020-07-02 12:19:56',
                 'updated_at' => '2020-07-02 12:19:56',
             ),
+            66 => 
+            array (
+                'id' => 67,
+                'key' => 'browse_pages',
+                'table_name' => 'pages',
+                'created_at' => '2020-07-11 22:48:05',
+                'updated_at' => '2020-07-11 22:48:05',
+            ),
+            67 => 
+            array (
+                'id' => 68,
+                'key' => 'read_pages',
+                'table_name' => 'pages',
+                'created_at' => '2020-07-11 22:48:05',
+                'updated_at' => '2020-07-11 22:48:05',
+            ),
+            68 => 
+            array (
+                'id' => 69,
+                'key' => 'edit_pages',
+                'table_name' => 'pages',
+                'created_at' => '2020-07-11 22:48:05',
+                'updated_at' => '2020-07-11 22:48:05',
+            ),
+            69 => 
+            array (
+                'id' => 70,
+                'key' => 'add_pages',
+                'table_name' => 'pages',
+                'created_at' => '2020-07-11 22:48:05',
+                'updated_at' => '2020-07-11 22:48:05',
+            ),
+            70 => 
+            array (
+                'id' => 71,
+                'key' => 'delete_pages',
+                'table_name' => 'pages',
+                'created_at' => '2020-07-11 22:48:05',
+                'updated_at' => '2020-07-11 22:48:05',
+            ),
         ));
         
         

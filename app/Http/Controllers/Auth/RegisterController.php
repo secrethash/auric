@@ -32,7 +32,8 @@ class RegisterController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = RouteServiceProvider::HOME;
+    // protected $redirectTo = RouteServiceProvider::HOME;
+    protected $redirectTo = '/auth/phone/verify';
 
     /**
      * Create a new controller instance.
@@ -66,7 +67,7 @@ class RegisterController extends Controller
     {
         return Validator::make($data, [
             'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'phone' => ['required', 'numeric', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
             // 'username' => ['required', 'string', 'unique:users', 'alpha_dash', 'min:3', 'max:30'],
             'referral' => ['required', 'string', 'exists:users,username', 'alpha_dash', 'min:10'],
@@ -84,6 +85,7 @@ class RegisterController extends Controller
         $referrer = User::whereUsername(session()->pull('referrer'))->first();
 
         $username = $this->generateUsername();
+        $country_code = '+91';
 
         if (!$referrer)
         {
@@ -93,12 +95,28 @@ class RegisterController extends Controller
         return User::create([
             'username' => $username,
             'name' => $data['name'],
-            'email' => $data['email'],
+            'phone' => $country_code.$data['phone'],
             'referrer_id' => $referrer ? $referrer->id : null,
             'password' => Hash::make($data['password']),
         ]);
     }
 
+    /**
+     * Triggered after a successful registration
+     *
+     * @return redirect
+     */
+    protected function registered(Request $request, User $user)
+    {
+        $user->textToVerify();
+        return redirect($this->redirectPath());
+    }
+
+    /**
+     * Generates a random username
+     *
+     * @return string uuid
+     */
     protected function generateUsername()
     {
         //

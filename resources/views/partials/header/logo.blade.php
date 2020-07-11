@@ -1,5 +1,5 @@
 <!-- Logo Wrapper-->
-<div class="logo-wrapper"><a href="home.html"><img src="{{asset("images/core-img/logo_icon_small.png")}}" alt=""></a></div>
+<div class="logo-wrapper"><a href="{{route('home.index')}}"><img src="{{asset("images/core-img/logo_icon_small.png")}}" alt=""></a></div>
 <!-- Search Form-->
 <div class="top-search-form">
     <form action="" method="POST">

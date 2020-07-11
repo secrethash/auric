@@ -42,6 +42,20 @@
             </div>
         </div>
     </div>
+
+    <div class="container">
+        <!-- Checkout Wrapper-->
+        <div class="checkout-wrapper-area py-3">
+            <h6>Bonus Rules</h6>
+            <p><strong>Level 1:</strong> 0.6% per transaction</p>
+            <p><strong>Level 2:</strong> 0.5% per transaction</p>
+            <p><strong>Level 3:</strong> 0.4% per transaction</p>
+            <p><strong>Level 4:</strong> 0.3% per transaction</p>
+            <p><strong>Level 5:</strong> 0.2% per transaction</p>
+            <p><strong>Level 6 and below:</strong> flat 0.1% per transaction</p>
+            <blockquote>Commissions can be withdrawn from your account at anytime.</blockquote>
+        </div>
+    </div>
 @endsection
 
 @section('scripts')

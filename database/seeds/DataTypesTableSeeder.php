@@ -215,6 +215,24 @@ class DataTypesTableSeeder extends Seeder
                 'created_at' => '2020-07-02 12:19:56',
                 'updated_at' => '2020-07-04 10:50:41',
             ),
+            11 => 
+            array (
+                'id' => 12,
+                'name' => 'pages',
+                'slug' => 'pages',
+                'display_name_singular' => 'Page',
+                'display_name_plural' => 'Pages',
+                'icon' => 'voyager-browser',
+                'model_name' => 'App\\Page',
+                'policy_name' => NULL,
+                'controller' => NULL,
+                'description' => NULL,
+                'generate_permissions' => 1,
+                'server_side' => 0,
+                'details' => '{"order_column":null,"order_display_column":null,"order_direction":"asc","default_search_key":null}',
+                'created_at' => '2020-07-11 22:48:04',
+                'updated_at' => '2020-07-11 22:48:04',
+            ),
         ));
         
         

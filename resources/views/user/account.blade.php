@@ -8,7 +8,7 @@
     <div class="container">
         <!-- Settings Wrapper-->
         <div class="settings-wrapper py-3">
-            <div class="card settings-card">
+            {{-- <div class="card settings-card">
                 <div class="card-body">
                     <!-- Single Settings-->
                     <div class="single-settings d-flex align-items-center justify-content-between">
@@ -24,13 +24,13 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> --}}
             <div class="card settings-card">
                 <div class="card-body">
                     <!-- Single Settings-->
                     <div class="single-settings d-flex align-items-center justify-content-between">
-                        <div class="title"><i class="lni-delivery"></i><span>My Orders</span></div>
-                        <div class="data-content"><a href="language.html">View<i class="lni-chevron-right"></i></a></div>
+                        <div class="title"><i class="lni-delivery"></i><span>My Offers</span></div>
+                        <div class="data-content"><a href="{{route('page', 'my-offers')}}" class="stretched-link">View<i class="lni-chevron-right"></i></a></div>
                     </div>
                 </div>
             </div>
@@ -38,8 +38,8 @@
                 <div class="card-body">
                     <!-- Single Settings-->
                     <div class="single-settings d-flex align-items-center justify-content-between">
-                        <div class="title"><i class="lni-crown"></i><span>My Promotions</span></div>
-                        <div class="data-content"><a href="{{route('user.referral')}}">Referral<i class="lni-chevron-right"></i></a></div>
+                        <div class="title"><i class="lni-crown"></i><span>My Bonus</span></div>
+                        <div class="data-content"><a href="{{route('user.referral')}}" class="stretched-link">Referral<i class="lni-chevron-right"></i></a></div>
                     </div>
                 </div>
             </div>
@@ -48,7 +48,7 @@
                     <!-- Single Settings-->
                     <div class="single-settings d-flex align-items-center justify-content-between">
                         <div class="title"><i class="lni-wallet"></i><span>My Wallet</span></div>
-                        <div class="data-content"><a href="{{route('user.wallet')}}">&#8377;{{$user->credits}}<i class="lni-chevron-right"></i></a></div>
+                        <div class="data-content"><a href="{{route('user.wallet')}}" class="stretched-link">&#8377;{{$user->credits}}<i class="lni-chevron-right"></i></a></div>
                     </div>
                 </div>
             </div>
@@ -66,7 +66,7 @@
                     <!-- Single Settings-->
                     <div class="single-settings d-flex align-items-center justify-content-between">
                         <div class="title"><i class="lni-protection"></i><span>Privacy</span></div>
-                        <div class="data-content"><a class="pl-4 stretched-link" href="privacy-policy.html"><i class="lni-chevron-right"></i></a></div>
+                        <div class="data-content"><a class="pl-4 stretched-link" href="{{route('page', 'privacy-policy')}}"><i class="lni-chevron-right"></i></a></div>
                     </div>
                 </div>
             </div>
@@ -75,7 +75,7 @@
                     <!-- Single Settings-->
                     <div class="single-settings d-flex align-items-center justify-content-between">
                         <div class="title"><i class="lni-protection"></i><span>Risk & Disclosure</span></div>
-                        <div class="data-content"><a class="pl-4" href="privacy-policy.html"><i class="lni-chevron-right"></i></a></div>
+                        <div class="data-content"><a class="pl-4 stretched-link" href="privacy-policy.html"><i class="lni-chevron-right"></i></a></div>
                     </div>
                 </div>
             </div>

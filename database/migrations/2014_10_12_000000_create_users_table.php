@@ -17,8 +17,12 @@ class CreateUsersTable extends Migration
             $table->id();
             $table->uuid('username')->unique();
             $table->string('name');
-            $table->string('email')->unique();
+            $table->string('email')->unique()->nullable();
+            $table->string('phone')->unique();
             $table->timestamp('email_verified_at')->nullable();
+            $table->timestamp('phone_verified_at')->nullable();
+            $table->string('verification_code')->unique()->nullable();
+            $table->timestamp('code_sent_at')->nullable();
             $table->string('password');
             $table->bigInteger('credits')->default(0);
             $table->unsignedBigInteger('referrer_id')->nullable();

@@ -28,7 +28,7 @@
             <div class="background-shape"></div>
             <div class="container">
                 <div class="row justify-content-center">
-                    <div class="col-12 col-sm-9 col-md-7 col-lg-6 col-xl-5"><img class="big-logo" src="img/core-img/logo_yellow_icon_small.png" alt="">
+                    <div class="col-12 col-sm-9 col-md-7 col-lg-6 col-xl-5"><img class="big-logo" src="{{asset('images/core-img/logo_yellow_icon_small.png')}}" alt="">
                         <h1 class="text-white w-100 center">Auric Shops</h1>
                         <!-- Register Form-->
                         <div class="register-form mt-5 px-4">
@@ -58,5 +58,7 @@
         <script src="{{asset("js/default/jquery.passwordstrength.js")}}"></script>
         <script src="{{asset("js/default/dark-mode-switch.js")}}"></script>
         <script src="{{asset("js/default/active.js")}}"></script>
+
+        @yield('after-scripts')
     </body>
 </html>

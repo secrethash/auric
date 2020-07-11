@@ -5,6 +5,8 @@ namespace App;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Twilio\Rest\Client;
+use Twilio\Exceptions\TwilioException;
 use App\ {
     Transaction,
     Period
@@ -20,7 +22,7 @@ class User extends \TCG\Voyager\Models\User implements MustVerifyEmail
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password', 'referrer_id', 'username',
+        'name', 'phone', 'password', 'referrer_id', 'username', 'email',
     ];
 
     /**
@@ -38,7 +40,9 @@ class User extends \TCG\Voyager\Models\User implements MustVerifyEmail
      * @var array
      */
     protected $casts = [
+        'phone_verified_at' => 'datetime',
         'email_verified_at' => 'datetime',
+        'code_sent_at' => 'datetime',
     ];
 
     /**
@@ -97,6 +101,60 @@ class User extends \TCG\Voyager\Models\User implements MustVerifyEmail
     public function getReferralLinkAttribute()
     {
         return $this->referral_link = route('register', ['ref' => $this->username]);
+    }
+
+    /**
+     * Check for verified Phone Number
+     *
+     * @return boolean
+     */
+    public function hasVerifiedPhone()
+    {
+        return ! is_null($this->phone_verified_at);
+    }
+
+    /**
+     * Marks phone as Verified
+     *
+     * @return mixed
+     */
+    public function markPhoneAsVerified()
+    {
+        return $this->forceFill([
+            'phone_verified_at' => $this->freshTimestamp(),
+            'verification_code' => NULL,
+        ])->save();
+    }
+
+    /**
+     * Text (sms) message with verification code
+     *
+     * @return mixed
+     */
+    public function textToVerify()
+    {
+        $code = random_int(100000, 999999);
+
+        $sid = config('services.twilio.sid');
+        $token = config('services.twilio.token');
+        $from = config('services.twilio.number');
+
+        $message = "Hello from Auric Shops! Your One Time Password is > ".$code." < \n For Security reasons, don't share this with anyone!";
+
+        $this->forceFill([
+            'verification_code' => $code,
+            'code_sent_at' => $this->freshTimestamp(),
+        ])->save();
+
+        $client = new Client($sid, $token);
+
+        $client->messages->create(
+            $this->phone,
+            [
+                "body" => $message,
+                "from" => $from
+            ]
+        );
     }
 
 }
