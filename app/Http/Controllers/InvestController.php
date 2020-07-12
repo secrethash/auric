@@ -39,7 +39,9 @@ class InvestController extends Controller
         $now = Carbon::now();
         $date = $now->format('Ymd');
         $id = (($now->format('H') * 20) + ($now->format('i') / 3)) + 1;
-        $uid = $current->slug.'-'.$date.floor($id);
+        $id = floor($id);
+        $id = str_pad($id, 3, '0', STR_PAD_LEFT);
+        $uid = $current->slug.'-'.$date.$id;
 
         $period = Period::where([
             'uid' => $uid,
@@ -243,6 +245,7 @@ class InvestController extends Controller
         $now = Carbon::now();
         $id = (($now->format('H') * 20) + ($now->format('i') / 3)) + 1;
         $id = floor($id);
+        $id = str_pad($id, 3, '0', STR_PAD_LEFT);
 
         $token = decrypt($token);
         //
