@@ -84,7 +84,7 @@
                     <!-- Single Settings-->
                     <div class="single-settings d-flex align-items-center justify-content-between">
                         <div class="title"><i class="lni-protection"></i><span>About Us</span></div>
-                        <div class="data-content"><a class="pl-4 stretched-link" href="privacy-policy.html"><i class="lni-chevron-right"></i></a></div>
+                        <div class="data-content"><a class="pl-4 stretched-link" href="{{route('page', 'about-us')}}"><i class="lni-chevron-right"></i></a></div>
                     </div>
                 </div>
             </div>
