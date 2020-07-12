@@ -75,4 +75,17 @@ class LoginController extends Controller
             'password' => ['required', 'string'],
         ]);
     }
+
+    /**
+     * The user has been authenticated.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  mixed  $user
+     * @return mixed
+     */
+    protected function authenticated(Request $request, $user)
+    {
+        //
+        Auth::logoutOtherDevices($request->password);
+    }
 }

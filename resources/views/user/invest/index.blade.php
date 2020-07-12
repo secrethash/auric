@@ -64,7 +64,7 @@
             <button href="#rules" class="btn btn-dark" data-toggle="modal" data-target="#rules"><i class="lni-agenda"></i>&nbsp;Rules</button>
         </div>
         <div class="clearfix mt-2 mb-0 pb-0 text-white">
-            <span class="font-weight-bolder">ID:</span>&nbsp;<span>{{$user->username}}</span>
+            <span class="font-weight-bolder">ID:</span>&nbsp;<span>{{Str::slug($user->name)}}</span>
         </div>
     </div>
 

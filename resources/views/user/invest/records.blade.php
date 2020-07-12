@@ -77,7 +77,7 @@
 
         <div class="row clearfix mt-2 mb-3">
             <div class="col-12 mx-auto px-auto">
-                {{$periods->onEachSide(0)->links()}}
+                {{$records->onEachSide(0)->links()}}
             </div>
         </div>
     </div>

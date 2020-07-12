@@ -28,11 +28,14 @@
                         <form action="{{route('user.wallet.pay')}}" method="POST">
                             @csrf
                             <label for="amount">Amount to Add</label>
-                            <div class="input-group mb-3">
+                            <div class="input-group mb-0">
                                 <div class="input-group-prepend">
                                     <span class="input-group-text bg-dark text-white" id="basic-addon1">&nbsp;&#8377;&nbsp;</span>
                                 </div>
-                                <input class="form-control" type="text" name="amount" id="amount" placeholder="Amount to add" value="1000"><small class="ml-1"><i class="fa fa-lock mr-1"></i>Your payment is processed under Maximum Security.<a class="ml-1" href="#">Learn More</a></small>
+                                <input class="form-control" type="text" name="amount" id="amount" placeholder="Amount to add" value="1000">
+                            </div>
+                            <div class="clearfix mt-0 mb-3">
+                                <small class="ml-1"><i class="fa fa-lock mr-1"></i>Your payment is processed under Maximum Security.<a class="ml-1" href="#">Learn More</a></small>
                             </div>
                             @error('amount')
                                 <span class="text-danger">{{$message}}</span>

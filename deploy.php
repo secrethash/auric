@@ -2,7 +2,7 @@
 
 namespace Deployer;
 
-require 'recipe/cloudflare.php';
+// require 'recipe/cloudflare.php';
 require 'recipe/laravel.php';
 
 // Project name
@@ -22,17 +22,17 @@ add('shared_dirs', ['public/storage']);
 add('writable_dirs', []);
 
 // Cloudflare Configuration
-set('cloudflare', [
-    "service_key" => "",
-    "api_key" => "",
-    "email" => "",
-    "domain" => "auricshops.com",
-]);
+// set('cloudflare', [
+//     "service_key" => "",
+//     "api_key" => "",
+//     "email" => "",
+//     "domain" => "auricshops.com",
+// ]);
 
 // Hosts
 set('default_stage', 'alpha');
 
-host('auric')
+host('auric_stable')
     ->stage('stable')
     ->set('deploy_path', '~/sites/stable');
 
