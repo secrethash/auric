@@ -2,10 +2,11 @@
 
 namespace Deployer;
 
+require 'recipe/cloudflare.php';
 require 'recipe/laravel.php';
 
 // Project name
-set('application', 'alpha_auric');
+set('application', 'auric');
 
 // Project repository
 set('repository', 'git@github.com:secrethash/auric.git');
@@ -14,14 +15,26 @@ set('repository', 'git@github.com:secrethash/auric.git');
 set('git_tty', true);
 
 // Shared files/dirs between deploys
-add('shared_files', ['.env.deploy']);
+add('shared_files', ['.env']);
 add('shared_dirs', ['public/storage']);
 
 // Writable dirs by web server
 add('writable_dirs', []);
 
+// Cloudflare Configuration
+set('cloudflare', [
+    "service_key" => "",
+    "api_key" => "",
+    "email" => "",
+    "domain" => "auricshops.com",
+]);
 
 // Hosts
+set('default_stage', 'alpha');
+
+host('auric')
+    ->stage('stable')
+    ->set('deploy_path', '~/sites/stable');
 
 host('auric')
     ->stage('alpha')

@@ -7,7 +7,13 @@
 
         <div class="form-group text-left mb-4"><span>{{ __('Phone Number') }}</span>
             <label for="phone"><i class="lni-phone-handset"></i></label>
-            <input class="form-control @error('phone') is-invalid @enderror" id="phone" type="number" name="phone" value="{{ old('phone', '+91') }}" required autocomplete="phone" autofocus placeholder="EX: 7000090000">
+            <input class="form-control @error('phone') is-invalid @enderror" id="phone" type="tel" name="phone" value="{{ old('phone') }}" required autocomplete="phone" autofocus placeholder="EX: 7000090000">
+
+            @error('phone')
+            <span class="invalid-feedback" role="alert">
+                <strong>{{ $message }}</strong>
+            </span>
+            @enderror
         </div>
         <div class="form-group text-left mb-4"><span>{{ __('Password') }}</span>
             <label for="password"><i class="lni-lock"></i></label>

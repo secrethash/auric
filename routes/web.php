@@ -31,7 +31,7 @@ Route::prefix('user')->name('user.')->middleware(['auth', 'verifiedphone'])->gro
     Route::get('logout', 'UserController@logout')->middleware('auth')->name('logout');
 });
 
-Route::prefix('auth/phone')->name('auth.phone.')->group(function () {
+Route::prefix('auth/phone')->name('auth.phone.')->middleware('auth')->group(function () {
     Route::get('verify', 'Auth\PhoneVerificationController@show')->name('verify.notice');
     Route::get('verify/resend/{token}', 'Auth\PhoneVerificationController@resend')->name('verify.resend');
     Route::post('verify', 'Auth\PhoneVerificationController@verify')->name('verify');

@@ -67,7 +67,7 @@ class RegisterController extends Controller
     {
         return Validator::make($data, [
             'name' => ['required', 'string', 'max:255'],
-            'phone' => ['required', 'numeric', 'unique:users'],
+            'phone' => ['required', 'numeric', 'digits:10', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
             // 'username' => ['required', 'string', 'unique:users', 'alpha_dash', 'min:3', 'max:30'],
             'referral' => ['required', 'string', 'exists:users,username', 'alpha_dash', 'min:10'],
@@ -85,7 +85,6 @@ class RegisterController extends Controller
         $referrer = User::whereUsername(session()->pull('referrer'))->first();
 
         $username = $this->generateUsername();
-        $country_code = '+91';
 
         if (!$referrer)
         {
@@ -95,7 +94,7 @@ class RegisterController extends Controller
         return User::create([
             'username' => $username,
             'name' => $data['name'],
-            'phone' => $country_code.$data['phone'],
+            'phone' => $data['phone'],
             'referrer_id' => $referrer ? $referrer->id : null,
             'password' => Hash::make($data['password']),
         ]);

@@ -16,7 +16,7 @@
     </div>
     <div class="form-group text-left mb-4"><span>{{__('Phone Number')}}</span>
         <label for="phone">+91</label>
-        <input class="ml-2 form-control @error('phone') is-invalid @enderror" id="phone" type="number" placeholder="EX: 9866556252" name="phone" value="{{ old('phone') }}" required autocomplete="phone">
+        <input class="ml-2 form-control @error('phone') is-invalid @enderror" id="phone" type="tel" placeholder="EX: 9866556252" name="phone" value="{{ old('phone') }}" required autocomplete="phone">
 
         @error('phone')
             <span class="invalid-feedback" role="alert">

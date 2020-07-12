@@ -5,7 +5,7 @@
         @csrf
         <div class="form-group text-left mb-4"><span>{{__('Phone Number')}}</span>
             <label for="phone"><i class="lni-phone-handset"></i></label>
-            <input class="form-control" id="phone" type="text" value="{{$user->phone}}" readonly>
+            <input class="form-control" id="phone" type="text" value="{{$user->country_code.'-'.$user->phone}}" readonly>
         </div>
         <div class="form-group text-left mb-4"><span>{{__('One Time Password / Code')}}</span>
             <label for="otp"><i class="lni-more-alt"></i></label>
@@ -36,7 +36,7 @@
     <script src="{{asset("js/jquery.countdown.min.js")}}"></script>
     <script type="text/javascript">
         $(document).ready(function (){
-            function count(count) {
+            function count(countTime) {
                 $('div#count')
                 .countdown(countTime, function(event) {
                     $(this).text(
@@ -45,6 +45,13 @@
                 })
                 .on('finish.countdown', function(){
                     $("#resend-code").show();
+                })
+                .on('update.countdown', function (event) {
+                    if (event.offset.totalSeconds != 0)
+                    {
+                        $("#resend-code").hide();
+                    }
+
                 });
             }
 
@@ -65,7 +72,7 @@
                     }
                     if (data.success) {
                         //
-                        count(data.time);
+                        $('div#count').countdown(data.time);
                         $("#resend-code").hide();
                     }
                 },

@@ -16,6 +16,7 @@ return [
     'defaults' => [
         'guard' => 'web',
         'passwords' => 'users',
+        'country_code' => env('DEFAULT_COUNTRY_CODE'),
     ],
 
     /*

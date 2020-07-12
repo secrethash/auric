@@ -74,7 +74,7 @@ class PhoneVerificationController extends Controller
         if ($now->greaterThanOrEqualTo($limit))
         {
             Log::debug('Time has Exceeded the Limit');
-            // $user->textToVerify();
+            $user->textToVerify();
         }
 
         return response()->json([

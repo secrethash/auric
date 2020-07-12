@@ -7,6 +7,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Twilio\Rest\Client;
 use Twilio\Exceptions\TwilioException;
+use Illuminate\Support\Facades\Log;
 use App\ {
     Transaction,
     Period
@@ -22,7 +23,7 @@ class User extends \TCG\Voyager\Models\User implements MustVerifyEmail
      * @var array
      */
     protected $fillable = [
-        'name', 'phone', 'password', 'referrer_id', 'username', 'email',
+        'name', 'phone', 'password', 'referrer_id', 'username', 'email', 'country_code',
     ];
 
     /**
@@ -139,17 +140,23 @@ class User extends \TCG\Voyager\Models\User implements MustVerifyEmail
         $token = config('services.twilio.token');
         $from = config('services.twilio.number');
 
-        $message = "Hello from Auric Shops! Your One Time Password is > ".$code." < \n For Security reasons, don't share this with anyone!";
-
         $this->forceFill([
             'verification_code' => $code,
             'code_sent_at' => $this->freshTimestamp(),
         ])->save();
 
+        $country_code = $this->country_code ?? config('auth.defaults.country_code');
+        $to = strval($country_code.$this->phone);
+
+        Log::debug('To Phone: '.$to);
+
+        $message = "Hello from Auric Shops! Your One Time Password is: ".$code." \n For Security reasons, don't share this with anyone!";
+
+
         $client = new Client($sid, $token);
 
         $client->messages->create(
-            $this->phone,
+            $to,
             [
                 "body" => $message,
                 "from" => $from
