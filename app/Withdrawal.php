@@ -88,9 +88,9 @@ class Withdrawal extends Model
 
         $country_code = $this->user()->country_code ?? config('auth.defaults.country_code');
         $to = strval($country_code.$this->user->phone);
+        $amount = $this->amount - $this->fee;
 
-
-        $message = "Hello from Auric Shops! Your One Time Password for a Withdrawal of ₹".$this->amount." is: ".$code." \n For Security reasons, don't share it with anyone!";
+        $message = "Hello from Auric Shops! Your One Time Password for a Withdrawal of ₹".$amount." is: ".$code." \n For Security reasons, don't share it with anyone!";
 
 
         $client = new Client($sid, $token);

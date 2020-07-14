@@ -12,7 +12,7 @@
     <!-- Checkout Wrapper-->
     <div class="checkout-wrapper-area py-3">
         <div class="credit-card-info-wrapper">
-            <div class="row py-3">
+            <div class="row mt-3">
                 <div class="col-8">
                     <h3>My Bank Details</h3>
                 </div>

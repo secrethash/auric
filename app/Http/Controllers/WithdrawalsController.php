@@ -8,10 +8,12 @@ use Illuminate\Validation\ValidationException;
 use App\ {
     Bank,
     BankType,
+    Order,
     User,
     Withdrawal
 };
 use App\Services\Calculate;
+use App\Services\Transact;
 
 class WithdrawalsController extends Controller
 {
@@ -133,7 +135,19 @@ class WithdrawalsController extends Controller
 
         $withdrawal->markPhoneAsVerified();
 
-        return redirect()->route('user.withdraw.index')->with('status', 'Your phone was successfully Verified!');
+        $data = [
+            "amount" => $withdrawal->amount,
+            "note" => "Withdraw Requested",
+            "status" => "success",
+            "payment_id" => NULL,
+            "request_id" => "withdraw_".$withdrawal->id,
+        ];
+        $order = Order::whereType('withdraw-hold')->first();
+
+        $transaction = Transact::create($data, $request->user(), $order);
+        $wallet = Transact::wallet($order->method, $withdrawal->amount, $request->user());
+
+        return redirect()->route('user.withdraw.index')->with('status', 'Verification Completed! Request is now Processing!');
     }
 
     /**

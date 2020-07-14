@@ -19,7 +19,7 @@
             </div>
         @endif
 
-        <div class="row py-3">
+        <div class="row mt-3">
             <div class="col-8">
                 <h3>Created Requests</h3>
             </div>
@@ -83,7 +83,7 @@
                         @endif
                         <div class="col-6 mt-3">
                             <p class="text-muted">
-                                <span class="text-muted"><strong>Request Verification:</strong> @if($withdrawal->hasVerifiedPhone()) <span class="text-success"><i class="lni-check-mark-circle"></i></span> @else <span class="text-danger"><i class="lni-cross-circle"></i></span> @endif</span>
+                                <span class="text-muted"><strong>Verification:</strong> @if($withdrawal->hasVerifiedPhone()) <span class="text-success"><i class="lni-check-mark-circle"></i></span> @else <span class="text-danger"><i class="lni-cross-circle"></i></span> @endif</span>
                             </p>
                         </div>
                         @if(!$withdrawal->hasVerifiedPhone())
