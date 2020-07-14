@@ -44,8 +44,7 @@ class WithdrawalsController extends Controller
     {
         //
         $user = Auth::user();
-        $fee = Calculate::withdrawFees($user->credits);
-        $limit = intval($user->credits) - $fee;
+        $limit = $user->credits;
         $maxAmount = ($limit < 50000) ? $limit : 50000;
 
         return view('user.withdraw.create')->with(['user' => $user, 'amountLimit' => $maxAmount]);

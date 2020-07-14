@@ -63,13 +63,17 @@
                             <hr>
 
                             <div class="row">
-                                <div class="col-6 text-center">
+                                <div class="col-4 text-center">
                                     <h6>Amount</h6>
-                                    <span class="text-info font-weight-bold">&nbsp;&#8377;{{$withdrawal->amount - $withdrawal->fee}}</span>
+                                    <span class="text-info font-weight-bold">&nbsp;&#8377;{{$withdrawal->amount + $withdrawal->fee}}</span>
                                 </div>
-                                <div class="col-6 text-center">
+                                <div class="col-4 text-center">
                                     <h6>Fee</h6>
                                     <span class="text-danger font-weight-bold">&nbsp;&#8377;{{$withdrawal->fee}}</span>
+                                </div>
+                                <div class="col-4 text-center">
+                                    <h6>Final</h6>
+                                    <span class="text-danger font-weight-bold">&nbsp;&#8377;{{$withdrawal->amount}}</span>
                                 </div>
                             </div>
 
