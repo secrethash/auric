@@ -10,9 +10,19 @@
     <div class="container">
         <!-- Checkout Wrapper-->
         <div class="checkout-wrapper-area py-3">
-            <div class="credit-card-info-wrapper"><img class="d-block mb-4" src="{{asset('images/bg-img/12.png')}}" alt="">
+            <div class="credit-card-info-wrapper">
                 <div class="bank-ac-info">
-                    <p>Make your payment directly into our bank account. Please use your Order ID as the payment reference. Your order won’t be shipped until the funds have cleared in our account.</p>
+                    <div class="clearfix m-3">
+                        <h5>Bonus Rules</h5>
+                        <p><strong>Level 1:</strong> 0.6% per transaction</p>
+                        <p><strong>Level 2:</strong> 0.5% per transaction</p>
+                        <p><strong>Level 3:</strong> 0.4% per transaction</p>
+                        <p><strong>Level 4:</strong> 0.3% per transaction</p>
+                        <p><strong>Level 5:</strong> 0.2% per transaction</p>
+                        {{-- <p><strong>Level 6 and below:</strong> flat 0.1% per transaction</p> --}}
+                        <blockquote>Commissions can be withdrawn from your account at anytime.</blockquote>
+                    </div>
+
                     <ul class="list-group mb-3">
                         <li class="list-group-item justify-content-between align-items-center">
                             <div class="row center">
@@ -40,20 +50,6 @@
                     <i class="lni-share"></i>&nbsp; Copy Referral Link
                 </button>
             </div>
-        </div>
-    </div>
-
-    <div class="container">
-        <!-- Checkout Wrapper-->
-        <div class="checkout-wrapper-area py-3">
-            <h6>Bonus Rules</h6>
-            <p><strong>Level 1:</strong> 0.6% per transaction</p>
-            <p><strong>Level 2:</strong> 0.5% per transaction</p>
-            <p><strong>Level 3:</strong> 0.4% per transaction</p>
-            <p><strong>Level 4:</strong> 0.3% per transaction</p>
-            <p><strong>Level 5:</strong> 0.2% per transaction</p>
-            <p><strong>Level 6 and below:</strong> flat 0.1% per transaction</p>
-            <blockquote>Commissions can be withdrawn from your account at anytime.</blockquote>
         </div>
     </div>
 @endsection
