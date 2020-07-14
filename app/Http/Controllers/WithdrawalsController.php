@@ -11,6 +11,7 @@ use App\ {
     User,
     Withdrawal
 };
+use App\Services\Calculate;
 
 class WithdrawalsController extends Controller
 {
@@ -24,7 +25,7 @@ class WithdrawalsController extends Controller
         //
         $user = Auth::user();
 
-        $withdrawals = $user->withdrawal()->paginate(10);
+        $withdrawals = $user->withdrawal()->latest()->paginate(10);
 
         return view('user.withdraw.index')->with([
             'user' => $user,
@@ -40,8 +41,12 @@ class WithdrawalsController extends Controller
     public function create()
     {
         //
+        $user = Auth::user();
+        $fee = Calculate::withdrawFees($user->credits);
+        $limit = intval($user->credits) - $fee;
+        $maxAmount = ($limit < 50000) ? $limit : 50000;
 
-        return view('user.withdraw.create')->with('user', auth()->user());
+        return view('user.withdraw.create')->with(['user' => $user, 'amountLimit' => $maxAmount]);
     }
 
     /**
@@ -53,7 +58,11 @@ class WithdrawalsController extends Controller
     public function store(Request $request)
     {
         //
-        $maxAmount = ($request->user()->credits < 50000) ? $request->user()->credits : 50000;
+
+        $fee = Calculate::withdrawFees($request->amount);
+        $limit = intval($request->user()->credits) - $fee;
+        $maxAmount = ($limit < 50000) ? $limit : 50000;
+
         $rules = [
             "bank" => ['numeric', 'exists:banks,id', 'required'],
             "amount" => ['required', 'numeric', 'max:'.$maxAmount],
@@ -63,6 +72,7 @@ class WithdrawalsController extends Controller
         $messages = [
             "bank.required" => "Bank Details are Required!",
             "bank.exits" => "Bank Details should have been created first!",
+            "bank.numeric" => "Select Bank Details from the list",
             "amount.required" => "Amount is Required!",
             "amount.max" => "The Amount is Over the Limit, try lowering the value.",
         ];
@@ -71,9 +81,11 @@ class WithdrawalsController extends Controller
 
         $bank = $validated['bank'];
         $bank = Bank::findOrFail($bank);
+        $fee = Calculate::withdrawFees($validated['amount']);
 
         $withdrawal = new Withdrawal;
-        $withdrawal->amount = $validated['amount'];
+        $withdrawal->amount = $validated['amount'] + $fee;
+        $withdrawal->fee = $fee;
         $withdrawal->note = $validated['note'] ?? NULL;
         $withdrawal->bank()->associate($bank);
         $withdrawal->user()->associate($request->user());

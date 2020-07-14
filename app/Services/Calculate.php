@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Color;
 use App\Number;
 use App\Period;
+use App\Withdrawal;
 
 class Calculate {
 
@@ -121,5 +122,18 @@ class Calculate {
     {
         //
         return $this->amount;
+    }
+
+    public static function withdrawFees($amount)
+    {
+        //
+        $fee = 30;
+
+        if ($amount > 1500)
+        {
+            $fee = $amount * 2 / 100;
+        }
+
+        return $fee;
     }
 }

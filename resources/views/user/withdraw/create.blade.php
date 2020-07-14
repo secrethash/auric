@@ -26,6 +26,10 @@
                                     <option value="{{$bank->id}}">{{$bank->short_name}}</option>
                                 @endforeach
                             </select>
+
+                            @error('bank')
+                                <div class="alert alert-danger">{{ $message }}</div>
+                            @enderror
                         </div>
 
                         <div class="form-group">
@@ -37,7 +41,8 @@
                                 id="amount"
                                 placeholder="Ex: 1000"
                                 value="{{old('amount')}}"
-                                max="50000"
+                                max="{{$amountLimit}}"
+                                step="100"
                             />
                             <small class="ml-1">
                                 <i class="fa fa-info-circle mr-1"></i>

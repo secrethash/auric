@@ -37,15 +37,15 @@ Route::prefix('user')->name('user.')->middleware(['auth', 'verifiedphone'])->gro
     Route::prefix('withdraw')->name('withdraw.')->group(function () {
         Route::get('/', 'WithdrawalsController@index')->name('index');
         Route::get('create', 'WithdrawalsController@create')->name('create');
-        Route::post('create', 'WithdrawalsController@store')->name('create');
+        Route::post('create', 'WithdrawalsController@store');
         Route::get('verify/{token}', 'WithdrawalsController@verifyShow')->name('verify');
-        Route::post('verify/{token}', 'WithdrawalsController@verify')->name('verify');
+        Route::post('verify/{token}', 'WithdrawalsController@verify');
         Route::get('verify/resend/{token}', 'WithdrawalsController@resend')->name('verify.resend');
 
         Route::prefix('bank')->name('bank.')->group(function () {
             Route::get('/', 'WithdrawalsController@bank')->name('index');
             Route::get('/create/{type?}', 'WithdrawalsController@bankCreate')->name('create');
-            Route::post('/create/{type?}', 'WithdrawalsController@bankStore')->name('create');
+            Route::post('/create/{type?}', 'WithdrawalsController@bankStore');
             Route::get('/destroy/{id}', 'WithdrawalsController@bankDestroy')->name('destroy');
         });
 

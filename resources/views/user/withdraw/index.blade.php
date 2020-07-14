@@ -19,7 +19,14 @@
             </div>
         @endif
 
-        <h3 class="text-center" style="color: #333;">Created Requests</h3>
+        <div class="row py-3">
+            <div class="col-8">
+                <h3>Created Requests</h3>
+            </div>
+            <div class="col-4">
+                <a href="{{route('user.withdraw.create')}}" class="btn btn-link text-danger mt-0 pt-2 btn-lg float-right"><i class="lni-plus"></i> Add New</a>
+            </div>
+        </div>
         <ul class="list-group mb-3">
             @foreach($withdrawals as $withdrawal)
 
@@ -46,11 +53,29 @@
                             <span class="text-muted float-right">{{$withdrawal->created_at->toFormattedDateString()}}</span>
                         </div>
                         <div class="col-8">
-                            <span class="font-weight-bold">To: {{$withdrawal->bank->short_name}}</span>
+                            <span class="font-weight-bold">Transfer To:</span>
                         </div>
                         <div class="col-4">
-                            <span class="text-danger float-right"><i class="lni-minus"></i>&nbsp;&#8377;{{$withdrawal->amount}}</span>
+                            <span class="text-info float-right font-weight-bold">{{$withdrawal->bank->short_name}}</span>
                         </div>
+
+                        <div class="col-12">
+                            <hr>
+
+                            <div class="row">
+                                <div class="col-6 text-center">
+                                    <h6>Amount</h6>
+                                    <span class="text-info font-weight-bold">&nbsp;&#8377;{{$withdrawal->amount - $withdrawal->fee}}</span>
+                                </div>
+                                <div class="col-6 text-center">
+                                    <h6>Fee</h6>
+                                    <span class="text-danger font-weight-bold">&nbsp;&#8377;{{$withdrawal->fee}}</span>
+                                </div>
+                            </div>
+
+                            <hr>
+                        </div>
+
                         @if($withdrawal->note)
                         <div class="col-12 mt-3">
                             <p class="text-muted"><strong class="text-primary">Note:</strong> {{$withdrawal->note}}</p>
@@ -58,7 +83,7 @@
                         @endif
                         <div class="col-6 mt-3">
                             <p class="text-muted">
-                                <span class="text-muted"><strong>Verified:</strong> @if($withdrawal->hasVerifiedPhone()) <span class="text-success"><i class="lni-check-mark-circle"></i></span> @else <span class="text-danger"><i class="lni-cross-circle"></i></span> @endif</span>
+                                <span class="text-muted"><strong>Request Verification:</strong> @if($withdrawal->hasVerifiedPhone()) <span class="text-success"><i class="lni-check-mark-circle"></i></span> @else <span class="text-danger"><i class="lni-cross-circle"></i></span> @endif</span>
                             </p>
                         </div>
                         @if(!$withdrawal->hasVerifiedPhone())

@@ -14,6 +14,7 @@ class AddColoumnsToWithdrawalsTable extends Migration
     public function up()
     {
         Schema::table('withdrawals', function (Blueprint $table) {
+
             $table->timestamp('phone_verified_at')
                   ->after('note')
                   ->nullable();
