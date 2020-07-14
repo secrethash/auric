@@ -9,7 +9,7 @@
         </div>
         <div class="form-group text-left mb-4"><span>{{__('One Time Password / Code')}}</span>
             <label for="otp"><i class="lni-more-alt"></i></label>
-            <input class="form-control @error('code') is-invalid @enderror" id="otp" name="code" type="number" placeholder="090867">
+            <input class="form-control text-center @error('code') is-invalid @enderror" id="otp" name="code" type="number" placeholder="------" style="letter-spacing: 25px;" autofocus="true">
 
             @error('code')
             <span class="invalid-feedback" role="alert">

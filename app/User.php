@@ -10,7 +10,9 @@ use Twilio\Exceptions\TwilioException;
 use Illuminate\Support\Facades\Log;
 use App\ {
     Transaction,
-    Period
+    Period,
+    Withdrawal,
+    Bank
 };
 
 class User extends \TCG\Voyager\Models\User implements MustVerifyEmail
@@ -62,6 +64,26 @@ class User extends \TCG\Voyager\Models\User implements MustVerifyEmail
     public function transactions()
     {
         return $this->hasMany(Transaction::class);
+    }
+
+    /**
+     * A user has many Bank Details.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function bank()
+    {
+        return $this->hasMany(Bank::class);
+    }
+
+    /**
+     * A user has many Bank Details.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function withdrawal()
+    {
+        return $this->hasMany(Withdrawal::class);
     }
 
     /**

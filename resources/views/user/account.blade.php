@@ -48,7 +48,16 @@
                     <!-- Single Settings-->
                     <div class="single-settings d-flex align-items-center justify-content-between">
                         <div class="title"><i class="lni-wallet"></i><span>My Wallet</span></div>
-                        <div class="data-content"><a href="{{route('user.wallet')}}" class="stretched-link">&#8377;{{$user->credits}}<i class="lni-chevron-right"></i></a></div>
+                        <div class="data-content"><a href="{{route('user.wallet.index')}}" class="stretched-link">&#8377;{{$user->credits}}<i class="lni-chevron-right"></i></a></div>
+                    </div>
+                </div>
+            </div>
+            <div class="card settings-card">
+                <div class="card-body">
+                    <!-- Single Settings-->
+                    <div class="single-settings d-flex align-items-center justify-content-between">
+                        <div class="title"><i class="lni-restaurant"></i><span>Bank Details</span></div>
+                        <div class="data-content"><a href="{{route('user.withdraw.bank.index')}}" class="stretched-link">Edit <i class="lni-chevron-right"></i></a></div>
                     </div>
                 </div>
             </div>

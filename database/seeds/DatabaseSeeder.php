@@ -51,5 +51,6 @@ class DatabaseSeeder extends Seeder
         // $this->call(MigrationsTableSeeder::class);
         // $this->call(FailedJobsTableSeeder::class);
         $this->call(PagesTableSeeder::class);
+        $this->call(BankTypeTableSeeder::class);
     }
 }

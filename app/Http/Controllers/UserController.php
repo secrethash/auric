@@ -209,7 +209,7 @@ class UserController extends Controller
             $message = 'Oops! Payment seems to have failed somehow! '.$error.'.';
         }
 
-        return redirect()->route('user.wallet')->with(['success'=>$success, 'message'=>$message]);
+        return redirect()->route('user.wallet.index')->with(['success'=>$success, 'message'=>$message]);
     }
 
     /**

@@ -22,12 +22,36 @@ Route::get('/shop', 'Shop\ProductsController@index')->name('shop.list');
 Route::get('/shop/{product?}', 'Shop\ProductsController@show')->name('shop.show');
 
 Route::prefix('user')->name('user.')->middleware(['auth', 'verifiedphone'])->group(function () {
+
     Route::get('account', 'UserController@account')->name('account');
     Route::get('referral', 'UserController@referral')->name('referral');
-    Route::get('wallet', 'UserController@wallet')->name('wallet');
-    Route::get('wallet/add', 'UserController@walletAdd')->name('wallet.add');
-    Route::post('wallet/pay', 'UserController@pay')->name('wallet.pay');
-    Route::post('wallet/pay/verify/{transaction}', 'UserController@payVerify')->name('wallet.pay.verify');
+
+    Route::prefix('wallet')->name('wallet.')->group(function () {
+        Route::get('/', 'UserController@wallet')->name('index');
+        Route::get('/add', 'UserController@walletAdd')->name('add');
+        Route::post('/pay', 'UserController@pay')->name('pay');
+        Route::post('/pay/verify/{transaction}', 'UserController@payVerify')->name('pay.verify');
+    });
+
+
+    Route::prefix('withdraw')->name('withdraw.')->group(function () {
+        Route::get('/', 'WithdrawalsController@index')->name('index');
+        Route::get('create', 'WithdrawalsController@create')->name('create');
+        Route::post('create', 'WithdrawalsController@store')->name('create');
+        Route::get('verify/{token}', 'WithdrawalsController@verifyShow')->name('verify');
+        Route::post('verify/{token}', 'WithdrawalsController@verify')->name('verify');
+        Route::get('verify/resend/{token}', 'WithdrawalsController@resend')->name('verify.resend');
+
+        Route::prefix('bank')->name('bank.')->group(function () {
+            Route::get('/', 'WithdrawalsController@bank')->name('index');
+            Route::get('/create/{type?}', 'WithdrawalsController@bankCreate')->name('create');
+            Route::post('/create/{type?}', 'WithdrawalsController@bankStore')->name('create');
+            Route::get('/destroy/{id}', 'WithdrawalsController@bankDestroy')->name('destroy');
+        });
+
+
+    });
+
     Route::get('logout', 'UserController@logout')->middleware('auth')->name('logout');
 });
 

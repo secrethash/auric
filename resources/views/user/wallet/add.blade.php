@@ -1,7 +1,7 @@
 @extends('layouts.main')
 
 @section('header')
-    @component('partials.header.title', ['back' => route('user.wallet')])
+    @component('partials.header.title', ['back' => route('user.wallet.index')])
         Add Money
     @endcomponent
 @endsection
