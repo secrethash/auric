@@ -85,7 +85,7 @@ class WithdrawalsController extends Controller
         $fee = Calculate::withdrawFees($validated['amount']);
 
         $withdrawal = new Withdrawal;
-        $withdrawal->amount = $validated['amount'] + $fee;
+        $withdrawal->amount = $validated['amount'] - $fee;
         $withdrawal->fee = $fee;
         $withdrawal->note = $validated['note'] ?? NULL;
         $withdrawal->bank()->associate($bank);
@@ -134,8 +134,9 @@ class WithdrawalsController extends Controller
 
         $withdrawal->markPhoneAsVerified();
 
+        $amount = $withdrawal->amount + $withdrawal->fee;
         $data = [
-            "amount" => $withdrawal->amount,
+            "amount" => $amount,
             "note" => "Withdraw Requested",
             "status" => "success",
             "payment_id" => NULL,
@@ -144,7 +145,7 @@ class WithdrawalsController extends Controller
         $order = Order::whereType('withdraw-hold')->first();
 
         $transaction = Transact::create($data, $request->user(), $order);
-        $wallet = Transact::wallet($order->method, $withdrawal->amount, $request->user());
+        $wallet = Transact::wallet($order->method, $amount, $request->user());
 
         return redirect()->route('user.withdraw.index')->with('status', 'Verification Completed! Request is now Processing!');
     }
