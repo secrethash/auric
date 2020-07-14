@@ -61,7 +61,7 @@ class WithdrawalsController extends Controller
         //
 
         $fee = Calculate::withdrawFees($request->amount);
-        $limit = intval($request->user()->credits) - $fee;
+        $limit = intval($request->user()->credits);
         $maxAmount = ($limit < 50000) ? $limit : 50000;
 
         $rules = [
