@@ -16,7 +16,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', 'HomeController@index')->name('home');
-Route::get('/home', 'HomeController@index')->middleware(['verifiedphone'])->name('home.index');
+Route::get('/home', 'HomeController@index')->middleware(['auth', 'verifiedphone'])->name('home.index');
 
 Route::get('/shop', 'Shop\ProductsController@index')->name('shop.list');
 Route::get('/shop/{product?}', 'Shop\ProductsController@show')->name('shop.show');
@@ -70,9 +70,9 @@ Route::prefix('invest')->name('invest.')->middleware(['auth', 'verifiedphone'])-
 });
 
 
-// Route::prefix('console')->group(function () {
-//     Voyager::routes();
-// });
+Route::prefix('console')->group(function () {
+    Voyager::routes();
+});
 Route::domain('console.'.config('app.domain'))->group(function () {
     Voyager::routes();
 });
