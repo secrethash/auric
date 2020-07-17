@@ -24,20 +24,20 @@
         </div>
 
         <ul class="list-group mb-3">
-        @foreach ($records as $records)
+        @foreach ($records as $record)
             @php
-                $color = App\Color::find($records->pivot->color_id);
-                $number = App\Number::find($records->pivot->number_id);
+                $color = App\Color::find($record->pivot->color_id);
+                $number = App\Number::find($record->pivot->number_id);
             @endphp
-            <li class="list-group-item justify-content-between align-items-center @if($records->pivot->result){{e('border-success')}}@elseif($records->pivot->result===0){{e('border-danger')}}@else{{e('border-primary')}}@endif">
+            <li class="list-group-item justify-content-between align-items-center @if($record->pivot->result){{e('border-success')}}@elseif($record->pivot->result===0){{e('border-danger')}}@else{{e('border-primary')}}@endif">
                 <div class="row">
                     <div class="col-6">
                         <span class="text-muted">Period</span>
-                        <h6 class="text-dark">{{Str::of($records->uid)->trim($lobby->slug.'-')}}</h6>
+                        <h6 class="text-dark">{{Str::of($record->uid)->trim($lobby->slug.'-')}}</h6>
                     </div>
                     <div class="col-6 text-right">
                         <span class="text-muted text-right">Created On</span>
-                        <h6 class="text-muted text-right">{{$records->pivot->created_at->format('Y-m-d H:i')}}</h6>
+                        <h6 class="text-muted text-right">{{$record->pivot->created_at->format('Y-m-d H:i')}}</h6>
                     </div>
                 </div>
                 <div class="row mt-2">
@@ -51,22 +51,22 @@
                     </div>
                     <div class="col-4 text-right">
                         <span class="text-muted text-right">Result</span>
-                        <h6 class="text-right @if($records->pivot->result){{e('text-success')}}@elseif($records->pivot->result===0){{e('text-danger')}}@else{{e('text-primary')}}@endif">@if($records->pivot->result){{e('WIN')}}@elseif($records->pivot->result===0){{e('LOOSE')}}@else{{e('ON-GOING')}}@endif</h6>
+                        <h6 class="text-right @if($record->pivot->result){{e('text-success')}}@elseif($record->pivot->result===0){{e('text-danger')}}@else{{e('text-primary')}}@endif">@if($record->pivot->result){{e('WIN')}}@elseif($record->pivot->result===0){{e('LOOSE')}}@else{{e('ON-GOING')}}@endif</h6>
                     </div>
                 </div>
                 <hr>
                 <div class="row mt-2">
                     <div class="col-4 text-left">
                         <span class="text-muted text-left">Contract</span>
-                        <h6 class="text-dark text-left">&#8377; {{$records->pivot->amount + $records->pivot->fees}}</h6>
+                        <h6 class="text-dark text-left">&#8377; {{$record->pivot->amount + $record->pivot->fees}}</h6>
                     </div>
                     <div class="col-4 text-center">
                         <span class="text-muted text-center">Fees</span>
-                        <h6 class="text-dark text-center">&#8377;{{$records->pivot->fees}}</h6>
+                        <h6 class="text-dark text-center">&#8377;{{$record->pivot->fees}}</h6>
                     </div>
                     <div class="col-4 text-right">
                         <span class="text-muted text-right">Delivery</span>
-                        <h6 class="@if($records->pivot->result){{e('text-success')}}@elseif($records->pivot->result===0){{e('text-danger')}}@else{{e('text-primary')}}@endif text-right">@if($records->pivot->result){!!e('+ ').'&#8377;'.$records->pivot->delivery!!}@elseif($records->pivot->result===0){!!e('- ').'&#8377;'.$records->pivot->amount!!}@else{!!'&mdash;'!!}@endif</h6>
+                        <h6 class="@if($record->pivot->result){{e('text-success')}}@elseif($record->pivot->result===0){{e('text-danger')}}@else{{e('text-primary')}}@endif text-right">@if($record->pivot->result){!!e('+ ').'&#8377;'.$record->pivot->delivery!!}@elseif($record->pivot->result===0){!!e('- ').'&#8377;'.$record->pivot->amount!!}@else{!!'&mdash;'!!}@endif</h6>
                     </div>
                 </div>
             </li>
