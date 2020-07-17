@@ -41,7 +41,7 @@
                         <div class="panel-body">
                             <div class="form-group">
                                 <label for="username">{{ __('User UID') }}</label>
-                                <input type="text" class="form-control" id="username" name="username" placeholder="{{ __('User UID') }}"
+                                <input type="text" class="form-control" id="username" placeholder="{{ __('User UID') }}"
                                        value="{{ old('username', $dataTypeContent->username ?? Str::uuid()) }}" disabled="disabled">
                             </div>
 
@@ -52,9 +52,17 @@
                             </div>
 
                             <div class="form-group">
-                                <label for="phone">{{ __('Phone') }}</label>
-                                <input type="tel" class="form-control" id="phone" name="phone" placeholder="{{ __('Phone') }}"
-                                       value="{{ old('phone', $dataTypeContent->phone ?? '') }}">
+                                <div class="form-row">
+                                    <div class="form-group col-md-2">
+                                        <label for="country_code">{{__('Code')}}</label>
+                                        <input type="text" class="form-control" name="country_code" id="country_code" value="{{ old('country_code', $dataTypeContent->country_code ?? '') }}">
+                                    </div>
+                                    <div class="form-group col-md-10">
+                                        <label for="phone">{{ __('Phone') }}</label>
+                                        <input type="tel" class="form-control" id="phone" name="phone" placeholder="{{ __('Phone') }}"
+                                            value="{{ old('phone', $dataTypeContent->phone ?? '') }}">
+                                    </div>
+                                </div>
                             </div>
 
                             <div class="form-group">
