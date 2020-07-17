@@ -70,7 +70,10 @@ Route::prefix('invest')->name('invest.')->middleware(['auth', 'verifiedphone'])-
 });
 
 
-Route::prefix('console')->group(function () {
+// Route::prefix('console')->group(function () {
+//     Voyager::routes();
+// });
+Route::domain('console.'.config('app.domain'))->group(function () {
     Voyager::routes();
 });
 
