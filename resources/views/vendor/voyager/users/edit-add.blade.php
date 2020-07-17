@@ -66,6 +66,24 @@
                             </div>
 
                             <div class="form-group">
+                                {{-- <label for="phone_verified_at">{{ __('Phone Verified At') }}</label> --}}
+                                <input type="hidden" class="form-control" id="phone_verified_at" name="phone_verified_at" placeholder="{{ __('Phone Verified At') }}"
+                                       value="{{ old('phone_verified_at', $dataTypeContent->phone_verified_at ?? '') }}">
+                            </div>
+
+                            <div class="form-group">
+                                {{-- <label for="code_sent_at">{{ __('Phone Verified At') }}</label> --}}
+                                <input type="hidden" class="form-control" id="code_sent_at" name="code_sent_at" placeholder="{{ __('Code Sent At') }}"
+                                       value="{{ old('code_sent_at', $dataTypeContent->code_sent_at ?? '') }}">
+                            </div>
+
+                            <div class="form-group">
+                                {{-- <label for="verification_code">{{ __('Phone Verified At') }}</label> --}}
+                                <input type="hidden" class="form-control" id="verification_code" name="verification_code" placeholder="{{ __('Verification Code') }}"
+                                       value="{{ old('verification_code', $dataTypeContent->verification_code ?? '') }}">
+                            </div>
+
+                            <div class="form-group">
                                 <label for="email">{{ __('voyager::generic.email') }}</label>
                                 <input type="email" class="form-control" id="email" name="email" placeholder="{{ __('voyager::generic.email') }}"
                                        value="{{ old('email', $dataTypeContent->email ?? '') }}">

@@ -58,8 +58,8 @@ class PhoneVerificationController extends Controller
         $token = decrypt($token);
         Log::debug('Resend: Token: '.$token);
         $user = User::find($token);
-        $limit = $user->code_sent_at->addSeconds(60);
         $now = now();
+        $limit = $user->code_sent_at ? $user->code_sent_at->addSeconds(60) : $now->subSeconds(60);
 
         Log::debug('User: '.$user->name);
 

@@ -55,7 +55,7 @@
                 });
             }
 
-            var countTime = "{{$user->code_sent_at->addSeconds(60)->format('Y/m/d H:i:s')}}";
+            var countTime = "{{$user->code_sent_at ? $user->code_sent_at->addSeconds(60)->format('Y/m/d H:i:s') : ''}}";
             count(countTime);
         });
     </script>
