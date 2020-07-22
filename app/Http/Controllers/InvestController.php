@@ -48,6 +48,11 @@ class InvestController extends Controller
             'active'=>1
         ])->first();
 
+        if (!$period)
+        {
+            return redirect()->refresh();
+        }
+
         return view('user.invest.index')->with([
             'user'=>auth()->user(),
             'lobbies'=>$lobbies,
