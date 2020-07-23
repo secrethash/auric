@@ -29,7 +29,7 @@
                 $color = App\Color::find($record->pivot->color_id);
                 $number = App\Number::find($record->pivot->number_id);
             @endphp
-            <li class="list-group-item justify-content-between align-items-center @if($record->pivot->result){{e('border-success')}}@elseif($record->pivot->result===0){{e('border-danger')}}@else{{e('border-primary')}}@endif">
+            <li class="list-group-item justify-content-between align-items-center @if($record->pivot->result && !$record->active){{e('border-success')}}@elseif($record->pivot->result===0 && !$record->active){{e('border-danger')}}@else{{e('border-primary')}}@endif">
                 <div class="row">
                     <div class="col-6">
                         <span class="text-muted">Period</span>
@@ -51,7 +51,7 @@
                     </div>
                     <div class="col-4 text-right">
                         <span class="text-muted text-right">Result</span>
-                        <h6 class="text-right @if($record->pivot->result){{e('text-success')}}@elseif($record->pivot->result===0){{e('text-danger')}}@else{{e('text-primary')}}@endif">@if($record->pivot->result){{e('WIN')}}@elseif($record->pivot->result===0){{e('LOOSE')}}@else{{e('ON-GOING')}}@endif</h6>
+                        <h6 class="text-right @if($record->pivot->result && !$record->active){{e('text-success')}}@elseif($record->pivot->result===0 && !$record->active){{e('text-danger')}}@else{{e('text-primary')}}@endif">@if($record->pivot->result && !$record->active){{e('WIN')}}@elseif($record->pivot->result===0 && !$record->active){{e('LOOSE')}}@else{{e('ON-GOING')}}@endif</h6>
                     </div>
                 </div>
                 <hr>
@@ -66,7 +66,7 @@
                     </div>
                     <div class="col-4 text-right">
                         <span class="text-muted text-right">Delivery</span>
-                        <h6 class="@if($record->pivot->result){{e('text-success')}}@elseif($record->pivot->result===0){{e('text-danger')}}@else{{e('text-primary')}}@endif text-right">@if($record->pivot->result){!!e('+ ').'&#8377;'.$record->pivot->delivery!!}@elseif($record->pivot->result===0){!!e('- ').'&#8377;'.$record->pivot->amount!!}@else{!!'&mdash;'!!}@endif</h6>
+                        <h6 class="@if($record->pivot->result && !$record->active){{e('text-success')}}@elseif($record->pivot->result===0 && !$record->active){{e('text-danger')}}@else{{e('text-primary')}}@endif text-right">@if($record->pivot->result && !$record->active){!!e('+ ').'&#8377;'.$record->pivot->delivery!!}@elseif($record->pivot->result===0 && !$record->active){!!e('- ').'&#8377;'.$record->pivot->amount!!}@else{!!'&mdash;'!!}@endif</h6>
                     </div>
                 </div>
             </li>

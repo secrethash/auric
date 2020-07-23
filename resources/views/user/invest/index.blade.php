@@ -230,7 +230,7 @@
                         $color = App\Color::find($result->pivot->color_id);
                         $number = App\Number::find($result->pivot->number_id);
                     @endphp
-                    <li class="list-group-item justify-content-between align-items-center @if($result->pivot->result){{e('border-success')}}@elseif($result->pivot->result===0){{e('border-danger')}}@else{{e('border-primary')}}@endif">
+                    <li class="list-group-item justify-content-between align-items-center @if($result->pivot->result && !$result->active){{e('border-success')}}@elseif($result->pivot->result===0 && !$result->active){{e('border-danger')}}@else{{e('border-primary')}}@endif">
                         <div class="row">
                             <div class="col-6">
 								<span class="text-muted">Period</span>
@@ -252,7 +252,7 @@
                             </div>
                             <div class="col-4 text-right">
 								<span class="text-muted text-right">Result</span>
-								<h6 class="text-right @if($result->pivot->result){{e('text-success')}}@elseif($result->pivot->result===0){{e('text-danger')}}@else{{e('text-primary')}}@endif">@if($result->pivot->result){{e('WIN')}}@elseif($result->pivot->result===0){{e('LOOSE')}}@else{{e('ON-GOING')}}@endif</h6>
+								<h6 class="text-right @if($result->pivot->result && !$result->active){{e('text-success')}}@elseif($result->pivot->result===0 && !$result->active){{e('text-danger')}}@else{{e('text-primary')}}@endif">@if($result->pivot->result && !$result->active){{e('WIN')}}@elseif($result->pivot->result===0 && !$result->active){{e('LOOSE')}}@else{{e('ON-GOING')}}@endif</h6>
                             </div>
                         </div>
                         <hr>
@@ -267,7 +267,7 @@
                             </div>
                             <div class="col-4 text-right">
 								<span class="text-muted text-right">Delivery</span>
-								<h6 class="@if($result->pivot->result){{e('text-success')}}@elseif($result->pivot->result===0){{e('text-danger')}}@else{{e('text-primary')}}@endif text-right">@if($result->pivot->result){!!e('+ ').'&#8377;'.$result->pivot->delivery!!}@elseif($result->pivot->result===0){!!e('- ').'&#8377;'.$result->pivot->amount!!}@else{!!'&mdash;'!!}@endif</h6>
+								<h6 class="@if($result->pivot->result && !$result->active){{e('text-success')}}@elseif($result->pivot->result===0 && !$result->active){{e('text-danger')}}@else{{e('text-primary')}}@endif text-right">@if($result->pivot->result && !$result->active){!!e('+ ').'&#8377;'.$result->pivot->delivery!!}@elseif($result->pivot->result===0 && !$result->active){!!e('- ').'&#8377;'.$result->pivot->amount!!}@else{!!'&mdash;'!!}@endif</h6>
                             </div>
                         </div>
                     </li>

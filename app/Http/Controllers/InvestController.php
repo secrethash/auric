@@ -43,10 +43,7 @@ class InvestController extends Controller
         $id = str_pad($id, 3, '0', STR_PAD_LEFT);
         $uid = $current->slug.'-'.$date.$id;
 
-        $period = Period::where([
-            'uid' => $uid,
-            'active'=>1
-        ])->first();
+        $period = Period::whereUid($uid)->first();
 
         if (!$period)
         {
@@ -130,7 +127,9 @@ class InvestController extends Controller
         $lobby = Lobby::find($lobby);
 
         $period = decrypt($period);
-        $period = Period::whereUid($period)->first();
+        $period = Period::where('uid', $period)
+                        ->where('active', 1)
+                        ->first();
 
         $validated = $request->validated();
         // Check Lobby
@@ -159,13 +158,13 @@ class InvestController extends Controller
 
         $betAmount = $validated['amount'];
         $amount = $betAmount;
-        Log::debug('Bet Amount: '.$amount);
+        // Log::debug('Bet Amount: '.$amount);
 
         $calculate = new Calculate;
         $commission = $calculate->commission($amount) * $validated['bets'];
         $amount = $calculate->final() * $validated['bets'];
-        Log::debug('Bet Commission: '.$commission);
-        Log::debug('Final Bet Amount: '.$amount);
+        // Log::debug('Bet Commission: '.$commission);
+        // Log::debug('Final Bet Amount: '.$amount);
 
         $betAmount = $betAmount * $validated['bets'];
 
@@ -179,7 +178,7 @@ class InvestController extends Controller
 
         $transact = Transact::create($data, Auth::user(), $order);
 
-        Log::debug('Controller Bet Number: '.$validated['bet_number']);
+        // Log::debug('Controller Bet Number: '.$validated['bet_number']);
 
         if ($validated['bet_number'] == '')
         {
@@ -227,15 +226,15 @@ class InvestController extends Controller
     public function checkPeriod(Period $period)
     {
         // Check Period
-        $time = Carbon::create($period->start)->addMinutes(2)->addSecond(30);
+        $time = Carbon::create($period->start)->addMinutes(2)->addSeconds(31);
         $now = Carbon::now();
 
-        if ($now->greaterThan($time))
+        if ($time->greaterThan($now))
         {
-            return false;
+            return true;
         }
 
-        return true;
+        return false;
     }
 
     /**
