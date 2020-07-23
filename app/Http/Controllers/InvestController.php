@@ -229,7 +229,7 @@ class InvestController extends Controller
     public function checkPeriod(Period $period)
     {
         // Check Period
-        $time = Carbon::create($period->start)->addMinutes(2)->addSeconds(31);
+        $time = $period->start->addMinutes(2)->addSeconds(31);
         $now = Carbon::now();
 
         if ($time->greaterThan($now))
