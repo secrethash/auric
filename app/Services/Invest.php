@@ -494,7 +494,6 @@ class Invest {
 
         $period->number()->associate($number);
         $period->price = rand(2000, 2999);
-        $period->save();
 
 
         ////////////////////////////////

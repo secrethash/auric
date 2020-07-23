@@ -365,7 +365,7 @@
 @section('after-scripts')
     <script src="{{asset("js/jquery.countdown.min.js")}}"></script>
     <script type="text/javascript">
-        var countTime = "{{Carbon\Carbon::create($period->start)->addMinutes(3)->addSeconds(2)->format('Y/m/d H:i:s')}}";
+        var countTime = "{{$period->start->addMinutes(3)->addSeconds(2)->format('Y/m/d H:i:s')}}";
         $('div#period-countdown')
         .countdown(countTime, function(event) {
             $(this).text(

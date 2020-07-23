@@ -43,7 +43,10 @@ class InvestController extends Controller
         $id = str_pad($id, 3, '0', STR_PAD_LEFT);
         $uid = $current->slug.'-'.$date.$id;
 
-        $period = Period::whereUid($uid)->first();
+        $period = Period::where([
+            'uid' => $uid,
+            'active'=>1
+        ])->first();
 
         if (!$period)
         {
