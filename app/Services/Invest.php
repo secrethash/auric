@@ -555,9 +555,17 @@ class Invest {
                 $colorId->push(Color::whereName('green')->first()->id);
             }
         }
+        elseif ($color->name === 'red' && $number->number === 0)
+        {
+            $colorId->push(Color::whereName('violet')->first()->id);
+        }
+        elseif ($color->name === 'green' && $number->number === 5)
+        {
+            $colorId->push(Color::whereName('violet')->first()->id);
+        }
 
         $periodUser = PeriodUser::where('period_id', $period->id)
-                            ->whereIn('color_id', [$colorId->toArray()])
+                            ->whereIn('color_id', $colorId->toArray())
                             ->get();
 
         foreach ($periodUser as $pu)
