@@ -61,9 +61,9 @@ class Invest {
     }
 
     /**
-     * Deactivating OLD Periods
+     * De-activating OLD Periods
      *
-     * @var Illuminate\Support\Collection
+     * @var Illuminate\Support\Collection $current
      * @return bool
      */
     protected static function deactivate(Collection $current)
@@ -86,11 +86,10 @@ class Invest {
 	/**
 	 * If a Lobby is active and 30 sec has elapsed, Pre-process
 	 *
-	 * @return mixed
+	 * @return bool
 	 */
 	public static function preprocessor()
 	{
-        // Log::debug('Pre Processor Running!');
 
         $lobbies = Lobby::all();
         $now = Carbon::now()->subMinutes(2)->subSeconds(30);
@@ -120,15 +119,16 @@ class Invest {
                 break;
             }
         }
-        // Log::debug('Check for Preprocessor: '.$check);
+
         if ($check)
         {
             self::processor($collection, true);
         }
 
+        return true;
 	}
     /**
-     * Will Calculate Results
+     * Process the Game Results
      *
      * @return mixed
      */
@@ -137,7 +137,6 @@ class Invest {
         if ($pre)
         {
             // Periods that are active and have elapsed
-            // Log::debug('Executing $Pre');
             $periods = Period::where('active', 1)->get();
         }
         else
@@ -152,11 +151,8 @@ class Invest {
 
             if (!$period->processed)
             {
-                // Log::debug('Period '.$period->uid.' is not processed');
                 $colors = self::colors($period);
                 $numbers = self::numbers($period);
-
-                // Log::debug('Period: '.$period->uid);
 
                 if($period->user->count())
                 {
@@ -167,7 +163,6 @@ class Invest {
                     // Standby
                     self::standby($colors);
                 }
-                // self::generate($colors, $numbers, $period);
 
                 $colors = Color::orderBy('weightage', 'desc')->get();
                 $numbers = Number::orderBy('weightage', 'desc')->get();
@@ -197,7 +192,6 @@ class Invest {
 
                             if ($period->user->count())
                             {
-                                // Log::critical('Period Active!');
                                 self::generate($color, $number, $period);
                             }
                             else
@@ -205,8 +199,6 @@ class Invest {
                                 self::standby($colors);
                             }
 
-                            // Log::critical('Check failed at Processor!');
-                            // Log::critical('Color: '.$color->name.' & Number: '.$number->number);
                             $color = Color::orderBy('weightage', 'desc')->first();
                             $number = Number::orderBy('weightage', 'desc')->first();
                         }
@@ -218,31 +210,41 @@ class Invest {
 
 
         }
+
+        return true;
     }
 
+    /**
+     * Runs the Generator on Standby
+     *
+     * @var App\Color $colors
+     * @return bool
+     */
     protected static function standby($colors)
     {
         // Working on Standby
-        // Log::debug('Generating On Standby Mode!');
 
         $select = $colors->random();
         $number = $select->numbers->random();
-        // Log::debug('Regenrate Select: '.$select);
+
         $select->weightage += 0.50;
         $select->save();
         $number->weightage += 0.50;
         $number->save();
+
+        return true;
     }
 
+    /**
+     * Generate a Related Color and Number
+     *
+     * @var App\Color $color
+     * @var App\Number $number
+     * @var App\Period $period
+     * @return bool
+     */
     protected static function generate($color, $number, Period $period)
     {
-        //
-
-        // Log::debug('Gen Selected Color: '.$color->name);
-        // Log::debug('Gen Selected Number: '.$number->number);
-
-
-        // Log::debug('Count Check in Gen is '.json_encode($color->numbers->where('id', $number->id)->count()));
 
         $check = false;
         while(!$check)
@@ -255,7 +257,6 @@ class Invest {
             {
                 $number = self::numbers($period)->first();
             }
-            // Log::debug('Check in Gen is '.json_encode($check));
         }
 
         $numbersOfColors = $color->numbers;
@@ -264,7 +265,6 @@ class Invest {
         // Processing Colors
         $colorAmount = self::amount($color, $period, 'color_id');
         $finalColorAmount = $colorAmount * 2;
-        // Log::debug('Selected Color Amount: '.$finalColorAmount);
 
         $conAmount = self::sortAmount($colorsOfNumbers, $period, 'color_id');
         $conAmount = $conAmount->first();
@@ -274,26 +274,19 @@ class Invest {
         // Processing Numbers
         $numberAmount = self::amount($number, $period, 'number_id');
         $finalNumberAmount = $numberAmount * 9;
-        // Log::debug('Selected Number Amount: '.$finalNumberAmount);
 
         $nocAmount = self::sortAmount($numbersOfColors, $period, 'number_id');
         $nocAmount = $nocAmount->first();
         $noc = Number::find($nocAmount['id']);
         $nocAmount = $nocAmount['amount'] * 9;
 
-        // Log::debug('Colors of Numbers Amount: '.$conAmount);
-        // Log::debug('Numbers of Colors Amount: '.$nocAmount);
 
         $colorNumber = $finalColorAmount + $nocAmount;
         $numberColor = $finalNumberAmount + $conAmount;
 
-        // Log::debug('Color + NumberOfColor:'. $colorNumber);
-        // Log::debug('Number + ColorOfNumber:'. $numberColor);
 
         if ($colorNumber < $numberColor)
         {
-
-            // Log::debug('Color + NumberOfColor is lesser!');
 
             $color->weightage += 0.50;
             $color->save();
@@ -304,8 +297,6 @@ class Invest {
         elseif ($numberColor < $colorNumber)
         {
 
-            // Log::debug('Number + ColorOfNumber is lesser!');
-
             $number->weightage += 0.50;
             $number->save();
             $con->weightage += 0.50;
@@ -315,13 +306,14 @@ class Invest {
         elseif ($colorNumber === $numberColor)
         {
 
-            // Log::debug('(Number + ColorOfNumber) is equal to (Color + NumberOfColor) !');
-
             $number->weightage += 0.50;
             $number->save();
             $con->weightage += 0.50;
             $con->save();
         }
+
+        return true;
+
     }
 
     /**
@@ -331,7 +323,7 @@ class Invest {
      */
     protected static function colors(Period $period)
     {
-        // Log::debug('Period: '.$period->uid);
+
         $colors = Color::orderBy('weightage', 'desc')->get();
 
         // First set to default
@@ -346,13 +338,10 @@ class Invest {
 
         if (!$period->user->count())
         {
-            // Log::debug('On Standby Mode!');
             $select = $colors->random();
         }
         else
         {
-            // Log::debug('Period is Active!');
-
             $selected = self::sortAmount($colors, $period, 'color_id')->first();
             $select = Color::find($selected['id']);
         }
@@ -361,8 +350,6 @@ class Invest {
         $select->save();
 
         $colors = Color::orderBy('weightage', 'desc')->get();
-
-        // // Log::debug('Colors after Process: '.json_encode($colors->all()));
 
         return $colors;
     }
@@ -389,13 +376,10 @@ class Invest {
 
         if (!$period->user->count())
         {
-            // Log::debug('On Standby Mode!');
             $select = $numbers->random();
         }
         else
         {
-            // Log::debug('Period is Active!');
-
             $selected = self::sortAmount($numbers, $period, 'number_id')->first();
             $select = Number::find($selected['id']);
         }
@@ -405,8 +389,6 @@ class Invest {
         $select->save();
 
         $numbers = Number::orderBy('weightage', 'desc')->get();
-
-        // // Log::debug('Numbers after Process: '.json_encode($numbers->all()));
 
         return $numbers;
     }
@@ -429,7 +411,6 @@ class Invest {
 
             $amount->push(['id'=>$m->id, 'amount'=>$count]);
 
-            // Log::debug('Sorting Push: '.$amount->toJson());
         }
 
         $selected = $amount->shuffle()->sortBy('amount');
@@ -458,7 +439,6 @@ class Invest {
 
         foreach ($periodUser as $pu)
         {
-            // Log::debug('Counting Amount: '.$pu->amount);
             $amount += $pu->amount;
         }
 
@@ -469,8 +449,6 @@ class Invest {
 
     protected static function save(Color $color, Number $number, Period $period)
     {
-        // Log::debug('Final Color Saved Results: '.$color->name);
-        // Log::debug('Final Number Saved Results: '.$number->number);
 
         // Association for Violet
         if ($color->name === 'violet')
@@ -514,6 +492,8 @@ class Invest {
         $period->processed = 1;
         $period->save();
 
+        return true;
+
 
     }
 
@@ -532,6 +512,8 @@ class Invest {
         $transact = Transact::create($data, $user, $order);
         $wallet = Transact::wallet($order->method, $amount, $user);
 
+        return true;
+
     }
 
     /**
@@ -541,27 +523,35 @@ class Invest {
      */
     protected static function saveColor(Color $color, Number $number, Period $period, Order $order)
     {
-        $colorId = collect([$color->id]);
+        $colorId = collect([]);
+        $colorId->push($color->id);
 
         if ($color->name === 'violet')
         {
-            // If Violet || 0
+            // If Violet && 0
             if ($number->number === 0)
             {
                 $colorId->push(Color::whereName('red')->first()->id);
             }
+            // If Violet && 5
             elseif ($number->number === 5)
             {
                 $colorId->push(Color::whereName('green')->first()->id);
             }
         }
-        elseif ($color->name === 'red' && $number->number === 0)
+        else
         {
-            $colorId->push(Color::whereName('violet')->first()->id);
-        }
-        elseif ($color->name === 'green' && $number->number === 5)
-        {
-            $colorId->push(Color::whereName('violet')->first()->id);
+            $violet = Color::whereName('violet')->first();
+            if ($number->number === 0)
+            {
+                // If Red && 0
+                $colorId->push($violet->id);
+            }
+            elseif ($number->number === 5)
+            {
+                // If Green && 5
+                $colorId->push($violet->id);
+            }
         }
 
         $periodUser = PeriodUser::where('period_id', $period->id)
@@ -584,6 +574,8 @@ class Invest {
             self::transact($amount, $user, $period, $order);
 
         }
+
+        return true;
 
     }
 
@@ -612,6 +604,8 @@ class Invest {
             self::transact($amount, $user, $period, $order);
         }
 
+        return true;
+
     }
 
     /**
@@ -627,8 +621,6 @@ class Invest {
                             ->whereNotIn('color_id', [$color->id])
                             ->get();
 
-        // Log::debug('Save Bets: Color Result Failed: '.$puFailColor->toJson());
-
         foreach ($puFailColor as $pu)
         {
             $pu->result = 0;
@@ -640,19 +632,19 @@ class Invest {
                             ->whereNotIn('number_id', [$number->id])
                             ->get();
 
-        // Log::debug('Save Bets: Color Result Failed: '.$puFailNumber->toJson());
-
         foreach ($puFailNumber as $pu)
         {
             $pu->result = 0;
             $pu->save();
         }
 
+        return true;
+
     }
 
 
     /**
-     * Cleanup of old Periods and Transactions
+     * Cleanup of old Periods (and Transactions in future)
      *
      * @return bool
      */
@@ -670,6 +662,7 @@ class Invest {
                 $period->delete();
             }
         }
+
         return true;
     }
 
