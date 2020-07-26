@@ -615,10 +615,40 @@ class Invest {
      */
     protected static function saveFailed(Color $color, Number $number, Period $period)
     {
+        $colorId = collect([]);
+        $colorId->push($color->id);
+
+        if ($color->name === 'violet')
+        {
+            // If Violet && 0
+            if ($number->number === 0)
+            {
+                $colorId->push(Color::whereName('red')->first()->id);
+            }
+            // If Violet && 5
+            elseif ($number->number === 5)
+            {
+                $colorId->push(Color::whereName('green')->first()->id);
+            }
+        }
+        else
+        {
+            $violet = Color::whereName('violet')->first();
+            if ($number->number === 0)
+            {
+                // If Red && 0
+                $colorId->push($violet->id);
+            }
+            elseif ($number->number === 5)
+            {
+                // If Green && 5
+                $colorId->push($violet->id);
+            }
+        }
 
         $puFailColor = PeriodUser::where('period_id', $period->id)
                             ->where('number_id', NULL)
-                            ->whereNotIn('color_id', [$color->id])
+                            ->whereNotIn('color_id', $colorId->toArray())
                             ->get();
 
         foreach ($puFailColor as $pu)
