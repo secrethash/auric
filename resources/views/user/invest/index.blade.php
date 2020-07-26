@@ -89,7 +89,7 @@
                     <h4 style="color: #333;">{{Str::of($period->uid)->trim($current->slug.'-')}}</h4>
                 </div>
                 <div class="col-6 text-right">
-                    <span class="text-muted">Coutdown</span>
+                    <span class="text-muted">Countdown</span>
                     <h4 style="color: #333;"><div id="period-countdown"></div></h4>
                 </div>
             </div>
