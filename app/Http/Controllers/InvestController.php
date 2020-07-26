@@ -15,7 +15,6 @@ use App\Services\Calculate;
 use App\Services\Transact;
 use App\Services\Invest;
 use Carbon\Carbon;
-use Illuminate\Support\Facades\Log;
 
 class InvestController extends Controller
 {
@@ -104,10 +103,7 @@ class InvestController extends Controller
             return abort(404);
         }
 
-        // $records = PeriodUser::where('user_id', $user->id)
-        //                     ->latest()
-        //                     ->paginate(20);
-        $periods = Period::where('lobby_id', $lobby->id)->get();
+        // $periods = Period::where('lobby_id', $lobby->id)->get();
         $records = $user->periods()->where('lobby_id', $lobby->id)->latest()->paginate(10);
 
         return view('user.invest.records')->with([
@@ -161,13 +157,10 @@ class InvestController extends Controller
 
         $betAmount = $validated['amount'];
         $amount = $betAmount;
-        // Log::debug('Bet Amount: '.$amount);
 
         $calculate = new Calculate;
         $commission = $calculate->commission($amount) * $validated['bets'];
         $amount = $calculate->final() * $validated['bets'];
-        // Log::debug('Bet Commission: '.$commission);
-        // Log::debug('Final Bet Amount: '.$amount);
 
         $betAmount = $betAmount * $validated['bets'];
 
@@ -181,7 +174,6 @@ class InvestController extends Controller
 
         $transact = Transact::create($data, Auth::user(), $order);
 
-        // Log::debug('Controller Bet Number: '.$validated['bet_number']);
 
         if ($validated['bet_number'] == '')
         {
@@ -248,18 +240,15 @@ class InvestController extends Controller
     public function preProcess($token)
     {
         // Check Period
-        // Log::debug('Preprocessor Controller!');
         $now = Carbon::now();
         $id = (($now->format('H') * 20) + ($now->format('i') / 3)) + 1;
         $id = floor($id);
         $id = str_pad($id, 3, '0', STR_PAD_LEFT);
 
         $token = decrypt($token);
-        //
-        // Log::debug('Id: '.$id.' Token: '.$token);
+
         if ($token == $id)
         {
-            // Log::debug('Check Passed! ID is equal to Token!');
 
             Invest::preprocessor();
 

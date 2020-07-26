@@ -415,8 +415,6 @@ class Invest {
 
         $selected = $amount->shuffle()->sortBy('amount');
 
-        Log::debug('Sorted Amount: '. $selected->toJson());
-
         return $selected;
     }
 
@@ -449,7 +447,6 @@ class Invest {
 
     protected static function save(Color $color, Number $number, Period $period)
     {
-
         // Association for Violet
         if ($color->name === 'violet')
         {
@@ -523,6 +520,7 @@ class Invest {
      */
     protected static function saveColor(Color $color, Number $number, Period $period, Order $order)
     {
+        // Saving Color
         $colorId = collect([]);
         $colorId->push($color->id);
 
@@ -555,23 +553,27 @@ class Invest {
         }
 
         $periodUser = PeriodUser::where('period_id', $period->id)
-                            ->whereIn('color_id', $colorId->toArray())
-                            ->get();
+                                ->whereIn('color_id', $colorId->toArray())
+                                ->get();
 
         foreach ($periodUser as $pu)
         {
-            $user = User::find($pu->user_id);
-            $puColor = Color::find($pu->color_id);
-            $calculate = new Calculate;
-            $calculate->amount = $pu->amount;
-            $calculate->color($puColor, $number);
-            $amount = $calculate->prize();
+            if($pu->result === NULL)
+            {
+                $user = User::find($pu->user_id);
+                $puColor = Color::find($pu->color_id);
+                $calculate = new Calculate;
+                $calculate->amount = $pu->amount;
+                $calculate->color($puColor, $number);
+                $amount = $calculate->prize();
 
-            $pu->result = 1;
-            $pu->delivery = $amount;
-            $pu->save();
+                self::transact($amount, $user, $period, $order);
 
-            self::transact($amount, $user, $period, $order);
+                $pu->result = 1;
+                $pu->delivery = $amount;
+                $pu->save();
+
+            }
 
         }
 
@@ -586,8 +588,10 @@ class Invest {
      */
     protected static function saveNumber(Number $number, Period $period, Order $order)
     {
-        $periodUser = PeriodUser::where(['number_id' => $number->id, 'period_id' => $period->id])
-                            ->get();
+        // Saving Number
+        $periodUser = PeriodUser::where('period_id', $period->id)
+                                ->where('number_id', $number->id)
+                                ->get();
 
         foreach ($periodUser as $pu)
         {
@@ -615,6 +619,7 @@ class Invest {
      */
     protected static function saveFailed(Color $color, Number $number, Period $period)
     {
+        // Saving Failed Results
         $colorId = collect([]);
         $colorId->push($color->id);
 

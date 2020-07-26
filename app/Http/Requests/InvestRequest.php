@@ -4,10 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
-use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Log;
-use Illuminate\Validation\ValidationException;
 use Illuminate\Validation\Validator;
 
 class InvestRequest extends FormRequest
@@ -31,8 +28,6 @@ class InvestRequest extends FormRequest
     {
         $betColor = $this->bet_color ? decrypt($this->bet_color) : '';
         $betNumber =  $this->bet_number ? decrypt($this->bet_number) : '';
-        Log::debug('Bet Color: ' . $betColor);
-        Log::debug('Bet Number: ' . $betNumber);
 
         $this->merge([
             'bet_color' => $betColor,
@@ -81,10 +76,8 @@ class InvestRequest extends FormRequest
      */
     protected function failedValidation(\Illuminate\Contracts\Validation\Validator $validator)
     {
-        // return response()->json(['errors' => $validator->errors()]);
-        Log::debug('Failed Validation!');
         $errorResponse['errors'] = $validator->errors();
-        Log::debug('Validation Errors: '.json_encode($errorResponse));
+
         throw new HttpResponseException(response()->json($errorResponse));
     }
 
