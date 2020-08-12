@@ -90,8 +90,10 @@ class Invest {
 	 */
 	public static function runProcessor()
 	{
-		sleep(31);
-		self::preprocessor();
+        // Log::debug('Will run Preprocessor after a sleep!');
+        sleep(31);
+        // Log::debug('Running the Preprocessor.');
+		return self::preprocessor();
 	}
 
 	/**
@@ -118,7 +120,9 @@ class Invest {
             // Collecting Current UIDs
             $collection->push($uid);
 
-            $period = Period::whereUid($uid)->get();
+            $period = Period::where('uid', $uid)
+                            ->where('active', 1)
+                            ->get();
 
             if($period->count())
             {
@@ -133,6 +137,7 @@ class Invest {
 
         if ($check)
         {
+            // Log::debug('Check Passed! Running Processor.');
             self::processor($collection, true);
         }
 
@@ -159,9 +164,10 @@ class Invest {
         }
 
         foreach ($periods as $period) {
-
+            // Log::debug('Running Processor for period: '.$period->uid);
             if (!$period->processed)
             {
+                // Log::debug('Voila! Period not processed.');
                 $colors = self::colors($period);
                 $numbers = self::numbers($period);
 
@@ -216,6 +222,8 @@ class Invest {
                     }
                 }
 
+                // Log::debug('Selected Color: '.$color->name);
+                // Log::debug('Selected Number: '.$number->number);
                 self::save($color, $number, $period);
             }
 
@@ -295,7 +303,6 @@ class Invest {
         $colorNumber = $finalColorAmount + $nocAmount;
         $numberColor = $finalNumberAmount + $conAmount;
 
-
         if ($colorNumber < $numberColor)
         {
 
@@ -317,10 +324,10 @@ class Invest {
         elseif ($colorNumber === $numberColor)
         {
 
-            $number->weightage += 0.50;
-            $number->save();
-            $con->weightage += 0.50;
-            $con->save();
+            $color->weightage += 0.50;
+            $color->save();
+            $noc->weightage += 0.50;
+            $noc->save();
         }
 
         return true;
@@ -357,7 +364,7 @@ class Invest {
             $select = Color::find($selected['id']);
         }
 
-        $select->weightage += 0.25;
+        $select->weightage += 0.50;
         $select->save();
 
         $colors = Color::orderBy('weightage', 'desc')->get();
@@ -368,7 +375,8 @@ class Invest {
     /**
      * Collect Numbers
      *
-     * @return App\Number
+     * @param \App\Period $period
+     * @return \App\Number
      */
     protected static function numbers(Period $period)
     {
@@ -396,7 +404,7 @@ class Invest {
         }
 
 
-        $select->weightage += 0.25;
+        $select->weightage += 0.50;
         $select->save();
 
         $numbers = Number::orderBy('weightage', 'desc')->get();
@@ -458,6 +466,7 @@ class Invest {
 
     protected static function save(Color $color, Number $number, Period $period)
     {
+        // Log::debug('Saving Results!');
         // Association for Violet
         if ($color->name === 'violet')
         {
@@ -569,6 +578,7 @@ class Invest {
 
         foreach ($periodUser as $pu)
         {
+            // Log::debug('Saving Individual for bet: '.$pu->id);
             if($pu->result === NULL)
             {
                 $user = User::find($pu->user_id);

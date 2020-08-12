@@ -21,8 +21,8 @@ class ColorsTableSeeder extends Seeder
             array (
                 'id' => 1,
                 'name' => 'red',
-                'weightage' => 0.25,
-                'default' => 0.25,
+                'weightage' => 0.50,
+                'default' => 0.50,
                 'created_at' => '2020-07-02 12:25:00',
                 'updated_at' => '2020-07-04 14:15:03',
             ),
@@ -30,8 +30,8 @@ class ColorsTableSeeder extends Seeder
             array (
                 'id' => 2,
                 'name' => 'green',
-                'weightage' => 0.25,
-                'default' => 0.25,
+                'weightage' => 0.50,
+                'default' => 0.50,
                 'created_at' => '2020-07-02 12:25:48',
                 'updated_at' => '2020-07-04 14:15:03',
             ),
@@ -39,7 +39,7 @@ class ColorsTableSeeder extends Seeder
             array (
                 'id' => 3,
                 'name' => 'violet',
-                'weightage' => 0.25,
+                'weightage' => 0.50,
                 'default' => 0.0,
                 'created_at' => '2020-07-02 12:25:59',
                 'updated_at' => '2020-07-04 14:15:03',

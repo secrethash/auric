@@ -2,8 +2,6 @@
 
 use Illuminate\Support\Facades\Route;
 
-// dd(now()->addSecond(180));
-
 /*
 |--------------------------------------------------------------------------
 | Web Routes
