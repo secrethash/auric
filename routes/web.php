@@ -64,7 +64,7 @@ Route::prefix('invest')->name('invest.')->middleware(['auth', 'verifiedphone'])-
     Route::get('{lobby}/periods', 'InvestController@periods')->name('periods');
     Route::get('{lobby}/records', 'InvestController@records')->name('records');
     Route::post('create/{lobby}/{period}', 'InvestController@create')->name('create');
-    Route::get('preprocess/{token}', 'InvestController@preProcess')->middleware('throttle:1,2')->name('process');
+    // Route::get('preprocess/{token}', 'InvestController@preProcess')->middleware('throttle:1,2')->name('process');
 });
 
 

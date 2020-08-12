@@ -250,7 +250,7 @@ class InvestController extends Controller
         if ($token == $id)
         {
 
-            Invest::preprocessor();
+            // Invest::preprocessor();
 
             return response()->json([
                 'status' => 'In Process!'
