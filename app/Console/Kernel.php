@@ -28,6 +28,7 @@ class Kernel extends ConsoleKernel
         // $schedule->command('inspire')->hourly();
         $schedule->call(function () {
             Invest::createPeriod();
+            Invest::runProcessor();
         })->everyMinute()->sendOutputTo(storage_path('logs/schedule.log'), true);
         $schedule->call(function () {
             Invest::cleanup();

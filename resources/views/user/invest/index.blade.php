@@ -378,8 +378,8 @@
         .on('update.countdown', function (event) {
             if (event.offset.totalSeconds == 30)
             {
-                console.log('Pre-processor Running!');
-                $.get('{{route('invest.process', encrypt($id))}}');
+                // console.log('Pre-processor Running!');
+                // $.get('{{route('invest.process', encrypt($id))}}');
             }
             if (event.offset.totalSeconds <= 30)
             {

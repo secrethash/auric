@@ -84,6 +84,17 @@ class Invest {
 	}
 
 	/**
+	 * Run Preprocessor at exactly 2 mins 30 Secs Delay
+	 *
+	 * @return mixed
+	 */
+	public static function runProcessor()
+	{
+		sleep(31);
+		self::preprocessor();
+	}
+
+	/**
 	 * If a Lobby is active and 30 sec has elapsed, Pre-process
 	 *
 	 * @return bool
