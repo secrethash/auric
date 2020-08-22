@@ -16,9 +16,9 @@
                         <h5>Bonus Rules</h5>
                         <p><strong>Level 1:</strong> 0.6% per transaction</p>
                         <p><strong>Level 2:</strong> 0.5% per transaction</p>
-                        <p><strong>Level 3:</strong> 0.4% per transaction</p>
+                        {{-- <p><strong>Level 3:</strong> 0.4% per transaction</p>
                         <p><strong>Level 4:</strong> 0.3% per transaction</p>
-                        <p><strong>Level 5:</strong> 0.2% per transaction</p>
+                        <p><strong>Level 5:</strong> 0.2% per transaction</p> --}}
                         {{-- <p><strong>Level 6 and below:</strong> flat 0.1% per transaction</p> --}}
                         <blockquote>Commissions can be withdrawn from your account at anytime.</blockquote>
                     </div>
@@ -41,6 +41,16 @@
                                 </div>
                                 <div class="col-12">
                                     <input type="text" id="referral" value="{{$user->referral_link}}" class="border-0 form-control form-control-lg text-center" readonly onclick="copyFunction()" />
+                                </div>
+                            </div>
+                        </li>
+                        <li class="list-group-item justify-content-between align-items-center">
+                            <div class="row center">
+                                <div class="col-12 text-center">
+                                    <h5>Total People Referred</h5>
+                                </div>
+                                <div class="col-12 text-center">
+                                    <h5 class="display-4"><span class="badge badge-dark">{{$user->referrals()->count()}}</span></h5>
                                 </div>
                             </div>
                         </li>
