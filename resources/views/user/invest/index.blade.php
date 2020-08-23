@@ -19,21 +19,13 @@
             border-color: #FF26D3;
         }
 
-        .btn-violet:hover {
+        .btn-violet:hover, .btn-violet:focus, .btn-violet.focus {
             color: #fff;
-            background-color: #d841ba;
-            border-color: #d841ba;
-        }
-
-        .btn-violet:focus, .btn-violet.focus {
-            color: #fff;
-            background-color: #d841ba;
-            border-color: #d841ba;
-            box-shadow: 0 0 0 0.2rem rgba(216, 65, 186, 0.5);
+            background-color: #020310;
+            border-color: #020310;
         }
 
         .btn-violet.disabled, .btn-violet:disabled {
-            color: #fff;
             background-color: #ff26d3;
             border-color: #ff26d3;
         }
@@ -94,53 +86,51 @@
                 </div>
             </div>
             <div id="investron">
-                <div class="row mt-3 align-items-center">
-                    <div class="col-4">
-                        <button class="btn btn-success" data-toggle="modal" data-target="#investModal" data-label="{{$current->name}} Green Color" data-slug="{{encrypt('color-green')}}" data-color="{{encrypt('green')}}">Join Green</button>
+                <div class="row row-cols-3 mt-3 align-items-center">
+                    <div class="col">
+                        <button class="btn btn-block btn-success" data-toggle="modal" data-target="#investModal" data-label="{{$current->name}} Green Color" data-slug="{{encrypt('color-green')}}" data-color="{{encrypt('green')}}" style="font-weight:900; letter-spacing: 1px;">Join Green</button>
                     </div>
-                    <div class="col-4">
-                        <button class="btn btn-violet" data-toggle="modal" data-target="#investModal" data-label="{{$current->name}} Violet Color" data-slug="{{encrypt('color-violet')}}" data-color="{{encrypt('violet')}}">Join Violet</button>
+                    <div class="col">
+                        <button class="btn btn-block btn-violet" data-toggle="modal" data-target="#investModal" data-label="{{$current->name}} Violet Color" data-slug="{{encrypt('color-violet')}}" data-color="{{encrypt('violet')}}" style="font-weight:900; letter-spacing: 1px;">Join Violet</button>
                     </div>
-                    <div class="col-4">
-                        <button class="btn btn-danger" data-toggle="modal" data-target="#investModal" data-label="{{$current->name}} Red Color" data-slug="{{encrypt('color-red')}}" data-color="{{encrypt('red')}}">Join Red</button>
+                    <div class="col">
+                        <button class="btn btn-block btn-danger" data-toggle="modal" data-target="#investModal" data-label="{{$current->name}} Red Color" data-slug="{{encrypt('color-red')}}" data-color="{{encrypt('red')}}" style="font-weight:900; letter-spacing: 1.5px;">Join Red</button>
                     </div>
                 </div>
-                <div class="row mt-2">
-                    <div class="m-1 mt-2"></div>
-                    <div class="col-2 m-1 mt-2">
+                <div class="row row-cols-5 mt-2">
+
+                    <div class="col mt-2">
                         <button class="btn btn-primary btn-block" data-toggle="modal" data-target="#investModal" data-label="{{$current->name}} Number 0" data-slug="{{encrypt('number-0')}}" data-number="{{encrypt('0')}}">0</button>
                     </div>
-                    <div class="col-2 m-1 mt-2">
+                    <div class="col mt-2">
                         <button class="btn btn-primary btn-block" data-toggle="modal" data-target="#investModal" data-label="{{$current->name}} Number 1" data-slug="{{encrypt('number-1')}}" data-number="{{encrypt('1')}}">1</button>
                     </div>
-                    <div class="col-2 m-1 mt-2">
+                    <div class="col mt-2">
                         <button class="btn btn-primary btn-block" data-toggle="modal" data-target="#investModal" data-label="{{$current->name}} Number 2" data-slug="{{encrypt('number-2')}}" data-number="{{encrypt('2')}}">2</button>
                     </div>
-                    <div class="col-2 m-1 mt-2">
+                    <div class="col mt-2">
                         <button class="btn btn-primary btn-block" data-toggle="modal" data-target="#investModal" data-label="{{$current->name}} Number 3" data-slug="{{encrypt('number-3')}}" data-number="{{encrypt('3')}}">3</button>
                     </div>
-                    <div class="col-2 m-1 mt-2">
+                    <div class="col mt-2">
                         <button class="btn btn-primary btn-block" data-toggle="modal" data-target="#investModal" data-label="{{$current->name}} Number 4" data-slug="{{encrypt('number-4')}}" data-number="{{encrypt('4')}}">4</button>
                     </div>
-                    <div class="m-1 mt-2"></div>
 
-                    <div class="m-1 mt-2"></div>
-                    <div class="col-2 m-1 mt-2">
+                    <div class="col mt-2">
                         <button class="btn btn-primary btn-block" data-toggle="modal" data-target="#investModal" data-label="{{$current->name}} Number 5" data-slug="{{encrypt('number-5')}}" data-number="{{encrypt('5')}}">5</button>
                     </div>
-                    <div class="col-2 m-1 mt-2">
+                    <div class="col mt-2">
                         <button class="btn btn-primary btn-block" data-toggle="modal" data-target="#investModal" data-label="{{$current->name}} Number 6" data-slug="{{encrypt('number-6')}}" data-number="{{encrypt('6')}}">6</button>
                     </div>
-                    <div class="col-2 m-1 mt-2">
+                    <div class="col mt-2">
                         <button class="btn btn-primary btn-block" data-toggle="modal" data-target="#investModal" data-label="{{$current->name}} Number 7" data-slug="{{encrypt('number-7')}}" data-number="{{encrypt('7')}}">7</button>
                     </div>
-                    <div class="col-2 m-1 mt-2">
+                    <div class="col mt-2">
                         <button class="btn btn-primary btn-block" data-toggle="modal" data-target="#investModal" data-label="{{$current->name}} Number 8" data-slug="{{encrypt('number-8')}}" data-number="{{encrypt('8')}}">8</button>
                     </div>
-                    <div class="col-2 m-1 mt-2">
+                    <div class="col mt-2">
                         <button class="btn btn-primary btn-block" data-toggle="modal" data-target="#investModal" data-label="{{$current->name}} Number 9" data-slug="{{encrypt('number-9')}}" data-number="{{encrypt('9')}}">9</button>
                     </div>
-                    <div class="m-1 mt-2"></div>
+
                 </div>
             </div>
 
@@ -193,9 +183,9 @@
                             @endphp
                             <tr>
                                 <th class="font-weight-normal">{{Str::of($result->uid)->trim($current->slug.'-')}}</th>
-                                <td class="font-weight-normal">&#8377;&nbsp;{{$result->price}}{{$number->number}}</td>
+                                <td class="font-weight-normal">&#8377;{{$result->price}}{{$number->number}}</td>
                                 <td class="font-weight-normal text-center">{{$number->number}}</td>
-                                <td class="font-weight-normal text-center">
+                                <td class="font-weight-normal text-left">
                                     <i class="fa fa-circle @if($color->name === 'red'){{e('text-danger')}}@elseif($color->name === 'green'){{e('text-success')}}@else{{e('text-violet')}}@endif"></i>
                                     @if($color->name === 'red' AND $number->number === 0)
                                         <i class="fa fa-circle text-violet"></i>
