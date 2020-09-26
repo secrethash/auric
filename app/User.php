@@ -7,6 +7,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Twilio\Rest\Client;
 use Twilio\Exceptions\TwilioException;
+use Illuminate\Auth\Passwords\CanResetPassword;
 use Illuminate\Support\Facades\Log;
 use App\ {
     Transaction,
@@ -14,10 +15,11 @@ use App\ {
     Withdrawal,
     Bank
 };
+use App\Notifications\ResetPasswordNotification;
 
 class User extends \TCG\Voyager\Models\User implements MustVerifyEmail
 {
-    use Notifiable;
+    use Notifiable, CanResetPassword;
 
     /**
      * The attributes that are mass assignable.
@@ -172,7 +174,7 @@ class User extends \TCG\Voyager\Models\User implements MustVerifyEmail
 
         Log::debug('To Phone: '.$to);
 
-        $message = "Hello from Auric Shops! Your One Time Password is: ".$code." \n For Security reasons, don't share this with anyone!";
+        $message = "Your Auric Shop's One Time Password is: ".$code." \n For Security reasons, don't share this with anyone!";
 
 
         $client = new Client($sid, $token);
@@ -186,4 +188,25 @@ class User extends \TCG\Voyager\Models\User implements MustVerifyEmail
         );
     }
 
+    /**
+     * Send the password reset notification.
+     *
+     * @param  string  $token
+     * @return void
+     */
+    public function sendPasswordResetNotification($token)
+    {
+        $this->notify(new ResetPasswordNotification($token));
+    }
+
+    /**
+     * Route Notifications to User's Phone Number
+     *
+     * @param  \Illuminate\Notifications\Notification  $notification
+     * @return mixed
+     */
+    public function routeNotificationForTwilio($notification)
+    {
+        return $this->country_code.$this->phone;
+    }
 }

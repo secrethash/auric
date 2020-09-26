@@ -1,0 +1,7 @@
+$amount = 0;
+foreach (App\Transaction::where('order_id', 1)->where('status', 'success')->get() as $transaction)
+{
+    $amount += $transaction->amount;
+}
+
+$amount;
