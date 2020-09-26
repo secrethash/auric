@@ -54,7 +54,7 @@ class ResetPasswordController extends Controller
     {
         return [
             'token' => ['required'],
-            'phone' => ['required', 'exits:users,phone'],
+            'phone' => ['required', 'exists:users,phone'],
             'password' => ['required', 'confirmed', 'min:8'],
         ];
     }
