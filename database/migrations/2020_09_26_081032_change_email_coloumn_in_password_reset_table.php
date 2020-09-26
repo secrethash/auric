@@ -13,7 +13,7 @@ class ChangeEmailColoumnInPasswordResetTable extends Migration
      */
     public function up()
     {
-        Schema::table('password_reset', function (Blueprint $table) {
+        Schema::table('password_resets', function (Blueprint $table) {
             //
             $table->string('email')->nullable()->change();
         });
@@ -26,7 +26,7 @@ class ChangeEmailColoumnInPasswordResetTable extends Migration
      */
     public function down()
     {
-        Schema::table('password_reset', function (Blueprint $table) {
+        Schema::table('password_resets', function (Blueprint $table) {
             //
             $table->string('email')->index()->change();
         });
