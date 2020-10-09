@@ -28,4 +28,9 @@ class HomeController extends Controller
 
         return view('home')->with('products', $products);
     }
+
+    public function maintainence()
+    {
+        return abort(503, 'Page Under Maintainence!');
+    }
 }
