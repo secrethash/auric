@@ -26,7 +26,10 @@ Route::prefix('user')->name('user.')->middleware(['auth', 'verifiedphone'])->gro
 
     Route::prefix('wallet')->name('wallet.')->group(function () {
         Route::get('/', 'UserController@wallet')->name('index');
-        Route::get('/add', 'UserController@walletAdd')->name('add');
+        // Route::get('/add', 'UserController@walletAdd')->name('add');
+        Route::get('/add', function () {
+            return abort(503, 'Page Under Maintainence!');
+        })->name('add');
         Route::post('/pay', 'UserController@pay')->name('pay');
         Route::post('/pay/verify/{transaction}', 'UserController@payVerify')->name('pay.verify');
     });
