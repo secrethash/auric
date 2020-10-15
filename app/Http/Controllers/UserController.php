@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Order;
+use App\Services\Pay;
 use App\Services\Transact;
 use App\Transaction;
 use Illuminate\Http\Request;
@@ -90,57 +91,48 @@ class UserController extends Controller
     public function pay(Request $request)
     {
         //
-
+        $year = now()->format('Y');
         $validated = $request->validate([
             "amount" => ["numeric", "min:100", "required"],
+            // "card-number" => ["numeric", "digits:16", "required"],
+            // "card-holder" => ["required"],
+            // "card-exp-mm" => ["numeric", "digits_between:1,12", "required"],
+            // "card-exp-yy" => ["numeric", "min:".$year, "required"],
+            // "card-cvv" => ["numeric", "digits:3", "required"],
         ]);
 
-        $key = config('payment.razorpay.key');
-        $secret = config('payment.razorpay.secret');
-        $api = new Api($key, $secret);
+        $gateway = config('payment.gateway');
+        $key = config('payment.'.$gateway.'.key');
+        $secret = config('payment.'.$gateway.'.secret');
+
+        $payment = new Pay($gateway, $key, $secret);
 
         $amount = $validated['amount'];
+        $currency = 'INR';
+        // $card = [
+        //     "number" => $validated['card-number'],
+        //     "holder" => $validated['card-holder'],
+        //     "expiryMonth" => $validated['card-exp-mm'],
+        //     "expiryYear" => $validated['card-exp-yy'],
+        //     "cvv" => $validated['card-cvv'],
+        // ];
 
-        $creation = array(
-            'receipt' => uniqid(),
-            'amount' => $amount * 100,
-            'currency' => 'INR',
-            'payment_capture' => 1
-        );
-
-        $order = $api->order->create($creation); // Creates order
-
+        $pay = $payment->initialize($amount, $currency, $request);
+        Log::debug('OrderID: '.$pay['order_id']);
         // Record Transaction
         $orderType = Order::whereType('wallet-plus')->first();
         $user = $request->user();
         $data = [
             "note" => "Adding Money to Wallet.",
             "amount" => $amount,
-            "request_id" => $order['id'],
+            "request_id" => $pay['order_id'],
             "payment_id" => NULL,
         ];
         $transact = Transact::create($data, $user, $orderType);
 
-        $data = [
-            "key"               => $key,
-            "amount"            => $amount * 100,
-            "name"              => setting('site.title'),
-            "description"       => 'Your one Stop Shop',
-            "prefill"           => [
-                "name"          => $request->user()->name,
-                "contact"       => $request->user()->phone,
-            ],
-            "order_id"          => $order['id'],
-            "display_currency"  => 'INR',
-            "display_amount"    => $amount,
-            "theme"             => [
-                "image_padding" => false,
-            ],
-        ];
+        $json = json_encode($pay);
 
-        $json = json_encode($data);
-
-        return view('user.wallet.pay')->with(['user' => auth()->user(), 'json' => $json, 'amount' => $amount, 'transaction' => encrypt($transact->sign)]);
+        return view('user.wallet.pay')->with(['user' => auth()->user(), 'json' => $json, 'amount' => $amount, 'transaction' => encrypt($transact->sign), 'payment' => $pay]);
     }
 
     /**
@@ -152,44 +144,21 @@ class UserController extends Controller
     public function payVerify(Request $request, $transaction)
     {
         //
-        $key = config('payment.razorpay.key');
-        $secret = config('payment.razorpay.secret');
-        $success = true;
+        $gateway = config('payment.gateway');
+        $key = config('payment.'.$gateway.'.key');
+        $secret = config('payment.'.$gateway.'.secret');
+
         $user = $request->user();
 
         $transaction = decrypt($transaction);
         $transaction = Transaction::whereSign($transaction)->first();
 
-        $order = $transaction->request_id;
-        $payment = $request->input('razorpay_payment_id');
-        $signature = $request->input('razorpay_signature');
-
-        if (!empty($payment))
-        {
-            $api = new Api($key, $secret);
-
-            try
-            {
-
-                $attributes = array(
-                    'razorpay_order_id' => $order,
-                    'razorpay_payment_id' => $payment,
-                    'razorpay_signature' => $signature
-                );
-                $verification = $api->utility->verifyPaymentSignature($attributes);
-                Log::debug('Razorpay Signature Verification Returns '.json_encode($verification));
-
-            }
-            catch(SignatureVerificationError $e)
-            {
-                $success = false;
-                $error = 'Payment Error : ' . $e->getMessage();
-            }
-        }
+        $pay = new Pay($gateway, $key, $secret);
+        $success = $pay->capture($transaction->request_id, $request);
 
         if ($success)
         {
-            $transaction->payment_id = $payment;
+            $transaction->payment_id = $pay->paymentId;
             $transaction->note = "Added Money to Wallet.";
             $transaction->status = 'success';
             $transaction->save();
@@ -201,12 +170,12 @@ class UserController extends Controller
         }
         else
         {
-            $transaction->payment_id = $payment;
-            $transaction->note = "Failed! ".$error;
+            $transaction->payment_id = $pay->paymentId;
+            $transaction->note = "Failed! " . $pay->error;
             $transaction->status = 'failed';
             $transaction->save();
 
-            $message = 'Oops! Payment seems to have failed somehow! '.$error.'.';
+            $message = 'Oops! Payment seems to have failed somehow! '.$pay->error.'.';
         }
 
         return redirect()->route('user.wallet.index')->with(['success'=>$success, 'message'=>$message]);

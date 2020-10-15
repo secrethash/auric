@@ -26,10 +26,11 @@ Route::prefix('user')->name('user.')->middleware(['auth', 'verifiedphone'])->gro
 
     Route::prefix('wallet')->name('wallet.')->group(function () {
         Route::get('/', 'UserController@wallet')->name('index');
-        // Route::get('/add', 'UserController@walletAdd')->name('add');
-        Route::get('/add', 'HomeController@maintainence')->name('add'); // UNDER MAINTAINENCE
+        Route::get('/add', 'UserController@walletAdd')->name('add');
+        // Route::get('/add', 'HomeController@maintainence')->name('add'); // UNDER MAINTAINENCE
         Route::post('/pay', 'UserController@pay')->name('pay');
         Route::post('/pay/verify/{transaction}', 'UserController@payVerify')->name('pay.verify');
+        Route::get('/pay/verify/{transaction}', 'UserController@payVerify')->name('pay.verify.get');
     });
 
 
