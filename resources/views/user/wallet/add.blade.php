@@ -22,9 +22,12 @@
         <div class="container">
             <!-- Checkout Wrapper-->
             <div class="checkout-wrapper-area py-3">
-                <div class="credit-card-info-wrapper"><img class="d-block mb-4" src="{{asset("images/bg-img/12.png")}}" alt="">
+                <div class="credit-card-info-wrapper"><img class="d-block mb-4" src="{{asset("images/qr.jpg")}}" alt="" style="max-height: 300px !important; width: auto !important;">
                     <div class="pay-credit-card-form">
+                        <p class="lead">Pay with Your Preffered wallet by scanning the above QR Code.</p>
+                        <h2>Pay with Card</h2>
                         <p>Add Money to your Wallet (minimum: &#8377;100). Your wallet will be credited with the specified amount after a successful transaction.</p>
+
                         <form action="{{route('user.wallet.pay')}}" method="POST">
                             @csrf
                             <label for="amount">Amount to Add</label>
